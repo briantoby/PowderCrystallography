@@ -10,6 +10,14 @@
 \author{Brian H. Toby}
 % Author subtitle could be a university or a geographical location, for example
 \newcommand{\authorsubtitle}{Naperville IL, USA}
+% add defs for some commonly used Greek letters
+\DeclareUnicodeCharacter{03B8}{\ensuremath{\theta}}
+\DeclareUnicodeCharacter{03BB}{\ensuremath{\lambda}}
+\DeclareUnicodeCharacter{03C0}{\ensuremath{\pi}}
+\DeclareUnicodeCharacter{03C3}{\ensuremath{\sigma}}
+\DeclareUnicodeCharacter{03B1}{\ensuremath{\alpha}}
+\DeclareUnicodeCharacter{03B2}{\ensuremath{\beta}}
+\DeclareUnicodeCharacter{03B3}{\ensuremath{\gamma}}
 
 % Create convenient commands \booktitle and \bookauthor
 \makeatletter
@@ -161,11 +169,7 @@ License: \booklicense
 
 \mainmatter
 
-\include{intro}
-
-\part{Prerequisites}
-
-\include{diffraction}
+\input{contents}
 
 \backmatter
 \addcontentsline{toc}{chapter}{Index}
