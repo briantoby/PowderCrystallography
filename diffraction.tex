@@ -1,4 +1,5 @@
 \chapter{X-ray and Neutron Scattering}
+\label{Chap:diffraction}
 
 \section{Terminology: 2$\theta$ and Q}
 
@@ -63,8 +64,8 @@ Diffraction is a quantum phenomenon that requires a tiny particle with a wavelen
 
 \section{Diffraction from materials}
 
- Diffraction occurs when a pair of atoms are spaced apart so that their scattering is in phase and thus can add at an appropriate angle. At other angles, the scattering will not have this constructive interference and will on average cancel. A completely random arrangement of atoms would have pairs of atoms at all distances and thus would be expected to have completely uniform diffraction (following the form of \textit{f} with angle) at all scattering angles. However, matter never has a completely random arrangement of atoms. Even gases have some ordering, since atoms can never approach too closely and thus even diffraction from gases will show some level of structure. Peter Debye in 1915 first tabulated an equation that computed diffraction intensity as a function of the distances between pairs of atoms. His equation can be rewritten in a slightly different but more convenient form as: 
-$$I\left(Q\right)=Nf^2\sum_{i}^{N}\sum_{j\neq i}^{N}\frac{\sin{Qr_{ij}}}{Qr_{ij}}$$
+ Diffraction occurs when a pair of atoms are spaced apart so that their scattering is in phase and thus can add at an appropriate angle. At other angles, the scattering will not have this constructive interference and will on average cancel. A completely random arrangement of atoms would have pairs of atoms at all distances and thus would be expected to have completely uniform diffraction (following the form of \textit{f} with angle) at all scattering angles. However, matter never has a completely random arrangement of atoms. Even gases have some ordering, since atoms can never approach too closely and thus even diffraction from gases will show some level of structure. Peter Debye\index{Debye, P.} in 1915 first tabulated an equation that computed diffraction intensity as a function of the distances between pairs of atoms. His equation can be rewritten in a slightly different but more convenient form as: 
+$$I\left(Q\right)=Nf^2\sum_{i}^{N}\sum_{j\neq i}^{N}\frac{\sin{Qr_{ij}}}{Qr_{ij}}$$\index{Debye equation}
   Where  and r\textsubscript{ij} is the distance between atoms i and j. In this equation, \textit{f} indicates the scattering power for each atom, discussed previously as the form factor or scattering length, and \textit{I} will be the relative intensity for scattering per unit solid angle. N is the total number of atoms and thus this is a double sum including every pair of atoms in the sample. In practice since the sinc function [sinc(q,r) = sin(qr)/qr] falls to very small values as qr becomes large, it is not necessary to consider pairs of atoms at very large distances. This equation (or equations derived from the Debye equation) allow for computation of diffraction scattering from disordered materials, such as glasses, but can be simplified greatly for crystalline materials as will be discussed further below. 
 
  
