@@ -1,0 +1,14 @@
+\chapter{Constraints}\index{Constraints}\label{Chap:constraints}
+
+From the perspective of information theory, it is not straightforward to categorize the amount of structural information in a powder diffraction pattern. From one perspective, every reflection that is within the measured data range does provide some information about the positions and ADPs for the atoms, but this information is compromised by the overlap of reflections and where reflections are weak with respect to the noise levels in the pattern. In single-crystal diffraction, the number of observations tends to scale with the complexity of the structure, but that is not always the case with powder diffraction. The resolution and sensitivity of the instrument, as well as sample broadening effects limit the amount of information that can be measured. Further, static and dynamic disorder can reduce the range where diffraction can be observed. 
+
+With more complex structural models, one may not have enough well-determined independent observations to fit all independent parameters that are available. Better data may help this. Likewise, there are sometimes parameters that cannot be differentiated regardless of the data type. As an example of the former, for x-ray diffraction from a complex metal oxide, the ADP values for the O atoms, where each will have a minor impact on the overall scattering, may refine to pretty much random values. What is commonly done is to introduce a constraint that all O atoms will share the same $\rm U_{iso}$ value. This will increase how much the impact the $\rm U_{iso}$ value has on the quality of the fit, ensuring that a more accurate value becomes more likely and at the same time decrease the complexity of the model. As an example for the case where parameters cannot be distinguished, consider a site that is shared by two different types of atoms. Since the coordinates or $\rm U_{iso}$ value for each of these two atoms will contribute in exactly the same manner to every $F_{hkl}$ value, changing will have the same effect as changing the other. The positions and $\rm U_{iso}$ value for the two atoms sharing a site must be constrained to be the same. 
+
+Constraints are implemented in GSAS-II by summing the derivatives for all constrained parameters to determine the effect of changing the now grouped parameters and then when a shift is computed, all grouped parameters are set to the same value. Atom coordinates are handled slightly differently, in that shifts are applied to atom positions, but the effect is the same.
+
+One special case of constraints are those of rigid bodies, where the geometry for a group of atoms that are refined together will be defined. Rigid bodies are sufficiently complex that they are described in a separate chapter, \ref{Chap:rigidbody}.
+
+
+Defining constraints... 
+
+(more work needed: \ref{needs more work})

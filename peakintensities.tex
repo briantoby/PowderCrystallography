@@ -1,0 +1,89 @@
+\chapter{Fitting Peak Intensities}
+\label{Chap:intensities}
+
+The fitting of powder diffraction peak intensities is the process that provides crystallographic structure information, so this is indeed the goal for many studies, while fitting of background, peak positions and widths are a necessary task, but do not in themselves provide results of interest. 
+
+\section{Parameters that Affect Computed Intensities}
+Before considering approaches for fitting the powder pattern intensities, it is worthwhile if I provide an overview of the factors that can change the intensities in the computed pattern, as these are the factors that will need to be optimized. 
+
+\subsection{Scale factors}
+The intensity scale of an experimental powder diffraction pattern is determined by experimental conditions and the computed pattern, which is on an absolute basis must be matched to this. For this reason an arbitrary scaling parameter must be included to match the intensity scales of the two patterns. In most cases, a scaling constant will be needed for every powder diffraction pattern. 
+
+In GSAS-II there are two scaling parameters for every histogram,
+\begin{itemize}
+    \item the histogram scale factor (in the histogram Sample Parameters) and there is also 
+    \item a phase fraction parameter for every phase in the histogram (in the HAP parameters). The phase fraction can be on an arbitrary scale. Note that the key value from the phase fraction is the ratio between different phase fractions for different phases in the same histogram.
+\end{itemize}
+
+In the case of a single-phase fit, either of the two can be fit, \textit{but not both}. 
+In the case of a multiphase fit, there are three choices: 
+
+\begin{enumerate}
+    \item the scale factor can be left at any fixed non-zero value (most commonly 1.0) and all phase fractions can be refined, or 
+    \item one phase fraction is fixed at a non-zero value (most commonly 1.0) and all other phase fractions are refined, along with the histogram scale factor, or 
+    \item the sum of the phase fractions is fixed to be a positive constant, and then all phase fractions and the scale factor is fit.
+\end{enumerate}
+
+The option to choose between these three is yours to make by personal preference. They will provide completely equivalent results. Note that in a multi-histogram fit, a scale factor and/or phase fraction(s) will need to be refined for every histogram.
+
+The effect of this scaling is simply a multiplication of the pattern by a constant to obtain the best agreement between the computed and observed patterns; there will be no changes to any relative peak heights. When peaks are well aligned and the peak shape is well matched, the scale factor will refine in a single cycle to the optimum value, but when this is not the case, the scale factor fit will continue to be improve as the peak position and the profile fits are optimized. 
+
+\subsection{Peak profiles}
+While peak profiles do not change the integrated intensity of peaks, the appearance of the fit will change as profile shapes are modified. A peak that is overly broad will likely appear to be too low in height. The diffraction intensities cannot be well-fit if the profiles are not well-fit. 
+
+\subsection{Atom positions}
+As we saw before, the diffraction intensities are determined by $I_{hkl}$ which is determined from the square of the structure factors, $F_{hkl}^2$, which is in turn determined by that atom positions in the unit cell:
+
+$$F_{hkl}=\sum_j^{N^\prime} f_j m_j\exp⁡[-2πi(hx_j + ky_j + lz_j)] \exp⁡[-2πi(\vec{Q}\cdot\vec{U_j})]$$
+where we sum over the asymmetric unit (the unique atoms in the cell, as discussed in section \ref{ref:asymmetricunit}). Note that the atoms that will have the largest impact are the one that have the greatest values for $f_j$ and $m_j$, the scattering power and the multiplicity, respectively. The former, $f_j$ is the number of electrons and thus the position of the heaviest atoms have the highest leverage for x-rays, unless their multiplicity is very low. The highest symmetry sites, with lower multiplicity relative to the general site, typically have few or no degrees of freedom for refinement of coordinates, however. For neutrons, the scattering length depends on the isotope and the leverage for the atom positions will be usually be very different from x-rays. Thus, we can expect that if the position of atoms within the unit cell change, then the intensities of the powder diffraction pattern will change, but the positions of some atoms may affect the intensities far greater than others. The effect of moving atoms will not change the total amount of scattering but will change distribution of intensities, possibly very significantly.
+
+\subsection{Atomic displacement parameters}
+While it is occasionally possible to have data of sufficient quality and with simpler structures where it anisotropic ADPs can improve a structural model both in terms of fit and quality, powder diffraction almost always uses $\rm U_{iso}$ values. This allows the second part of the structure factor equation to be simplified to $\exp⁡[-2πiQ{\rm U_{iso,j}}]$. This is a damping factor for each atom's scattering contribution. At low values Q it is close to 1 and drops to smaller values as Q increases. The larger the value of $\rm U_{iso,j}$ for an atom, the more rapidly with Q that the contribution for that atom is reduced in the summation and thus the powder diffraction pattern. Since the contribution of any one atom to the powder diffraction pattern can be subtle, the impact of changing $\rm U_{iso}$ is even more subtle, but will manifest as a change in high Q intensities in comparison to those at low Q.
+
+\subsection{Site Occupancies}
+The scattering factor equation we have used so far does not include a term for the occupancy of each site, but how this is handled is to add a factor, $o_j$ that simply multiplies $f_j$, as discussed in section \ref{ref:occupancies}. It should be noted that $o_j$ will decrease the impact of that atom's contribution to the $F_{hkl}$ summation. It differs from the impact of $\rm U_{iso,j}$ for that atom in that  $o_j$ will decrease the contribution for all reflections equally while $\rm U_{iso,j}$ will have largest impact at high Q. Unless data have been collected over a wide range in Q, it can be difficult to discern the difference between these two factors. This leads to a high correlation between $\rm U_{iso,j}$ and $o_j$, meaning that the effect of lowering $o_j$ can largely be offset by lowering $\rm U_{iso,j}$ if the measurement range for Q is not large. Thus, experimentally it can be very difficult or even impossible to determine both values simultaneously. On the other hand, when there are a significant level of vacancies for an atom and the lowered occupancy of this site is not addressed in the model, then obviously $o_j$ is higher than the correct value. The fit may compensate for this by increasing $\rm U_{iso,j}$ to a larger than expected value. Likewise, if there is more scattering from an atom site than is in the model; this can happen when an atom type incorrectly assigned to one with less scattering power, then $\rm U_{iso,j}$ will compensate by refining to a smaller number, including the possibility of refining to a negative value. 
+
+\subsection{Texture} 
+Texture in materials can be a very useful property, adding strength or other desired properties and many diffraction experiments are performed to characterize texture, but for crystallographic structure determination, texture is largely a pain. Use of sample preparation techniques that minimize it is to be encouraged. The affect of texture will be to lower the intensity for classes of reflections for crystallite orientation directions that have less abundance than would be expected, and move that intensity into the other classes of reflections for directions that are overrepresented. While simple and strong texture has a clear effect on diffraction intensities, and when untreated it can be visible in the "Rietveld plot", where a the reflections in a particular zone have too much or too little intensity, in practice I find it is usually very hard for me to see that untreated texture is present. 
+
+\section{The intensity fitting process}
+
+\subsection{Preliminaries}
+Usually the first step in intensity fitting will be to refine the scale factor, often combined with the background fitting and in the next run to add phase fractions, if multiphase. In the worst cases, it may be best to find an initial reasonable value for the scale factor manually, until the cell and perhaps profiles can be improved, as will be described in section \ref{manualscale}. 
+
+As mentioned before, the diffraction intensities cannot be well-fit if the profiles are not well-fit. As has been discussed in the chapter on fitting profiles (Chapter \ref{Chap:profile}) a Le Bail or Pawley fit (described further in the next section) may be helpful to obtain accurate peak profiles before attempting to fit peak intensities. 
+
+If there are multiple phases in the material, be sure to refine phase fractions before trying to optimize structural parameters for any of the phases. While one can optimize structural parameters for several phases at the same time, particularly if the phases have minimal overlapping peaks, until you are experienced with Rietveld, my recommendation is to work with one phase at a time and to tackle them in the order of greatest mass (weight) fraction to lowest. 
+
+\subsubsection{Missing atoms}
+It is common that atoms will be missing from the model, particularly with \textit{ab initio} structure determination. While it may be necessary to work on structure completion at later stages in the fit, if it is clear that atoms are missing, it makes sense to view the structure visually (see section \ref{ref:structureplotting}) and perhaps examine a difference Fourier map (see section \ref{ref:maps}) to look for positions of missing atoms at this stage, as the refinement will proceed much better with all atoms in the model.
+
+\subsubsection{Atom positions}
+Refinement of atom positions should only be attempted after the background, peak shapes and peak positions are well fit. There should be no significant unassigned peaks that would indicate the presence of an impurity phase or a lowering of symmetry for the phase (see Chapter \ref{Chap:subgroups} for a discussion of subgroups). While the isolated peaks from an impurity would be expected to have minimal effect on the model for other phases, the probability is significant that there are also peaks from the impurity superimposed on the other phases. Such unaccounted for intensity would throw off the fitting of the fitted phase. 
+
+Start the fitting by optimizing the coordinates for the most significant scatterers in the phase, as noted by their larger scattering power and higher multiplicity. 
+To add the atomic coordinates into the refinement in GSAS-II, select the phase in the data tree and then select the "Atoms" tab on that data window. 
+Double-click on the refine box for the atom to be optimized and a pull-down menu will offer choices for refinement flags, "F", "X" and "U" and their combinations. 
+Select "X" to refine coordinates. Note that GSAS-II will handle site symmetry constraints for you. If the atom is a special site, say (0,y,1/2), only the y value will be refined. If the coordinates are (x, 1/2-x, z) then the relationship between x and y will be maintained. 
+The only exception for this is with polar space groups, where a coordinate must be fixed. This will be discussed separately in section \ref{ref:polar}. As atoms are fit and the atom coordinates converge, you can add more weakly scattering scattering atoms into the fit. 
+
+It is wise to keep an eye on the bond distances for the structure to make sure that the model is not distorting in unreasonable ways. Bonding values are available on the Atom tab, using the Compute/"Show distances \& angles" menu command. This can happen either because the model that you are using is not the correct one for the material, but it can also happen when the model is correct, but the data are not sufficiently sensitive to some of the atom locations to allow the full structure to be fit without constraints or restraints. The difference between these two cases is usually clear. If the structure is wrong, then nothing will produce a really good fit, but the quality of the fit improves significantly as the structure distorts. When the problem is that the data are not sufficient, the distortion of the structure is only producing very minor improvements in the fit. In this latter case, one must either remove structural parameters from the model (which can be done by introducing constraints (see Chapter \ref{Chap:constraints}), or simply by not varying parameters) or introduce restraints that "push" the fitting towards a reasonable structure, as described in Chapter \ref{Chap:restraints}, on restraints. 
+
+\subsubsection{Missing atoms, redux}
+If missing atoms could not be located previously, once the atom positions have been fit at least for the most significant scattering atoms, it is worthwhile to again look again for sites of missing atoms. Again, view the structure visually (see section \ref{ref:structureplotting}) and examine a difference Fourier map (see section \ref{ref:maps}) to look for positions of missing atoms. 
+
+\subsubsection{Atomic displacement parameters}
+
+
+
+This is why seeing large values for $\rm U_{iso,j}$ should lead you to question 
+
+
+\subsubsection{Site Occupancies}
+\subsubsection{Texture}
+
+
+
+\section{LeBail and Pawley Fitting}\label{ref:LeBail}\label{ref:Pawley}
+
+(more work needed: \ref{needs more work})

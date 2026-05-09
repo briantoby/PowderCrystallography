@@ -1,0 +1,40 @@
+\chapter{Peak fitting}\label{Chap:peakfitting}
+
+There are two ways that GSAS-II can fit a diffraction pattern. Most of this book is concerned with Rietveld analysis, where peak positions are generated from the structure factors generated from a space group, lattice parameters and atom positions/ADPs for one or more crystallographic phases. In the Pawley and Le Bail fitting options (see section \ref{ref:LeBail}), the reflection intensities are optimized directly, rather than being determined from the atom positions/ADPs. The second mechanism uses discrete peaks that are placed at the locations that you choose, independent from any lattice constraints. The position, intensity and, optionally, peak widths for each peak are varied independently. We call this "peak fitting" to distinguish it from the full-profile Rietveld fitting process. 
+
+There are a number of reasons why peak fitting may be used. The capability was initially developed as part of the indexing process, where one assigns a lattice to a set of peaks. Use of peak fitting provides much more accurate positions than other methods and can uncover where two peaks are closely spaced -- the inclusion of a single peak at a position intermediate between the two actual peaks can derail the fitting process. However, there are other reasons why peak fitting can be useful. It can be used to determine the intensity of peaks, where that is the only quantity needed to be determined perhaps for phase abundance or some \textit{ad hoc} property is being characterized, possibly where lattice parameters are not known, or where only a narrow data range has been measured. It can be useful for identification of an unknown phase (see \ref{ref:extrapeak}) or for learning about peak widths in the absence of the restrictions of a model. 
+
+It should be noted that peak fitting uses the same background fitting tools described in Chapter \ref{Chap:background}. Background parameters will be optimized in the peak fitting process when their refinement flags are on. The instrumental profile terms described in Chapter \ref{Chap:profile} may also be used, depending on the peak width mode selected (discussed further in section \ref{ref:widthmode}) and the instrumental terms (located in the histogram's Instrumental Parameters data tree child entry) can optionally be fit as well. 
+
+To perform peak fitting, select the Peak List data tree child item for the histogram of interest. This will present a table of peaks, that will initially be empty. Each peaks is described with four parameters and each of those four parameters has a refinement flag to determine if that parameter will be optimized when peaks are refined. 
+
+\section{Peak Parameters Definitions}\label{ref:sigmadef}
+
+The four peak parameters are "position" with the peak position as either $2\theta$ (degrees)
+or TOF ($\mu$sec), "intensity" which is the integrated intensity for the peak on the intensity scale of the diffraction pattern. The "sigma${}^2$" and "gamma" values are the Gaussian and Lorentzian peak widths, respectively. 
+Note that the Gaussian full-width at half-maximum ($FWHM_G$)  is related to "sigma${}^2$" ($\sigma^2$), which is the peak variance, by: 
+
+$$FWHM_G = \sqrt{8 * \ln 2 * \sigma^ 2}$$
+
+while the Lorentzian full-width at half-maximum ($FWHM_L$) is just "gamma" ($\Gamma$):
+
+$$FWHM_L = \Gamma$$
+
+The $sigma^2$  values are in units of centidegrees$^2$ 
+(centidegrees are degrees $\times 100$) for CW data or microseconds${}^2$ for TOF data; 
+$\Gamma$ has units of centidegrees or microseconds.  
+
+\section{Creating a Peak List}
+Peaks are added to the peak list by clicking on a data point in the pattern. Note that when the plot is in zoom or pan mode (selected by the button with perpendicular arrows or the magnifying glass at the lower left), mouse clicks are not available to GSAS-II and peaks are not added. When the peak is added, a vertical line is drawn at the peak position. Right-clicking on a peak deletes it. Peaks can be moved by dragging them -- press the mouse button down at the location of  the vertical line and move the mouse to the new location for the peak while holding the mouse button down. Note that to drag a peak, click on the line away from any data points. If you click on a point, you will add an additional point. If a peak is selected, which can be done by double-clicking on the number to the left of the peak values, the corresponding vertical line is highlighted. The "d" and "u" keyboard keys, when pressed with the plot window active, will  move successively through the peak table, selecting each peak in turn (downwards with "d" and upwards with "u").  
+
+Peaks may also be read with the "Peak List"/"Save Peaks..." menu command from a file saved with the "Peak List"/"Load Peaks..." menu command. Do not use the  Import/"Read powder pattern peaks" menu command. That is used for a different type of histogram that only has peaks, without a powder pattern. 
+
+\section{The Peak Fitting Process}\label{ref:peakparameterorder}
+
+\section{Peak Width modes}\label{ref:widthmode}
+
+\section{Extra Peak mode}\label{ref:extrapeak}
+
+\section{Sequential Peak Fitting}\label{ref:seqpeak}
+
+(more work needed: \ref{needs more work})

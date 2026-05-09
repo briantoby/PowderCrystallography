@@ -4,7 +4,7 @@
 \title{\bookname}
 %Crystallographic Powder Diffraction Analysis with GSAS-II}
 \newcommand{\booksubtitle}{An Introduction to Rietveld Analysis}
-\newcommand{\bookedition}{Edition 0.1.1}
+\newcommand{\bookedition}{Edition 0.1.2}
 %\newcommand{\booklicense}{Creative Commons Zero 1.0 Universal}
 \newcommand{\booklicense}{Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)}
 
@@ -53,6 +53,15 @@
 \renewcommand{\contentsname}{Table of Contents} % default is {Contents}
 \usepackage{makeidx}
 \makeindex % Initialize an index so we can add entries with \index
+
+% ---- TOC: reserve more width for section numbers (e.g., 12.10) ----
+\makeatletter
+\renewcommand*\l@section{\@dottedtocline{1}{1.5em}{3.2em}}
+\makeatother
+\makeatletter
+\renewcommand*\l@subsection{\@dottedtocline{2}{3.8em}{4.0em}}
+\makeatother
+% -------------------------------------------------------------------
 
 % Content Starts Here
 \begin{document}
