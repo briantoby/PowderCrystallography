@@ -3,6 +3,8 @@
 
  I will provide an overview to how GSAS-II is organized now because in subsequent chapters of this book, I will frequently alternate between introducing concepts and then showing how those concepts are embodied within GSAS-II. I think that having a familiarity with the organization of GSAS-II will be helpful before this. For this reason, I want to provide an orientation for how GSAS-II is installed and organized here.
 
+ There are three ways that GSAS-II can be used. A key design feature is that every capability in GSAS-II can be accessed with a graphical user interface (GUI)\index{GUI}. A second mechanism is that GSAS-II offers an interface that allows most of the computational features of GSAS-II to be accessed in Python scripts  (GSASIIscriptable). It is envisioned that the features available by scripting will expand as there is demand for that, but there are capabilities, such as visualization, that I do not expect will ever be offered via scripting. Finally, as GSAS-II is open source, we do hope that our code will be integrated into other projects, rather than see other scientists need to duplicate what we have already completed. Within this book, I will only consider access to GSAS-II via the GUI. For people interested in scripting GSAS-II, I would still encourage them to get started using the GUI and to then duplicate actions they have already done with scripts. 
+
 \section{Installing GSAS-II \& Web Resources}
 GSAS-II is hosted on GitHub.com and is typically downloaded from there. Links to information provided about GSAS-II is provided on the GitHub home page, \texttt{https://GSASII.github.io}.\index{GSAS-II home page} For installation instructions\index{GSAS-II installation instructions}, please see the installation section of that website (\texttt{https://advancedphotonsource.github.io/GSAS-II-tutorials/install.html}) . Most people will choose to download one of the GSAS2MAIN self-installers, but there are many different ways that GSAS-II can be installed depending on your own preferences and goals. The installation instructions web pages provide a detailed  discussion of the options and advantages. 
 
@@ -68,6 +70,9 @@ Note that the console window is only used for output from GSAS-II. You will neve
 \end{figure}
 \section{GSAS-II Terminology}
 There are some terms that are used in GSAS-II or in this book that are worth defining, as their use is not necessarily obvious. 
+
+\textbf{Model}\index{model}: 
+I prefer to use the term model rather than crystal structure when talking about the parameters that we fit in GSAS-II. I do this for a number of reasons. The parameters we fit include many things that are not properly part of the crystal structure, such as crystallite size or texture, but also because, in the end, what we call a crystal structure is indeed only a picture, or perhaps even better a cartoon, of what we believe to be present. There may be other models that explain the data even better. There are always aspects of the material (such as defects) that are not part of our model. We can only fit a model up to complexity supported by the data. 
 
 \textbf{Histogram}\index{histogram}: This is used for any type of dataset in GSAS-II that can be used in a refinement, which includes all types of powder diffraction and single-crystal data, but not diffraction images. The history behind this odd name is that original TOF instrumentation used CAMAC-based histogramming memory units to record diffraction data. Each time a neutron was recorded, the electronics turned the time into an address in memory and that word in memory was incremented, so it was natural to think of a TOF diffraction pattern as a histogram.  
 
