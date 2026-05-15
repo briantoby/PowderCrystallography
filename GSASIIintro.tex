@@ -87,14 +87,14 @@ This is the quantity that is minimized by GSAS-II when fit is performed. It is d
 $$\chi^2 = \sum_{N} w_j(Y_{obs,j} - Y_{calc,j})^2$$ 
 where $Y_{obs,j}$ are the observations, which will include restraint values, and $Y_{calc,j}$ are the values predicted for these observations from the model and $w_j$ are the weights applied to each observation. Statistical analysis predicts that the optimal model will be obtained when $w_j = 1/\sigma_j^2$ where $\sigma_j^2$ is the standard uncertainty for observation $Y_{obs,j}$.
 
-\textbf{Reduced $\chi^2$}\index{reduced $\chi^2$}: This is computed from 
+\textbf{Reduced $\chi^2$}\index{reduced $\chi^2$}\label{ref:redchi2}: This is computed from 
 
 $$\chi^2 = \sum_{N} w_j\frac{(Y_{obs,j} - Y_{calc,j})^2}{N-p}$$ 
 following the same definitions as above for $\chi^2$, but where $N$ is the number of observations and $p$ is the number of refined parameters. Note that if the weights are defined as $w_j = 1/\sigma_j^2$ and the model provides an ideal fit to the observations, then the expectation value for $|Y_{obs,j} - Y_{calc,j}|$ is $\sigma_j$ so the Reduced $\chi^2$ would be expected to be 1 when $N>>p$ (and one always wants $N>>p$). If the Reduced $\chi^2 < 1$ then this means that the weights must be overestimating the actual uncertainty in the data or that the model is being "overfit" where too many parameters are being fit. 
 
 Note that some authors do not distinguish between "$\chi^2$" and "Reduced $\chi^2$", but for GSAS-II these mean different quantities. I have never seen $\chi$ used in any statistical context, only $\chi^2$, but see the next entry for a usage of $\sqrt{\chi^2}$. 
 
-\textbf{Goodness of Fit, GOF}\index{goodness of fit}\index{GOF}: This is commonly used in single-crystal fitting. 
+\textbf{Goodness of Fit, GOF}\index{goodness of fit}\index{GOF}\label{ref:GOF}: This is commonly used in single-crystal fitting. 
 
 $$GOF = \sqrt{\sum_{N} w_j\frac{(Y_{obs,j} - Y_{calc,j})^2}{N-p}}$$
 so the $GOF^2 = \chi^2$.

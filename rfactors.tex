@@ -1,0 +1,25 @@
+\chapter{R-factors}\label{Chap:rfactors}
+
+\section{Profile R-factors}
+There are many values that are sometimes reported in Rietveld as an indication of the fit quality and a handful of them are computed in GSAS-II. The ones that matter most in my opinion are weighted profile R-factor, $R_{wp}$ or occasionally named in GSAS-II as wRp is given by 
+$$R_{wp} = \sqrt{ \frac{\sum w_j(y_{j,obs}-y_{j,calc})^2}{\sum w_jy_{j,obs}^2} }$$
+where $y_j$ are the the points in the diffraction pattern and there are $N$ points total. When the data points are statistically weighed, $w_j = 1/\sigma_j^2$ , where $\sigma_j$ is the standard uncertainty for point $y_j$. 
+
+Since $R_{wp}$ is statistically defined, we can ask what is the statistical expectation value for this quantity. To obtain that we note that the definition for the standard uncertainty is that it is the expectation value for how the $y_j$ values differ from the model, meaning that $\sigma_j^2 = <(y_{j,obs}-y_{j,calc})^2>$. Thus, we can create a quantity $R_{exp}$  which is the statistically expected value for $R_{wp}$, but is better thought of as the best possible value for $R_{wp}$. With statistical weighting $w_j = 1/\sigma_j^2$  so the expectation value for $<\sum w_j(y_{j,obs}-y_{j,calc})^2>$ should be the number of observations, but since we are also fitting $p$ variables, we should actually make an adjustment for that, so we can replace the sum with $N-p$ . (Note that $p << N$ so $N-p \cong N$.) Thus, we obtain 
+$$R_{exp} = \sqrt{ \frac{N-p}{\sum w_jy_{j,obs}^2} }$$
+\section{Reduced $\chi^2$}
+The next statistical quantity, the Reduced $\chi^2$  is given by 
+$$\chi^2  =  \frac{\sum w_j(y_{j,obs}-y_{j,calc})^2}{N-p} $$
+or equivalently,  reduced $\chi^2  = (R_{wp}/R_{exp})^2$. Note that we previously (section \ref{ref:redchi2}) defined this and the goodness-of-fit (GOF) as $GOF^2 = \mathrm{reduced\ \chi^2}$.
+
+Note that the Reduced $\chi^2$ and $R_{wp}$ values indicate the overall quality of the fit, which includes the fitting of the peak positions, shapes, intensities and the background. The  $R_{wp}$ value is not on any type of absolute scale and only has meaning in comparison to other models fit to the same data. The Reduced $\chi^2$ is on an absolute scale, but is very sensitive to errors in our fitting that may have negligible implications for the quality of our crystallographic model. In section \ref{ref:goodenough}, I discuss some ideas that can help discern this. 
+
+Since one should never be able to improve the fit beyond the statistical scatter expected in our data points, the best that $R_{wp}$ should ever be is $R_{exp}$. Equivalently, the reduced $\chi^2$ (or GOF) should never drop below 1. If the reduced  $\chi^2$ does drop below 1, then we have introduced too many parameters, and the fit is now adjusting to compensate for statistical scatter (sometimes people call this fitting noise) or what is more likely is that the uncertainties associated with the data points are overestimates, which can happen when actions such as pixel-splitting introduce some smoothing into the data.  
+
+\section{Bragg R-factors}
+
+Another useful quantity  is the so-called Bragg R-factor, which are computed on the reflection intensities rather than the data points. They are defined in various ways, but I will use here the values on structure factors,  $F_{hkl}$ and $F_{hkl}^2$,  which are:
+$$R_F  = \frac{\sum_{hkl} |F_{obs, hkl}| - |F_{calc, hkl}| } {\sum_{hkl} |F_{obs, hkl}|} $$
+and 
+$$R_{F^2}  = \frac{\sum_{hkl} F^2_{obs, hkl} - F^2_{calc, hkl} } {\sum_{hkl} F^2_{obs, hkl}} $$
+These R-factors are analogous to single-crystal R-factors, but in single-crystal work, the structure factors are measured and have uncertainties that can be used for weighted R-factors. How the $F_{obs, hkl}$ values are obtained is discussed in Chapter \ref{Chap:intextraction}, but that method is both indirect and approximate. Further, we do not have uncertainties, so unlike single-crystal work, these R-factors have no statistical basis. The reason though that they are useful is that the focus on how well the structure is reproducing the peak intensities and are much less affected by other aspects of the overall fit. 
