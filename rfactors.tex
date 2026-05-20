@@ -7,7 +7,7 @@ where $y_j$ are the the points in the diffraction pattern and there are $N$ poin
 
 Since $R_{wp}$ is statistically defined, we can ask what is the statistical expectation value for this quantity. To obtain that we note that the definition for the standard uncertainty is that it is the expectation value for how the $y_j$ values differ from the model, meaning that $\sigma_j^2 = <(y_{j,obs}-y_{j,calc})^2>$. Thus, we can create a quantity $R_{exp}$  which is the statistically expected value for $R_{wp}$, but is better thought of as the best possible value for $R_{wp}$. With statistical weighting $w_j = 1/\sigma_j^2$  so the expectation value for $<\sum w_j(y_{j,obs}-y_{j,calc})^2>$ should be the number of observations, but since we are also fitting $p$ variables, we should actually make an adjustment for that, so we can replace the sum with $N-p$ . (Note that $p << N$ so $N-p \cong N$.) Thus, we obtain 
 $$R_{exp} = \sqrt{ \frac{N-p}{\sum w_jy_{j,obs}^2} }$$
-\section{Reduced $\chi^2$}
+\section{Reduced \texorpdfstring{$\chi^2$}{Chi-squared}}
 The next statistical quantity, the Reduced $\chi^2$  is given by 
 $$\chi^2  =  \frac{\sum w_j(y_{j,obs}-y_{j,calc})^2}{N-p} $$
 or equivalently,  reduced $\chi^2  = (R_{wp}/R_{exp})^2$. Note that we previously (section \ref{ref:redchi2}) defined this and the goodness-of-fit (GOF) as $GOF^2 = \mathrm{reduced\ \chi^2}$.

@@ -1,16 +1,8 @@
+% this is a slightly customized version of the Science Textbook template from Richard R. Masters
+% (https://github.com/ironmeld/science-textbook-template).
 \documentclass{book}
-\input{settings}
-%\newcommand{\bookname}{Crystallographic Powder Diffraction Analysis with GSAS-II}
-%\title{\bookname}
-%Crystallographic Powder Diffraction Analysis with GSAS-II}
-%\newcommand{\booksubtitle}{An Introduction to Rietveld Analysis}
-%\newcommand{\bookedition}{Edition 0.1.2}
-%\newcommand{\booklicense}{Creative Commons Zero 1.0 Universal}
-%\newcommand{\booklicense}{Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)}
+\input{settings}  % get settings from an external file
 
-%\author{Brian H. Toby}
-% Author subtitle could be a university or a geographical location, for example
-%\newcommand{\authorsubtitle}{Naperville IL, USA}
 % add defs for some commonly used Greek letters
 \DeclareUnicodeCharacter{03B8}{\ensuremath{\theta}}
 \DeclareUnicodeCharacter{03BB}{\ensuremath{\lambda}}
@@ -35,6 +27,7 @@
 \usepackage{amsmath} % Used by equations
 \usepackage{graphicx}
 \usepackage{subcaption}
+\usepackage{hyperref}
 
 % The following dimensions specify 4.75" X 7.5" content on 6 3/8" by 9 1/4"
 % paper. The paper width and height can be tweaked as required and the content
