@@ -1,6 +1,6 @@
 \chapter{GSAS-II Utility Computation Tools}\label{Chap:Utilities}
 
-\section{Absorb: Compute X-ray Absorption Coefficient}\label{ref:Absorb}
+\section{Absorb: Compute X-ray Absorption Coefficient}\label{ref:Absorb}\index{program Absorb}
 
 GSAS-II includes a program for computing the absorption of a material. It was originally created as a free-standing program that was also implemented as a web utility,
 \footnote{A web calculator for x-ray absorption based on program Absorb is found at URL  https://11bm.xray.aps.anl.gov/absorb/}
@@ -34,7 +34,14 @@ To confirm that a sample depth is thick enough for Bragg-Bretano measurements, y
 
 Use the Absorb/Quit menu command to exit the Absorb program. Exiting GSAS-II will also close Absorb.
 
-\section{Fprime: Compute atomic scattering}\label{ref:Fprime}
+\section{Fprime: Compute atomic scattering}\label{ref:Fprime}\index{program Fprime}
+
+GSAS-II includes a program for computing the scattering factor curves for selected elements. It uses the same computation method as GSAS-II does for estimation of $f^\prime$ and $f^{\prime\prime}$ values, which are taken from a compilation made in 1981 by D. T. Cromer\index{Cromer, D.} and D. A. Liberman.\index{Liberman, D.}
+
+absorption of a material. It was originally created as a free-standing program that was also implemented as a web utility,
+\footnote{A web calculator for x-ray absorption based on program Absorb is found at URL  https://11bm.xray.aps.anl.gov/absorb/}
+but now is  accessed from inside the GSAS-II GUI. To access it, use the Calculate/"Run Absorb" menu command. This will open a window, as shown in Fig. \ref{fig:absorb1}. The next step in use is to add the elements that will be used in the computation. Use the Absorb/"New Element" menu command, to add the elements that will be needed. After the command is entered, a periodic table is shown, as seen in Fig. \ref{fig:absorb2}. Click on one or more elements in the table; note the color of the selected elements change as selected. Click on OK to close the periodic table window and return to the previous window for the Absorb program, which now lists computation results, but you will likely need to edit the chemical formula which is done by typing a number in the box to the right of the element and \textit{then pressing Enter}. 
+
 
 (section not started: \ref{needs more work})
 
