@@ -1,7 +1,8 @@
 \chapter{Transformations of Symmetry}\label{Chap:Subgroups}
 
-When determining the structure of a material, one should not assume that when a good, or even excellent, fit
-to the experimental data is found, that this indicates that the structural model is correct. There may be other models that fit better that have not yet been found. Even with once the best-fitting model is found, it may be that with more precise data, it would be clear that a different model is to be preferred. There is also the problem of "fitting noise." Sometimes, in order to improve the fit, refinement will distort a model in ways that are not chemically reasonable. If refinement improves the fit to data by distorting a phenyl group so it is no longer planar and the C-C bond lengths are unequal, that model would be far less plausible, even though it provides a better fit to the data than a chemically reasonable model. 
+When determining the structure of a material, one should not assume that when a good, or even excellent, fit to the experimental data is found that this indicates that the structural model is correct. 
+There may be other models that fit better that have not yet been found. 
+Even if it is known that the model offers the best fit to a set of experimental data, it may be that with more precise data, it would be clear that a different model is to be preferred. There is also the problem of "fitting noise": Sometimes, in order to improve the fit, refinement will distort a model in ways that are not chemically reasonable. If refinement improves the fit to data by distorting a phenyl group so it is no longer planar and the C-C bond lengths are unequal, that model would be far less plausible, even though it provides a better fit to the data than a chemically reasonable model. 
 
 Perhaps a better question than "what is the correct model?" would be "what is the most accurate structure that is consistent with a set of data?" since with better data, one may be able to learn more. A key question will be to establish the best symmetry description for the structure. Crystallographers have traditionally been very concerned about missing symmetry. When a structure is refined in too low a space group, the missing symmetry will invariably degrade the quality of the refinement. Historically, the highly respected Caltech crystallographer Richard Marsh\index{Marsh, R.}, who died in 1994, published reports on crystal structures where symmetry had been missed. Invariably, the higher-symmetry structure was preferred, and often removed implausible aspects in chemistry. Dick was a pleasure to be around. I am not the only one who misses him. The process of finding a higher symmetry space group for published work is often referred to as "Marshing" in his honor. 
 
@@ -27,11 +28,60 @@ Representational analysis provides a mechanism for exploring changes in symmetry
 
 \section{Symmetry tools in GSAS-II}
 
-To help with determination of the optimal symmetry for a structure, GSAS-II provides a number of tools that utilize externally created software. This tutorial shows examples of their use. These tools are used to transform a structure and create a new GSAS-II project (.gpx) file. This allows comparison of a refinement with different space groups. Alternately, a table of subgroups can also be generated to use in indexing a unit cell visually.
+To help with determination of the optimal symmetry for a structure, GSAS-II provides a number of tools. 
+Most utilize externally-created software. 
+Further, there are also tools for working with distortion mode generated via representational analysis (see section \ref{ref:RA}). 
+In most cases, this software is accessed via web servers, but there are also codes included with GSAS-II. 
+The access to these tools is located in the section of the GUI where their use would be most convenient. 
+Below is a list of the tools that GSAS-II offers for symmetry analysis, listing the 
+source of the actual computations and short description of what the tool does. The presentation is organized by the section of the GUI where the tools are located.
+
+\subsection{Histogram Unit Cells List}
+The GUI that is displayed when the Unit Cells List data tree sub-entry is selected for powder diffraction histograms provides tools for indexing powder diffraction patterns and considering extinctions arising from symmetry. The upper part of the GUI in the data window is used for autoindexing and the lower portion of the window is used to superimpose the positions of reflection from a specified unit cell and space group onto the selected powder diffraction pattern. Those unit cell parameters can be loaded from indexing results, from phases that have been imported into the project (using the "Cell Index/Refine"/"Load Phase" menu command), or a cell and space group can be entered from the keyboard into the appropriate text boxes and selection pull-down menus. When a Bravais lattice has been selected and unit cell contents are entered, the reflection positions are shown as vertical dashed orange lines. The location of extinct reflections will be shown in blue when "Show Extinct" is selected. Placing the mouse on a line causes the reflection indices to be displayed as a "tooltip." The unit cell dimensions can be shifted with the arrows alongside of the text entry boxes for those dimensions and the "cell step" pull down menu dictates how much the parameters change when a arrow button is pressed. The "Try all?" button will generate a list of all the space groups consistent with the selected Bravais lattice; clicking on the entries in the list will show you the allowed reflections in that space group. 
+
+\subsubsection{Supercell visualization}
+\label{ref:supercellindexing}
+Note that the unit cell parameter text entry boxes will accept math expressions. One cute trick that this allows is a simple way to test if a superlattice can index unidentified peaks. If one edits the value of \textit{a},  \textit{b}, or \textit{c} by adding "\texttt{*2}" at the end of the unit cell value, when the mouse is moved out of the box, the unit cell will be doubled. If a commensurate supercell is present, doubling \textit{a},  \textit{b}, or \textit{c} in turn should index at least some of the "extra" peaks. The original value can be restored by entering "\texttt{/2}" at the end of the new unit cell value or using the "Cell Index/Refine"/"Load Phase" menu command. 
+
+\subsubsection{Cell Symmetry Search}
+In the menu labeled "Cell Index/Refine" the "Cell Symmetry Search" command runs the NIST*LATTICE program from Vicky Karen\index{Karen, V.} and the late Alan Mighell\index{Mighell, A.}.
+This program will search for unit cells of higher symmetry that are close to the input unit cell dimensions as well as possible subcells and supercells.
+The generated unit cells are placed into the window where they can be compared to the histogram's powder pattern. 
+The value from this is that you may find a higher symmetry cell that indexes all the powder diffraction peaks, or, a supercell may index peaks that were previously unindexed.
+
+\subsubsection{Unit Cells List tools}
+The tools that are provided for exploring symmetry in this section of the GUI use the menu labeled "Cell Index/Refine" and consist of the following menu commands: 
+
+\begin{itemize}
+
+    \item Run Subgroups: 
+    \item Run k-SUBGROUPSMAG
+    \item Transform Cell
+    \end{itemize}
+
+\subsection{Phase: General tab}
+ In compute menu
+\begin{itemize}
+    \item Transform
+    \item Std Setting
+    \item Subgroups search
+    \item Select magnetic/subgroup phase
+    \item make subgroups project files(s)
+    \item Bilbao supergroup search
+    \item ISOCIF Supergroup search
+\end{itemize}
+
+\subsection{Phase: Isodistort tab}
+ In compute menu
+\begin{itemize}
+    \item Run ISODISTORT
+\end{itemize}
+
+\subsection{Importing distortion modes from ISODISORT}
 
 \section{The Bilbao Crystallographic Server}\label{ref:BCS}
 
 \section{The BYU ISOTROPY Web Server}\label{ref:isotropy}
 
 
-(more work needed: \ref{needs more work})
+(more work needed in this chapter: \ref{needs more work})
