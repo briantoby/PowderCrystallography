@@ -77,12 +77,15 @@ Here are some of the other actions that can be performed from the Draw Atoms tab
 \begin{itemize}
     %\item Edit atom radii
     \item Set view point: the view point is set to the average position of the selected atoms. Works nicely with a single atom or a group of atoms. 
-    \item Create void map: this sweeps through the unit cell on the specified grid spacing and locates points where there are no atoms (as determined by their space-filling radius) within a specified radius. Blue dots are then placed at those locations where there are no atoms. These dots can be quite hard to see against a black background, so you may want to change the background color from the ``Draw Options'' tab. GSAS-II really needs a command that allows you to change the void map color. 
     \item Update draw atoms: Usually the information in the Draw Atoms list is synchronized to changes in the Atoms list, but should that fail, this command will update the Draw Atoms coordinates/ADP values. 
     \item Load selected atoms: This can be used to copy selected atoms from the Atoms list to the Draw Atoms list. This is not commonly needed, but might be used after an atom is accidentally deleted from the Draw Atoms list or has been transformed, but is wanted at the original position again. 
     \item Randomized Action: This selects atoms in a randomized order and gives you the opportunity to do something you have chosen to those selected atoms. As an example, if you want to convert a structure that has vacancies noted by partial occupancy to an atomistic model, you might want to delete a percentage of those atoms. With this command, you could select all the generated symmetry replicants of that atom and then delete the first \textit{n}\% of those atoms. 
 \end{itemize}
 
+This action can be performed from the Draw Atoms tab from the ``Compute'' menu:
+\begin{itemize}
+    \item Create void map: this sweeps through the unit cell on the specified grid spacing and locates points where there are no atoms (as determined by their space-filling radius) within a specified distance. Blue dots (actually small cubes) are then placed at those locations where there are no atoms. The default is to create small blue dots that can be somewhat hard to see against a black background on some monitors, but the GUI allows them to be made brighter or to change the size or color.\index{void map}
+\end{itemize}
 \subsection{Window keystrokes}
 These commands require that the plot window be active (by clicking on the graphics window border or inside the window).
 \begin{itemize}

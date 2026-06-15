@@ -1,4 +1,4 @@
-\chapter{Constraints}\index{Constraints}\label{Chap:constraints}
+\chapter{Constraints}\index{constraints|textbf}\label{Chap:constraints}
 
 From the perspective of information theory, it is not straightforward to categorize the amount of structural information in a powder diffraction pattern. From one perspective, every reflection that is within the measured data range does provide some information about the positions and ADPs for the atoms, even if it does not have intensity above the background level, but this information is compromised by the overlap of reflections. Since background levels are higher in powder diffraction than single-crystal diffraction (since single-crystal background is spread over $4\pi$ steradians in volume while powder background is only spread in one dimension, so there will be a higher uncertainty about when a reflection intensity is small. In single-crystal diffraction, the number of observations tends to scale with the complexity of the structure, but that is not always the case with powder diffraction. The resolution and sensitivity of the instrument, as well as sample broadening effects limit the amount of information that can be measured with powders. Further, static and dynamic disorder can reduce the range where diffraction can be observed, so complex structures may provide data over a narrower range of Q than a simple structure, as much as we might wish otherwise. 
 
@@ -18,7 +18,7 @@ Every parameter that can be refined in GSAS-II is defined a unique name that is 
 \begin{quote}
  \textbf{P}:\textbf{H}:\textbf{name}    
 \end{quote}
-where \textbf{P} is a phase number and \textbf{H} is a histogram number and \textbf{name} specifies the type of parameter. The \textbf{name} values are tabulated in the GSAS-II Developer's Documentation in the table at this URL: https://gsas-ii.readthedocs.io/en/latest/objvarorg.html\#parameter-names-in-gsas-ii.
+where \textbf{P} is a phase number and \textbf{H} is a histogram number and \textbf{name} specifies the type of parameter. The \textbf{name} values are tabulated in the GSAS-II Developer's Documentation in the table at this URL: \url{https://gsas-ii.readthedocs.io/en/latest/objvarorg.html\#parameter-names-in-gsas-ii}.
 When not appropriate, \textbf{H} or \textbf{P} can be blank. Global parameters, which are very uncommon, do not have an \textbf{H} or \textbf{P} value. Note that internally to GSAS-II, parameter names are stored in a fashion that abstracts the phase and histogram numbers, so that if the phases or histograms are reordered, the names will automatically be updated to follow. 
 
 As an example of how a number would be omitted, a wavelength is a parameter of a histogram and not a phase and the name LAM is associated with wavelength. Thus, the wavelength for histogram 3 will be named \texttt{:3:LAM} . 
@@ -150,7 +150,7 @@ and the generated variable, $var_G$, is the term that is actually varied. Any sh
 Note that if a variable is used in both a constraint equation and and parameter equivalence, this could cause a conflict in processing. To address this, the parameter equivalences using parameters in constraint equations are converted to constraint equations for processing. Note that constraint equations and new variable equations can share 
 
 The math that is used for processing constraint equations is described in the GSAS-II Developer's Documentation, at this URL:
-https://gsas-ii.readthedocs.io/en/latest/GSASIImapvars.html\#constraint-checking-and-grouping-generateconstraints
+\url{https://gsas-ii.readthedocs.io/en/latest/GSASIImapvars.html\#constraint-checking-and-grouping-generateconstraints}.
 
 \section{Typical Constraint Use}
 
