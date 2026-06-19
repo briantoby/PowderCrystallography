@@ -1,0 +1,122 @@
+\chapter{Importing and Exporting Data}\index{importers}\index{}{exporters}\label{Chap:ImportExport}
+
+While this book will concentrate on use of GSAS-II with powder diffraction data, the program can be used with many types of diffraction data. Of course, to use that data, it must be read into the program, which is done with a special layer of code and the process of reading in data is called importing and will be discussed here. The special layer of code that is used for importing data has been designed to simplify  expansion to include different data formats.  Likewise, it is equally important to be able to bring data and results from GSAS-II into other software. That process is called exporting and GSAS-II is also designed for simple expansion of the export software layer to include new formats as well. This will also be discussed in this chapter. There is one format for both imports and exports that deserves special attention and that is the CIF format, which has become the \textit{lingua franca} of crystallography. Due to the centrality of CIF in crystallography, Chapter \ref{Chap:G2CIF} presents use of that format in detail. 
+
+The magic behind the special layer of software used for importing and exporting of data is that GSAS-II is self-configuring. Each supported family of import and export formats has a (usually small) Python module that either reads or writes the appropriate type of file. These modules are known as importers and exporters. When GSAS-II starts, it will read in the Python files in the \texttt{GSASII/imports} and \texttt{GSASII/exports} directory, as well as a possible user-defined directory for locally defined formats (\texttt{\~/.GSASII/imports} and \texttt{\~/.GSASII/exports}). To introduce a new format, one simply needs to write a new importer and either add that to an existing file with importers or exporters, or create a new file.\footnote{As noted in the Programmer's documentation, some minor configuration changes are needed for new files to be read from the system directory and to see that they are included in the Programmer's documentation.}
+GSAS-II will include all defined importers and exporters found when the program starts into the appropriate GUI menus and will also make them available for scripting. No additional GUI coding is needed.  The GSAS-II Programmer's documentation includes a chapter on importers (\url{https://gsas-ii.readthedocs.io/en/latest/imports.html}) that describes how to create a new importer. The existing importers serve as coding examples for how this is done. Most are quite simple (50-150 lines of code). Likewise, another Programmer's documentation chapter (\url{https://gsas-ii.readthedocs.io/en/latest/exports.html}) documents exporters and discusses how to create a new exporter. 
+
+\section{Supported import data types}
+The types of data that can be imported into GSAS-II are discussed below. The Programmer's documentation includes specific information on the supported formats for each type. Each importer associated with a data type is given an entry in the appropriate menu. There may be additional menu commands as well. As an example, most menus include an option, ``Guess format from file.'' This will attempt to determine the file format from the file extension and from looking for characteristics consistent with a format. It will usually work and will not take too much extra time, but if you are having problems reading a file, you should try reading it by selecting the importer for the specific format of the file. 
+
+\subsection{Images}
+2D images from x-ray diffraction images are commonly written in a large variety of formats and new approaches are actively being developed. This is a good thing as historically the most commonly used format has been variants on the TIFF format (Tagged Image File Format), though very few x-ray instruments write files that are actually compliant with the TIFF standard. GSAS-II has an importer that reads TIFF files and from idiosyncrasies in individual implementations attempts to determine the instrument where the file was created, but this importer does not implement the full standard with respect to data compression. For this reason, TIFF images can also be read with a standard library that does implement the full standard. Even when properly implemented, TIFF leaves something to be desired in that many important metadata settings are not present. If you have a choice for a format, I would suggest that the HDF5 and EDF formats are probably the best choices. If you do use TIFF, you should investigate the ASCII metadata files that are written at APS Sector 11 beamlines. These will be read automatically when TIFF images are read. 
+\subsection{Phases}
+GSAS-II implements a variety of formats for reading coordinates, unit cells and space groups, but by far the format that is most commonly used is CIF. Details on CIF imports are discussed in a separate chapter (\ref{Chap:G2CIF}). Note that one common stumbling block in importing phase information to GSAS-II has to do with space group settings. GSAS-II cannot process structures where the Origin 1 setting has been used. (See section \ref{ref:origin1} for more information on origin choices.) When a file is read where the space group allows both Origin 1\index{Origin 1} and Origin 2\index{Origin 2} settings, the GSAS-II GUI will ask you to indicate if the structure should have the origin transformed to Origin 2, or if that is already the case. Usually, the stoichiometry will make it clear which is the correct choice, but on occasion one must actually look at the atomic configurations to see which setting makes chemical sense.  With CIF input, if the file has both symmetry operators and a space group name included, GSAS-II may be able to determine this directly. GSAS-II will handle most non-standard space group settings, but on occasion if GSAS-II does not generate the same symmetry operations as found in a CIF, you may be offered the chance to use a Bilbao utility to put the structure into a standard setting.  The importer for GSAS-II gpx files will read a phase directly from a previously-created GSAS-II project file. 
+\subsection{Powder Data}
+Historically, there have been oh so many formats used for powder diffraction data. In fact, my impatience with this caused me to spend nearly a decade working on a CIF implementation for powder diffraction data (pdCIF), which GSAS-II does support. 
+
+GSAS-II reads quite a few different formats. This is partly hidden, as some of the importers for commercial instruments may actually support several generations of file versions; those file formats have evolved extensively over the years. In one case, and I don't remember which vendor this is, but GSAS-II cannot read one specific vintage of their files. We can read older and new versions of their file, but the vendor has not been able to supply us with details for how to read that particular version. The original GSAS program also read quite a few different file formats, all of which were specific to GSAS. The ``GSAS powder data file'' import will read all of these file types. When trying different options for fitting data, it may be useful to create a new GSAS-II project from an existing one. To make this easier, there is an importer that will read histograms from an \texttt{.gpx} file. 
+
+\subsubsection{Instrument Parameter Files}
+Most powder diffraction data files only specify intensities vs. $2\theta$ or TOF, but do not include \textit{crucial} information such as: are the data are neutron or x-ray data;  what geometry was used, Debye-Scherrer or Bragg-Brentano; what was the radiation wavelength? This must be read from a separate metadata file that also includes the instrumental broadening parameters (U, V \& W and X \& Y for CW and many more terms for TOF). The ideal mode that is used with GSAS-II is that ideally an instrument has been fully characterized prior to use in a refinement and these values do not need to be refined. GSAS-II can read in these values from either of two different formats, one created for GSAS-II which has extension \texttt{.instprm}, a fairly complex format used in the original GSAS program, where several extensions have been common (including  \texttt{.ins},  \texttt{.inst} and  \texttt{.prm}). Alternately, default values can be chosen. After one or more powder diffraction files have been imported, GSAS-II will look for an instrument parameter file with a name specified in the data file, where that is allowed, or with the same name as the data file, but with a different file extension. If that is found, the instrument parameters are read automatically from that file. If not, you will be asked to supply an instrument parameter file for the histogram that has just been read. If instead of selecting a file from that window, you press ``Cancel,'' another window will be opened where you can select from a set of defaults. Note that when multiple histograms are imported at the same time, the same set of instrument parameters are used for all of the histograms, except that for TOF patterns, where bank numbers are assigned to histograms, the instrument parameters matching that bank number will be selected from the instrument parameter file. 
+
+\subparagraph{Write an instrument parameter file}
+Creating an instrument parameter file in the new  \texttt{.instprm} format is quite easy. Import a histogram or simulate one, as described below. One can then use peak, Rietveld, Le Bail or Pawley fitting to set the instrument parameter values (do this with data collected on a standard), or even edit the terms manually. From the ``Instrument Parameters'' data tree entry, use the Operations/``Save profile'' menu command. 
+This writes a \texttt{.instprm} that can be used in a future import operation. 
+To write a multi-bank \texttt{.instprm} file use the Operations/``Save all profile'' menu command. 
+
+\subsubsection{Generating a GSAS-II powder diffraction file}
+Historically, getting powder diffraction data into GSAS was a significant stumbling block for new users.
+This seems to be less of a barrier than in the past, as GSAS-II is more flexible and most diffractometers provide at least one export format that GSAS-II can read, but in case you ever need to create a GSAS-II data file manually, it is worthwhile to take a close look at a simple format that is usually easy to create from a listing of diffraction intensities. However, it should be noted that establishing statistically appropriate weights for diffraction data is key to obtaining the optimum model that best fits the data. GSAS-II will accept \textit{position,intensity} pairs, but the then intensity values are interpreted as counts and the uncertainty on the intensity value will be set as the square-root of the intensity (or 1 if the intensity value is zero). When intensities have been scaled in some fashion, the uncertainties must be added as a \textit{position,intensity,uncertainty} triplet. Without inclusion of the uncertainties, the refinement will be inappropriately weighted, which lowers the precision of the result, similar to randomly dropping observations. 
+
+Suppose that we have a listing of the diffraction intensities, as \textit{$2\theta$,count} pairs: 
+\begin{quote}
+\texttt{\\
+ 8.000 1309 \\
+ 8.001 1414 \\
+ 8.002 1525 \\
+ 8.003 1582 \\
+ 8.004 1603 \\
+ 8.005 1616 \\
+ 8.006 1744 \\
+ 8.007 1875 \\
+ 8.008 1969 \\
+ 8.009 2052 \\ 
+ 8.010 2164 \\ 
+ ...\\
+}\end{quote}
+It does not matter many spaces separate the two columns, or indeed if the numbers are even aligned as columns, as long as each pair is on a separate line. Likewise, it is unimportant as to how many digits are present after the decimal place, (though if the intensities are not integers, this is a very good indication that the values are not unscaled counts.) Saving this listing as an ASCII file using a text editor will provide a file that can be read in directly as ``Topas xye'' file. The choice of a file extension is up to you, though \texttt{.xy} or \texttt{.xye} are recommended. Adding a file header with comments as to what data the file contains is also recommended. Include as many lines as you wish, but prefix each line with a ``hash'' (\#) character:
+\begin{quote}
+\texttt{\\
+\# This is a comment with info about this file\\
+\# Collected Jan 1, 2020\\
+ 8.000 1309 \\
+ 8.001 1414 \\
+ 8.002 1525 \\
+ 8.003 1582 \\
+ 8.004 1603 \\
+...\\
+}
+\end{quote}
+The format will ignore fields separated by commas, so this is also a valid ``Topas xye'' file, here with uncertainties as well as intensities:
+\begin{quote}
+\texttt{\\
+\# file with uncertainties\\
+ 8.000, 1309.242352, 39.084803\\
+ 8.001, 1414.992113, 38.144993\\
+ 8.002, 1525.088007, 39.624973\\
+ 8.003, 1582.321213, 40.377673\\
+ 8.004, 1603.534724, 40.702369\\
+...\\
+}
+\end{quote}
+
+\subsubsection{Other powder import capabilities}
+There are a few special entries in the Import/Powder Data menu, separated from the main part of the menu with a horizontal line. 
+\subparagraph{Simulate a dataset}
+The ``Simulate a dataset'' menu command creates a special histogram, where you specify a data range and a set of instrument parameters, but no actual data. When this ``dummy'' histogram is encountered when the GSAS-II Calculate/Refine menu command is used, the phase(s), HAP, instrument and sample parameters are used to compute a powder diffraction pattern. The first time this computation is done (or after the data limits have been changed), the ``experimental'' pattern is set from the computed pattern, with the addition of statistical noise to the ``experimental'' pattern. This command thus allows GSAS-II to be used to simulate powder diffraction patterns. These patterns will be a quantitative match for experimental patterns provided that realistic values are used for sample and instrumental parameters.\index{pattern simulation} 
+
+One can also see the effect of changing a parameter. The first time that the Refine command is used, the observed pattern is generated. If a parameter is changed and Refine is used again, only the computed pattern is updated. 
+
+\subparagraph{Auto Import}
+The ``Auto Import'' command allows GSAS-II to automatically read in powder diffraction patterns as they appear in a directory. This allows GSAS-II to be used to track data collection in real time. It is of greatest value when a plot has been set up with a waterfall or contour plots of multiple sets of diffraction data. 
+
+\subparagraph{Fit instr. profile from fundamental parms...}
+The ``Fit instr. profile from fundamental parms...'' command is used to generate instrument profile terms from a fundamental parameters description of an instrument. The fundamental parameters terms can be input using the descriptions used in the NIST software, which uses SI units or by specifying FPA terms as used by Topas. This command works by using the NIST Fundamental Parameters code to compute peaks at various $2\theta$ values, which are then fit with pseudo-Voigt peaks. The widths of those are used to determine the instrumental parameters that GSAS-II uses. 
+
+\subsection{Structure Factor}
+This is used to read single-crystal datasets, which are $|F_{hkl}|$ or  $F_{hkl}^2$ values, into GSAS-II. A number of formats are supported. It is important to know if the values are $|F|$ or $F^2$ values as different formats require one or the other. Of course, bad things happen you read in $|F|$ as $F^2$ values or the reverse. 
+
+%\subsection{Small Angle Data}
+%\subsection{Reflectometry Data}
+%\subsection{PDF G(r) Data}
+\subsection{Powder Pattern Peaks}
+
+\section{Supported export data types}
+GSAS-II can write both results and imported data. There are many types of exports that GSAS-II can make, and in most cases there are a variety of supported export formats. As mentioned earlier, it is often a simple task to add support for additional formats.
+\subsection{Project exports}
+A GSAS-II project contains one or more phases and one or more histograms. All of this is bundled into a binary \texttt{.gpx} (project) file when the File/``Save project'' menu command. 
+Good luck trying to read that file, other than to read it into GSAS-II, unless you are pretty comfortable with Python programming and even then it will take some work to find where different things are stored. (There is some is some documentation on this in the Programmer's manual in the ``GSASII Data object \& variable organization'' chapter, \url{https://gsas-ii.readthedocs.io/en/latest/objvarorg.html}). 
+
+The exports in this menu provide access to the entire contents of the GSAS-II project. The most valuable of these is the Full CIF, which provides a customizeable CIF appropriate for deposition with a publication. The Chapter on \ref{Chap:G2CIF}  discusses this in depth. 
+The ``ASCII Json dump'' will create a very large file that contains the entire contents of the .gpx file in the Json format. This file can be read into editors or listed, but the file will be several times larger. This export has no routine use, but may be of value for code development, debugging or just learning about how GSAS-II works. 
+The two CSV export menu commands, which were provided by users, create spreadsheet files with a tabulation of many GSAS-II parameters. In the case of ``Bracket notation,'' this is a reference for crystallographic notation for uncertainties [such as -1.021(2), see section \ref{ref:SUnotation}] and this export will have quantities listed with their uncertainties. 
+
+Note that this menu is disabled with sequential refinements. Use the ``Sequential project as CIF'' menu command. The same command is also available in the ``Seq Export'' menu in the ``Sequential results'' data tree entry, which does offer additional options. 
+\subsection{Phases}
+The export options for phases are typically used to bring coordinates into other software for structural analysis, including graphics. The ``Quick CIF'' option provides a phase-only CIF that does not include crystallographic uncertainties. This is very helpful as a way to use an external program for a task such as visualization, but the CIFs produced here are not recommended to document a project. Use the Project-based CIF export, which does include uncertainties on fitted quantities.  
+
+Note that this menu is disabled with sequential refinements. Use the commands in ``Sequential phases'' submenu command. The same commands are  also available in the ``Seq Export'' menu in the ``Sequential results'' data tree entry. 
+
+\subsection{Powder Data}
+When the powder data export menu command is used, you will be asked which powder diffraction histogram(s) should be exported, unless there is a single powder histogram, in which case that question does not need to be asked. The data file formats used for experimental data will include only the measured diffraction intensities, but most of the other formats will include the calculated pattern as well and some will provide separate values for the background values. It is also possible here to export the reflection list. Those options will not include the powder diffraction intensities, but instead report the values seen in the histogram's ``Reflection Lists'' data tree entry. 
+
+Note that this menu is disabled with sequential refinements. Use the commands in ``Sequential histograms'' submenu command. The same commands are also available in the ``Seq Export'' menu in the ``Sequential results'' data tree entry. 
+%\subsection{Small Angle Data}
+%\subsection{Reflectometry Data}
+%\subsection{Single crystal data}
+%\subsection{Images}
+\subsection{Maps}
+Fourier maps (discussed in section \ref{ref:Fourier}) can be exported for viewing in external software. At this time, only the CCP4 map format (primarily used for macromolecular crystallography) and and the format used in FOX and DrawXTL are supported. 
+
+%\subsection{Other exports}
