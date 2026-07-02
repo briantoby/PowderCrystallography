@@ -1,7 +1,7 @@
 \chapter{Structural Graphics in GSAS-II}\label{Chap:structureplotting}
 
-GSAS-II provides structural visualization as part of the Phase data tree item. This chapter introduces some of the capabilities offered there. 
-While this can be used for publication-quality graphics and there may well be things that GSAS-II's molecular visualization does that would be hard to duplicate in other software, it should also be noted that there are many other crystallographic graphics packages that may be better for many tasks. These include the free Mercury and Vesta programs, as well as CrystalMaker and Diamond. However, where GSAS-II's graphics are most useful is in its integration into the structure completion and refinement process, which will be the focus of what I present here. Before going into the GUI for structure visualization, it is worthwhile to first describe what is actually displayed. 
+GSAS-II provides structural visualization as part of the Phase data tree entry. This chapter introduces some of the capabilities offered there. 
+While this can be used for publication-quality graphics and there may well be things that GSAS-II's molecular visualization does that would be hard to duplicate in other software, it should also be noted that there are many other crystallographic graphics packages that may be better for many tasks. These include the free Mercury\index{software!Mercury} and Vesta\index{software!Vesta} programs, as well as CrystalMaker\index{software!CrystalMaker} and Diamond\index{software!Diamond}. However, where GSAS-II's graphics are most useful is in its integration into the structure completion and refinement process, which will be the focus of what I present here. Before going into the GUI for structure visualization, it is worthwhile to first describe what is actually displayed. 
 For the following discussion, I will label the axes of the screen as having x horizontal, y as vertical and z as coming out from the screen.
 
 GSAS-II uses OpenGL graphics to display the structure in three dimensions. Well, since the structure is displayed on a two dimensional screen, it is really a 2D drawing, but it includes perspective and Z-clipping (which hides objects that are too ``close'' to you as a viewer) and can be rotated in space, which allows our brains to interpret what we are seeing in 3D. I still find it somewhat amazing that this ``3D graphics'' technology, that was at first only available to me on a nearly desk-sized \$60,000 Silicon Graphics computer (that a previous employer pushed me into learning to use) is now available on a mobile phone. 
@@ -10,7 +10,7 @@ Dragging the mouse will change our view of the structure. Dragging the mouse up 
 
 The view point is always placed in the center of the graphics window. If the ``Show view point'' option is set as on in the ``Draw Options'' tab (this is the default), it is drawn with 1 $\mathring{\text{A}}$ lines along the \textit{a}, \textit{b} and c, directions, with the lines colored red, green and blue, respectively. The unit cell, when outlined, is also drawn with red, green and blue lines for the \textit{a}, \textit{b} and c,  axes, respectively. Colored lines are used for the lines starting from x=y=z=0  and the remaining lines are white.
 
-To provide some orientation to the GUI, there are three tabs within each phase data tree item that all interact for visualization; they are the ``Atoms``, ``Draw Atoms'' and ``Draw Options,'' which will be discussed further in this chapter, but there are other tabs that can also influence what appears in the visualization. Here is a synopsis of all these phase tabs and their relevance to structure visualization:
+To provide some orientation to the GUI, there are three tabs within each phase data tree entry that all interact for visualization; they are the ``Atoms``, ``Draw Atoms'' and ``Draw Options,'' which will be discussed further in this chapter, but there are other tabs that can also influence what appears in the visualization. Here is a synopsis of all these phase tabs and their relevance to structure visualization:
 \begin{itemize}
     \item Atoms: contains the atom positions and ADP values that are used for display
     \item  Draw Atoms: has the atoms that appear in the visualization. These are copies of the atoms from the Atoms tab, potentially with symmetry and unit cell translations applied.
@@ -57,7 +57,7 @@ Labels can be placed at atom positions, but these labels may be hidden by sphere
 If the label option is left blank (the default), no label is provided for that atom. 
 
 \subsection{Atom colors}
-The default atom color is set from the value for the element type shown on the General tab. The default can be changed there. When any of the methods given in section \ref{ref:atomchangeselection} is used, a dialog will be presented for color selection, but the nature of this dialog will be determined by the operating system on your computer. 
+The default atom color is set from the value for the element type shown on the General tab. The default can be changed there. When any of the methods given in \S\ref{ref:atomchangeselection} is used, a dialog will be presented for color selection, but the nature of this dialog will be determined by the operating system on your computer. 
 
 % \subsection{Atom Bonding Settings}
 
@@ -120,7 +120,7 @@ The section of the window shown in Fig. \ref{fig:DrawOpts3} allows you to draw a
     \label{fig:DrawOpts3}
 \end{figure}
 
-When a Fourier map is computed, an extra section appears in the data window, as shown in  in Fig. \ref{fig:DrawOptsF}. These options affect how Fourier maps and peaks from that map are displayed and are discussed in section \ref{ref:FourierViewOpts}.
+When a Fourier map is computed, an extra section appears in the data window, as shown in  in Fig. \ref{fig:DrawOptsF}. These options affect how Fourier maps and peaks from that map are displayed and are discussed in \S\ref{ref:FourierViewOpts}.
 
 \begin{figure}
     \centering

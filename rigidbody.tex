@@ -1,0 +1,442 @@
+\chapter{Rigid Body Constraints}\index{Rigid Body Constraints}\label{Chap:rigidbody}
+
+Rigid bodies are a very powerful way to simplify crystallographic models by fixing the geometry of a group of atoms. There is an easy way to understand how the simplification works: The location for an individual atom usually has three degrees of freedom -- meaning three refineable parameters, the x, y and z coordinates for the atom. (For now, let's ignore atoms on special positions). Note that fewer parameters are needed to describe the placement of a group of atoms held at a fixed geometry with respect to each other. For that group we need three degrees of freedom for the location of the group and, at most, three degrees of freedom for the orientation of the group. That drops down to two degrees of freedom for a linear group of atoms. Thus, in the case of a two-atom group, we replace 6 degrees of freedom with 5 and in the general case of a non-linear group of $n$ atoms, we replace $3n$ degrees of freedom with 6. 
+
+Rigid bodies are employed in two ways in GSAS-II. They are used for \textit{ab initio} structure determination, in the Monte-Carlo/Simulated Annealing structure solution module where they serve to reduce the number of variables that need to be generated to find an approximate structure that then can be used in minimization. The second way, and the subject of this chapter, is that they are used as a type of constraint, to reduce the complexity of a model when performing refinements. (Constraints have been introduced in Chapter \ref{Chap:constraints}.) Note that there are many chemical moieties that have very minimal changes across large numbers of known crystal structures. A crystallographic model where the atoms in this moiety are constrained to have the known geometry is almost always going to be a more accurate description for the actual average structure for the material than one where the model is not very sensitive to exact atomic positions and the fitting allows the moiety to have some distortions. The Cambridge Crystallographic Database (CSD) has some excellent tools for exploring the conformation for a group of atoms across the very large collection of crystal structures in that database. 
+
+GSAS-II offers two ways to describe the geometry for a group of atoms, which are called a Vector Rigid Body and a Residue Rigid Body. A third treatment for rigid bodies, Spinning Bodies, is for moieties that are partly disordered, but do maintain some order with respect to the underlying lattice. The vector and residue types of rigid bodies will be described in subsequent sections, but in atom positions are described in a Cartesian coordinate system where the axes are orthogonal and the coordinate units are in \AA. 
+
+\section{Vector Rigid Bodies}\index{rigid body!vector|textbf} 
+These bodies have this name because the atom positions in the group are constructed from a sum of scaled vectors. Note that we can use a vector as a description for an atom position by considering the position of atom $j$, with coordinates $(x_j,y_j,z_j)$ as a vector from the origin to that position, $\vec{r}_j$ where $\vec{r}_j = x_i\hat{x} + y_i\hat{y} + z_i\hat{z}$ where $\hat{x}$, $\hat{y}$, and $\hat{z}$ are unit vectors along the appropriate axes. The values for $x_j$, $y_j$, and $z_j$ are in \AA. As was noted, vector rigid bodies atom positions come from the sum of scaled vectors, or as an equation, $\vec{r}_j = \sum_k t_k \vec{v}_{j,k}$ where $t_k$ is the scaling constant for the $k$th vector component, which we call translations. This means that $x_j = \sum_k t_k v_{x,j,k}$ (likewise for $y_j$ and $z_j$). This can be expanded for all atoms in the rigid body as a linear equation:
+$$
+\begin{bmatrix}
+\vec{r}_1 \\
+\vec{r}_2 \\
+\vdots \\
+\vec{r}_n
+\end{bmatrix}
+= 
+t_1\begin{bmatrix}
+\vec{v}_{1,1} \\
+\vec{v}_{2,1} \\
+\vdots \\
+\vec{v}_{n,1}
+\end{bmatrix}
++ 
+t_2\begin{bmatrix}
+\vec{v}_{1,2} \\
+\vec{v}_{2,2} \\
+\vdots \\
+\vec{v}_{n,2}
+\end{bmatrix}
++...
+$$
+or equivalently using matrices as, 
+$$
+\begin{bmatrix}
+x_1&y_1&z_1 \\
+x_2&y_2&z_2  \\
+\vdots \\
+x_n&y_n&z_n
+\end{bmatrix}
+= 
+t_1\begin{bmatrix}
+v_{x,1,1}&v_{y,1,1}&v_{z,1,1} \\
+v_{x,2,1}&v_{y,2,1}&v_{z,2,1}  \\
+\vdots \\
+v_{x,n,1}&v_{y,n,1}&v_{z,n,1}
+\end{bmatrix}
++ 
+t_2\begin{bmatrix}
+v_{x,1,2}&v_{y,1,2}&v_{z,1,2} \\
+v_{x,2,2}&v_{y,2,2}&v_{z,2,2}  \\
+\vdots \\
+v_{x,n,2}&v_{y,n,2}&v_{z,n,2}
+\end{bmatrix}
++ ...
+$$
+You will decide how many translations to use in designing your vector rigid body.  
+GSAS-II allows the $t_n$ translations to be varied, so this introduces $n$ additional parameter(s) that will dictate the spacing of atoms in the rigid body, should you choose to vary them. 
+
+\subsection{Vector RB example}
+The way this would actually be used is probably quite unclear at this stage, but an example may help. For this example, we will build a rigid body for a planar 8-atom group with two types of atoms, A and B where the A atoms and B atoms are each on the corner of square, as is seen in Fig. \ref{fig:vecRB}.
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{figures/squareVecBody.jpg}
+    \caption{A fictitious example of a rigid body. The text shows different ways that this can be converted to a vector rigid body. }
+    \label{fig:vecRB}
+\end{figure}
+Note that in this fictitious molecular fragment, I have placed all atoms in the x-y plane and the A atoms have coordinates $(\pm0.5,\pm0.5,0)$ and the B atoms have coordinates  $(\pm1,\pm1,0)$. If we create the rigid body with one translation, then the rigid body coordinates are given by this equation:
+$$
+\begin{bmatrix}
+\vec{r}_1 \\
+\vec{r}_2 \\
+\vdots \\
+\vec{r}_8
+\end{bmatrix}
+= 
+t_1
+\begin{bmatrix}
+0.5&0.5&0 \\
+-0.5&0.5&0 \\
+-0.5&-0.5&0 \\
+0.5&-0.5&0 \\
+1&1&0 \\
+-1&1&0 \\
+-1&-1&0 \\
+1&-1&0 \\
+\end{bmatrix}
+$$
+where the A atoms are the first four atoms. Note that the A-A bond distance will be $t_1$  (in \AA) and the A-B bond distance will be $t_1/\sqrt2$  (in \AA).
+
+We could also partition the A and B coordinates into separate matrices, as is done in this equation:
+$$
+\begin{bmatrix}
+\vec{r}_1 \\
+\vec{r}_2 \\
+\vdots \\
+\vec{r}_8
+\end{bmatrix}
+= 
+t_1
+\begin{bmatrix}
+0.5&0.5&0 \\
+-0.5&0.5&0 \\
+-0.5&-0.5&0 \\
+0.5&-0.5&0 \\
+0&0&0 \\
+0&0&0 \\
+0&0&0 \\
+0&0&0 \\
+\end{bmatrix}
++
+t_2
+\begin{bmatrix}
+0&0&0 \\
+0&0&0 \\
+0&0&0 \\
+0&0&0 \\
+1&1&0 \\
+-1&1&0 \\
+-1&-1&0 \\
+1&-1&0 \\
+\end{bmatrix}
+$$
+where we have completely separated the A atom and B atom matrices. 
+
+There is another way to formulate this same rigid body that, while completely equivalent to the previous, I think is more elegant and illustrates how vector rigid bodies can be very effectively formulated. In this equation: 
+$$
+\begin{bmatrix}
+\vec{r}_1 \\
+\vec{r}_2 \\
+\vdots \\
+\vec{r}_8
+\end{bmatrix}
+= 
+t_1
+\begin{bmatrix}
+0.5&0.5&0 \\
+-0.5&0.5&0 \\
+-0.5&-0.5&0 \\
+0.5&-0.5&0 \\
+0.5&0.5&0 \\
+-0.5&0.5&0 \\
+-0.5&-0.5&0 \\
+0.5&-0.5&0 \\
+\end{bmatrix}
++
+t_2
+\begin{bmatrix}
+0&0&0 \\
+0&0&0 \\
+0&0&0 \\
+0&0&0 \\
+0.5&0.5&0 \\
+-0.5&0.5&0 \\
+-0.5&-0.5&0 \\
+0.5&-0.5&0 \\
+\end{bmatrix}
+$$
+the $t_2$ translation now specifies the offset of the B atoms from the A positions, as the coordinates for the first A atom are $(\frac{t_1}{2}, \frac{t_1}{2},0)$ and the  coordinates for the first B atom are $(\frac{t_1}{2}+\frac{t_2}{2}, \frac{t_1}{2}+\frac{t_2}{2},0)$. The A-A bond distance remains as $t_1$ (in \AA) but the A-B bond distance is now $t_2/\sqrt2$ (also in \AA) so this version of the rigid body allows the two bond distances to be independent refineable parameters. The previous version allows that as well, but the meaning of the translations is not as obvious. 
+
+\subsection{Inputting a Vector RB to GSAS-II}
+I am not aware of any software that will help with creating a vector rigid body, should you wish to use an idealized geometry -- which is what I recommend. This would seem to require work with trigonometry, paper and pencil to create the input matrix/matrices. However, if you have atomic coordinates and wish to create a single-translation model, in the ``Rigid bodies'' data tree entry, select the ``Vector rigid bodies'' tab and then use the ``Edit Vector Body''/``Extract from file'' menu command. This command read coordinates in a variety of formats. It is described further below in \S\ref{ref:ExtractRB}. However, be sure that the coordinates that you are using are very close to the ideal geometry you want. You do not want to force your model to have inaccuracies from a poorly-chosen CIF. The comments below in \S\ref{idealizedXYZ} on obtaining idealized coordinates may also be of value. 
+
+If you have created the coordinate matrices, you can input them using the ``Edit Vector Body''/``Add rigid body'' menu command. This will open a window asking how many atoms are in the body and how many translations will be needed. The data window will then have input fields where you can specify the coordinates, translations and atom type for each row in the first matrix, as seen in Fig. \ref{fig:vecRBinp}. 
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{figures/vecRBinp.jpg}
+    \caption{Vector rigid body input window}
+    \label{fig:vecRBinp}
+\end{figure}
+If you would prefer to create input in a text editor, you can create template file by creating a body with the correct number of atoms and translations and then use the ``Edit Vector Body''/``Save rigid body'' menu command to create a \texttt{.vecbody} file, which can then be edited and read in using the ``Edit Vector Body''/``Read rigid body'' menu command.
+
+\section{Residue Rigid Bodies}\index{rigid body!residue|textbf} 
+The original GSAS program only offered vector rigid bodies, but GSAS-II also allows a seconf type of rigid bodies to be defined. This type is called a residue rigid body and they have several advantages. The name comes from macromolecular crystallography because the part of an amino acid that remains in a protein after peptide synthesis is called a residue in biochemistry. The residue rigid body implementation was initially for amino-acid residues for proteins, but has considerable utility for organic and organometallic materials as well. While the residue rigid body does not offer refineable translation parameters, it does allow for defining refineable torsion angle parameters. 
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{figures/resRBtorsion.jpg}
+    \caption{Visualization of a torsion rotation. The C5-C6 bond has been designated as the torsion and the bond has been rotated by $45^\circ$ between the upper and lower depictions.}
+    \label{fig:resRBrot}
+\end{figure}
+
+The process for defining a residue rigid body is more straightforward than the fairly complex process of defining a vector rigid body. You will simply supply Cartesian coordinates (in \AA) for the atoms in the rigid body. Should you wish to add torsional degrees of freedom, you do this by designating the pairs of atoms that have the bond between them. Of those two atoms, one is called the ``torsion origin'' and the other ``the pivot.'' The atoms bonded to the pivot atom (called the riding atoms) and the atoms bonded to those atoms, and so on, are the ones that will be rotated as the torsion angle is changed. However, GSAS-II does not include H (or D) atoms as riding atoms. If H atoms are part of the group of atoms attached via a torsion, their position should be generated in the phase's Atoms tab using the ``Edit Atoms''/``On selected atoms...''/``Calc H atoms'' and the ``Edit Atoms''/``Update H atoms'' menu commands. 
+A visual example of a torsion rotation is shown in Fig. \ref{fig:resRBrot}. Here the C5 atom is the origin atom for the torsion and the C6 atom is the pivot, so that the riding atoms are O7 and O8. Since there are no H atoms attached to the phenyl ring, had the origin and pivot been switched, the ring would have rotate and the O atoms would stay in their original position. These two approaches are equivalent. Use of either definition for the torsion origin and riding atoms would result in a refinement with differing rigid body parameters, but the resulting crystallographic structures should be the same, within a fraction of the s.u. values. 
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.75\linewidth]{figures/RBimport.jpg}
+    \caption{Creating a rigid body: window created by ``Extract from File'' menu command}
+    \label{fig:RBcreate}
+\end{figure}
+\subsection{Inputting a Residue RB to GSAS-II}
+To define a residue rigid body, select the ``Rigid bodies'' data tree entry and then click on the ``Residue rigid bodies'' tab and then use one of the commands in the ``Edit Vector Body'' menu. The menu command choices include:
+
+\subparagraph{``Import XYZ''} This command will read Cartesian coordinates, for example from Avogadro or MolDraw, and will place the atoms into a residue rigid body. 
+
+\subparagraph{``Extract from file''}\label{ref:ExtractRB} This opens a new tab labeled ``Rigid body importer'' where a multistep process is implemented for reading fractional coordinates and selecting atoms to be included. 
+\begin{enumerate}
+    \item Before attempting to use crystallographic coordinates to create a rigid body, confirm that the atoms you will want to use are all in the same asymmetric unit\index{asymmetric unit}. You may need to reorganize which symmetry replicants are present and possibly even need to lower symmetry. 
+    \item In the first step after you press on the ``Extract from file'' menu command, you identify a file to read from. This uses the phase importers (see \S\ref{ref:PhaseImporter} for more information on importers), so any of the formats that GSAS-II supports can be used. 
+    \item Once the file is opened and read, you select the atoms that you want to use for creating the rigid body. The atoms in the asymmetric unit are displayed in the graphics window, with unselected atoms made much darker than selected atoms. Press ``Continue'' when you have selected the desired atoms. 
+    \item The next window is shown as Fig. \ref{fig:RBcreate} and is quite sophisticated. The atoms that have been included from the previous step are now shown as a ball-and-stick model in the graphics window, where atoms are labeled with their number and element type.  The upper two buttons on the left are used to select atoms, or selection can be done individually in the table. 
+    \item The middle three buttons are used to align the origin and axes. This is discussed in more detail below in \S\ref{ref:resRBaxes}.
+    \item The there bottom buttons (which will create a vector body, a residue body or cancel the import) will complete this import operation and close the ``Rigid body importer'' tab. The ``export as xyz'' will write a file but does not close the tab. Note that only the selected atoms will be used. This means that atoms can be selected from structure file in step 3, that can be used for defining axes in step 5, but will not be included in the final rigid body if they are not selected in this step.
+\end{enumerate}
+
+\subparagraph{``Define torsion''} This is used to add a torsion to a residue rigid body. You will be asked for the two atoms that define the bond. You can add as many torsion angles as is appropriate for your rigid body. The value of the angle torsion angle is an increment that is added to the initial torsion angle from the input Cartesian coordinates. The angle is measured clockwise looking from the rider atoms towards the torsion's origin atom. 
+\subparagraph{``Import residues''} This command provides access to macros useful for working with proteins, but is unlikely to be used in any other context. 
+\subparagraph{``Save/Read rigid body''}
+The ``Save rigid body'' menu command writes the rigid body information to a file named with the extension \texttt{.resbody} and the ``Read rigid body'' will read them back. This is useful to duplicate a rigid body in a separate GSAS-II project. 
+\begin{figure}
+    \centering
+    \includegraphics[width=0.75\linewidth]{figures/resRBmain.jpg}
+    \caption{The residue rigid body data window. This is seen after a residue rigid body has been created.}
+    \label{fig:resRBmain}
+\end{figure}
+
+When the residue rigid body is read into the GUI, the data window will appear as in Fig. \ref{fig:resRBmain}. Here, torsions have also been defined. At this stage, only very minimal editing is possible. The orientation of the axes and the origin can be changed here by specifying three atoms for the ``Orientation reference'' settings, which are labeled as A, B and C. The first atom (A) will be set as the origin and the vector from the A atom to the second atom (B) will define the x-axis. The third atom (C) will define the y-axis so that the A, B and C atoms all lie in the x-y plane. The origin for the axes can optionally be changed using the ``Center RB'' button, which will set the origin to center of the rigid body (determined by averaging all coordinates \textit{without} weighting for mass). The use of this will be demonstrated in \S\ref{ref:createPZDC}. Note that if the ``Orientation reference'' settings are changed after use of the ``Center RB'' button, the origin is reset to the ``A'' atom. 
+
+The other controls on this window are: The name for the rigid body is set in the ``Residue name'' box. (It will be made unique if a name is repeated.) The ``Plot'' button displays the rigid body as a ball-and-stick diagram, where atoms are labeled by the atom name. The ``Delete'' buttton will delete this rigid body.  The ``Strip H-atoms'' button is only present if the rigid body contains hydrogen atoms and will remove all H or D atoms from the body. The ``H<->D'' button will replace all H atoms with D ($\rm^2H$)  or the reverse, if pressed again. The ``Cycle XYZ'' button permutes the x, y and z axes. 
+
+\section{Rigid Body Axes and Origin}
+Note that when we discuss rigid bodies, we have two independent coordinate systems. One for the rigid body, which does not have any translational symmetry and where the coordinate system is Cartesian; the axes are orthogonal and the coordinate units are in \AA. The crystal system, where translational symmetry is present, uses fractional coordinates and the angles between axes are dictated by the crystal system as we have seen throughout the book. There are two steps in using rigid bodies in GSAS-II. In the first step, the body is defined. For this the source information may be in Cartesian or fractional coordinates, but the rigid body information will be stored as Cartesian. In the second step, the atoms in the phase are related to the atoms in the rigid body. I usually refer to that process as inserting the rigid body into the phase. In that second step, we will determine how the rigid body coordinate system is transformed to produce atom positions in fractional coordinates via position and orientation parameters for the rigid body. Also note that if a rigid body appears in multiple places in a phase (or even several phases in a project), it only needs to be defined once and can be inserted as many times as is needed. Each insertion will have separate position and orientation parameters.
+
+\subsection{Selection of Rigid Body Axes and Origin}
+In many cases, it does not matter how the Cartesian axes for the rigid body are oriented with respect to the atoms. However, as will be discussed in detail in \S\ref{ref:RBsym}, if the rigid body will lie on a symmetry axis, plane or point in the unit cell, that axis or plane must be aligned with the Cartesian axes, so that that it can be oriented with respect to the crystal axes. The best location for the origin of the rigid body is at the center of mass for a body, particularly if TLS refinement will be used (discussed in \S\ref{ref:RBTLS}), but if the rigid body will be located on a special position point (most commonly this will be a $\overline{1}$ operator), the origin of the rigid body \textit{must} preserve that symmetry. Even when a rigid body will be placed in a location of the unit cell without any special symmetry, it is still a good idea to define the rigid body axes and origin in a way that represents any symmetry of the fragment. For example, if many of the atoms in the rigid body lie on a plane, I will try to align the axes so that those atoms have one coordinate as approximately zero; usually, I will put those atoms into the x-y plane. 
+
+\subsubsection{Use of the ``Extract from file'' menu command}\label{ref:resRBaxes}
+If the coordinates are imported from a file, the axes and origin can be determined from computations in the window created in the second step after use of the ``Extract from file'' menu command (seen in Fig. \ref{fig:RBcreate}). There are three actions that can be performed here: 
+\begin{enumerate}
+    \item \textbf{Set origin}: To use this, select one or more atoms from the table. If a single atom is selected then the origin is shifted to the location of that atom, so its coordinates will be (0,0,0); if multiple atoms are selected, the origin is shifted to the site midway between the selected atoms. This is not a true center-of-mass as the averaging is not mass-weighted. After selecting atom(s), press the ``Set origin'' button to perform this. 
+    \item  \textbf{Place in plane}: Note that the plane to be selected can be the xy, the xz, or the yz plane. The axes orientation is shifted so that the selected plane will be placed to minimize the root-mean-square distance to the selected atoms. The origin is not changed. After selecting three or more atoms, and selecting the plane to use, press the ``Place in plane'' button to perform this. 
+    \item \textbf{Define as}: This is used to orient the coordinates so that x, y, or z axis (as selected) points in the selected direction. If one atom is selected here, the coordinate system will be rotated so that x (or y or z) will be oriented so that the axis passes from the origin through the selected atom. If multiple atoms are selected, the axis will pass from the origin to the position midway through the selected atoms. After selecting atom(s) and the axis, press the ``Define as'' button to perform this. 
+\end{enumerate}
+My experience is that these options work best if used in the sequence listed above, meaning that the top button in the set is used first, then the middle and then the lower button in that order. Note that the atom selection must be repeated yet again, after use of these buttons, to select the atoms in this window that will be included in the vector or residue rigid body. 
+\subsubsection{Vector rigid bodies}
+For vector rigid bodies, when the coordinates are generated with paper, pencil and calculator, the axes and origin choice are part of the design. If the coordinates are imported from a file, the axes and origin can be determined from settings the window generated by the ``Extract from file'' menu command, as described above in \S\ref{ref:resRBaxes}.
+\subsubsection{Residue rigid bodies}
+If the ``Import XYZ'' menu command is used to read the coordinates for a residue rigid body, the origin and axes that were defined by the program that created those coordinates will be retained, when the coordinates are read. Likewise, the window created in the second step after use of the ``Extract from file'' menu command (seen in Fig. \ref{fig:RBcreate}) can also be used to set the axes and origin for a residue body as part of the process of converting the coordinates to Cartesian space. 
+
+However, as was presented in the discussion of the residue rigid body data window (seen in Fig. \ref{fig:resRBmain}), the axes orientation and origin values can optionally be overridden by controls there. 
+The orientation of the axes and the origin can be changed here by specifying three atoms for the ``Orientation reference'' settings, which I will label as A, B and C. 
+The first atom (A) will be set as the origin and the vector from the A atom to the second atom (B) will define the x-axis. 
+The third atom (C) will define the y-axis so that the A, B and C atoms all lie in the x-y plane. 
+
+\subsection{Obtaining idealized coordinates}\label{idealizedXYZ}
+While you can create a rigid body from fractional coordinates found in a crystal structure, for example from a database, be careful doing this. An individual crystal structure may not have a very accurate representation of the expected interatomic distances and angles and any errors in your rigid body input will be replicated in your results. For this reason, with organic molecular fragments, it is often a good idea to use a molecular forcefield program (unless you have access/ability to use higher-level theory) to obtain an optimized model for the molecule or molecular fragment you wish to use for your rigid body. There are many commercial molecular modeling programs, but if you need something free, the open source Avogadro program\index{software!avogadro|textbf} is a good choice  (\url{https://sourceforge.net/projects/avogadro}). This is available for Windows, Linux or MacOS, or as source code. Note that the XYZ files produced by Avogadro can be read by GSAS-II. A free account on the MolDraw website\index{software!MolDraw website|textbf} (\url{https://www.moldraw.com}) may also work for you. The MOGUL program\index{software!MOGUL} from the Cambridge Crystallographic Database can be used to find the average geometry of a molecular fragment across many crystal structures. 
+
+It should be noted that the molecular modeling, as well as first-principles codes, will compute the ``in vacuum'' structures for the input atoms, corresponding to an isolated object. However, in a crystal structure, molecules and ions will often change configuration to minimize the energetics of packing interactions. In almost all cases, the changes to these moieties will be due to torsion angle changes. It is well worthwhile to review crystallographic results with the moiety to be used for a rigid body to ensure that the common structural configurations can be achieved once torsional modes are included. 
+
+\section{Examples: Defining Residue Rigid Bodies}
+
+It may help to better understand the process of defining a rigid body by following an exercise, where I define two residue rigid bodies. Later in this chapter I will then place these rigid bodies into a metal-organic framework (MOF) material where the two rigid bodies each coordinate a transition-metal atom. The two moieties to be used here are a pyrazine-2,3-dicarboxylic acid ion and a 4,4'-bipyridine (bipy) molecule. 
+\begin{figure}
+    \centering
+    \includegraphics[width=0.25\linewidth]{figures/PyrazinedicarboxylicAcid.jpg}
+    \caption{A chemical diagram for the pyrazine-2,3-dicarboxylic acid ion. (Generated with the MolDraw web program.)}
+    \label{fig:PZDC}
+\end{figure}
+\subsection{Create a pyrazinedicarboxylic acid rigid body}\label{ref:createPZDC}
+A chemical diagram for the pyrazine-2,3-dicarboxylic acid ion is shown in Fig. \ref{fig:PZDC}. From this we need to obtain a set of three dimensional set of coordinates, which can be done by locating where this molecule has been used in a crystal structure, but my preference is to generate an idealized version of the ion. The two free options for this mentioned earlier in \S\ref{idealizedXYZ} are the Avogadro program or the MolDraw website. In either of these programs, we can ``draw'' the chemical diagram to generate the chemical representation for this, but an easier way to do this is to use the SMILES/indexP{SMILES|textbf} (simplified molecular-input line-entry system) name, which encodes the chemical connectivity. The SMILES notation for the pyrazine-2,3-dicarboxylic acid molecule is readily available from a web search, but the SMILES notation for the deprotonated ion, \mbox{\texttt{C1N=C(C([O-])=O)C(C([O-])=O)=NC=1}}, is likely a bit harder to find. I generated this from the SMILES for the molecule and then deleted the two H atoms. 
+
+If this SMILES string is entered into Avogadro using the Build/Insert/SMILES... the ion will be created. It can then have the geometry optimized using the Extensions/``Optimize Geometry'' menu command, and then the coordinates can be written for GSAS-II using the File/``Save As...'' command (be sure to select the XYZ format). 
+
+While I prefer Avogadro as giving more accurate bond distances and angles, with MolDraw, use their SMILES to 3D Structure Converter (\url{https://www.moldraw.com/tools/free-chem-tools/smiles-to-3d-structure-converter.html}) where you can paste the SMILES entry on the left, click on the ``Render 3D'' button in the middle of the browser window and see the molecule generated in 3D to the right. Click on the ``XYZ'' button in the downloads section under the 3D visual and an \texttt{.xyz} file is downloaded. 
+
+Then we want to create a rigid body with these coordinates in GSAS-II, but there is a minor problem if we want to do this with a new project, because an empty project file does not have any of the overall data tree entries. One must either add a phase or a histogram to the project, and when that is done, the Rigid Body data tree entry will be present. The simplest way to address this is to use the Data/``Add new phase'' menu command to create a phase and then use the Data/``Delete phase entries'' menu command to immediately delete it. However, since you likely have diffraction data to use with the rigid body, you can import that and this will also create the Rigid Body data tree entry. 
+\begin{figure}
+    \centering
+    \includegraphics[width=0.7\linewidth]{figures/pzdcRB1.jpg}
+    \caption{The Residue Rigid Body data window after reading in the pyrazinedicarboxylic acid XYZ file.}
+    \label{fig:pz1}
+\end{figure}
+To create this rigid body, click on the Rigid Body data tree entry and click on the ``Residue rigid bodies'' tab. Then use the ``Edit Residue Body''/``Import XYZ'' menu command and select the file that was created with Avogadro or MolDraw. The data window will appear as in Fig. \ref{fig:pz1}. Note that this rigid body is not likely to occur in a high-symmetry location in a lattice, as this group of atoms can only have any internal symmetry (one or two mirror planes) when the torsional rotations for the four carboxylate O atoms are matched. Since there is no symmetry present, we do not need to worry about the axes orientations.  Nonetheless, to show how the controls on this data window are used and because I just prefer to have nicely oriented axes, we will select the C1 to C3 vector as the x axis and the C1, C3 and C12 atoms to define the x-y plane, with the y-axis to be in the approximate direction of C1 to C12 by selecting the A-B-C orientation reference atoms to be C1, C3 and C12, as seen in Fig. \ref{fig:pz2}. Press the ``Plot'' button and the ion will be displayed as in  Fig. \ref{fig:pz2p}.
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{figures/pzdcRB2.jpg}
+    \caption{The Residue Rigid Body data window after setting the orientation atoms for pyrazinedicarboxylic acid.}
+    \label{fig:pz2}
+\end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.4\linewidth]{figures/pzdcRB2p.jpg}
+    \caption{The plot of  pyrazinedicarboxylic acid from the Residue Rigid Body data window.}
+    \label{fig:pz2p}
+\end{figure}
+There are still more things that need to be done in this data window. The torsions need to be added to the carboxylate groups, since they depending on the material, they will have very different orientations that optimize bonding. 
+This is done by invoking ``Edit Residue Body''/``Define torsion'' menu command. For one torsion angle, use C3 as the origin and C4 as the pivot in the successive input windows. (Note that in the second window the choices are the three atoms bonded to C3.) For the other torsion, use C7 as origin and C8 as pivot. 
+You should change the name of the rigid body to something else using the text entry box in the upper left.
+While not required, pressing the ``Center RB?'' button will place the origin at a location close to the center of mass. This is useful, as this will simplify TLS fitting (see \S\ref{ref:RBTLS}), should we choose to do that later. After these actions, the ion will be displayed as in  Fig. \ref{fig:pz3p} in the graphics window, where the view point has been moved. The data window appears as seen in Fig. \ref{fig:pz3}. If you will use this rigid body in other GSAS-II projects, you are recommended to save it into a file. This is done with the ``Edit Residue Body''/``Save rigid body'' menu command, which writes a file with extension \texttt{.resbody}. That file can be read in to a different project using the ``Edit Residue Body''/``Read rigid body'' menu command.
+\begin{figure}
+    \centering
+    \includegraphics[width=0.4\linewidth]{figures/pzdcRB3p.jpg}
+    \caption{The plot of  pyrazinedicarboxylic acid from the Residue Rigid Body data window after the origin has been reset. Note the changed location of the red-green-blue axes location that we call the ``view point'' relative to Fig. \ref{fig:pz2p}. (The blue line is not visible as it is perpendicular to the screen.)}
+    \label{fig:pz3p}
+\end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{figures/pzdcRB3.jpg}
+    \caption{The Residue Rigid Body data window for pyrazinedicarboxylic acid after setting the origin and rigid body name.}
+    \label{fig:pz3}
+\end{figure}
+
+\FloatBarrier
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.25\linewidth]{figures/bipy.jpg}
+    \caption{A chemical diagram for the 4,4'-bipyridine molecule. (Generated with the MolDraw web program.)}
+    \label{fig:bipy}
+\end{figure}
+\subsection{Create a bipyridine rigid body}
+A chemical diagram for the 4,4'-bipyridine (bipy) molecule is shown in Fig. \ref{fig:bipy}. As before, we need to obtain a set of three dimensional set of coordinates, and again this can be done using the Avogadro program or the MolDraw website. The SMILES notation for the 4,4'-bipyridine molecule is readily available from a web search, \mbox{\texttt{C1=CN=CC=C1C2=CC=NC=C2}}. The same process is used as before in either Avogadro or MolDraw, or any other forcefield or quantum-mechanical modeling program. Interestingly, the Avogadro program creates a planar molecule, while MolDraw provides a molecule with a significant torsion rotation on the bond between the two pyridine groups. Either is fine for our purposes. 
+
+Unlike the pyrazinedicarboxylic acid ion in the previous section, the bipy molecule will always have an internal center of symmetry, regardless of the torsion angle setting. In fact, we will need to place this internal center of symmetry at a specific location in a structure later in this chapter. For this example, we will create two slightly different versions of the bipy molecule that will be used later in the chapter to demonstrate aspects of how GSAS-II handles internal symmetry when rigid bodies are incorporated into the structure. In one case, the rigid body will contain only one-half of the molecule. \textit{e.g.} the unique atoms, and in the other case, we will include both C atoms on either side to the center of symmetry so that the rigid body contains a redundant atom. There is a third option, where we include all the C and N atoms in both rings, but then we would need to delete the H atoms from the torsional riding atom C and that gets a bit more complex than is needed. 
+
+Since we will want to place the origin in a location between two atoms, the ``Import XYZ'' menu command that was used prior will not work for us here. We will instead use the ``Edit Residue Body''/``Extract from file'' menu command which offers more control over the origin and axes location. 
+
+\subsubsection{Half-molecule Bipy}\label{Half-moleculeBipy}
+When the ``Edit Residue Body''/``Extract from file'' menu command is used, the first window that is opened asks for the format of the file to be read. In this case, we will read an XYZ file created above, so XYZ is selected. In the next window, select the \texttt{.xyz} file written previously. The contents of the data  window will display the atoms read from the file, as seen in Fig. \ref{fig:bipy0} and the graphics window contents are seen in Fig. \ref{fig:bipy0p}. This visualization will be very useful as we now need to select only the atoms we need for the next step. Unselect atoms 7 through 11 (C7-C10, N2) and 16-19 (H5-H8), leaving only one phenyl ring and the first carbon of the second ring, as seen in Fig. \ref{fig:bipy0p}. Once the atoms are selected, press the ``Continue'' button at the bottom of the data window. 
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.75\linewidth]{figures/bipy0.jpg}
+    \caption{The initial data window contents when importing the XYZ coordinates for the bipyridine molecule.}
+    \label{fig:bipy0}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.45\linewidth]{figures/bipy0p.jpg}
+    \caption{The graphics window display when initially importing the XYZ coordinates for the bipyridine molecule. Note that I have used the mouse wheel to enlarge the view of the molecule.}
+    \label{fig:bipy0p}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.4\linewidth]{figures/bipy0pa.jpg}
+    \caption{The graphics window display when initially importing the XYZ coordinates for the bipyridine molecule after selection of atoms. The selected atoms appear brighter than the unselected atoms.}
+    \label{fig:bipy0pa}
+\end{figure}
+
+\FloatBarrier
+
+The data window is then updated, as seen in Fig. \ref{fig:bipy1} and the graphics window contents are seen in Fig. \ref{fig:bipy1p}. This where we have the ability to determine the origin and axes, as was discussed in \S\ref{ref:resRBaxes}. 
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.75\linewidth]{figures/bipy1.jpg}
+    \caption{The second data window contents when importing the XYZ coordinates for the bipyridine molecule.}
+    \label{fig:bipy1}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.45\linewidth]{figures/bipy1p.jpg}
+    \caption{The graphics window display after atom selection is complete in the process of defining a bipyridine rigid body.}
+    \label{fig:bipy1p}
+\end{figure}
+Here we want to place the origin midway between atoms 5 and 6 (C5 and C6), so press the ``Toggle'' button, so that no atoms are selected, and then select C5 and C6, and finally press the ``Set origin'' button. Note that the coordinates for these two atoms now add to zero. While for this use, setting the axes is optional, the body will be easier to understand if we place the atoms in one ring into the x-y plane. Select all atoms using the ``Set All'' button and then press the ``Place in plane'' button with ``xy'' selected. Note that z is very close to 0. for all of the selected atoms, confirming that they all do lie in a plane. Finally, we will want to place the x-axis along the C5-C6 bond, so now select either one of those two atoms (but not both as their average position is the same as the origin). Press ``Set All'', then ``Toggle'' and select C5, and finally press the ``Set origin'' button. Note that C5, C6 and N1 now lie on the x-axis as both y and z are now approximately 0. 
+
+Finally, to create the rigid body, we want to remove the one duplicate atom (C6) from the body, so we will want to select all the atoms but that to create the rigid body. Again press ``Set All'' and then unselect the C6 atom. The graphics window will now show the molecule as shown in Fig. \ref{fig:bipy1pF}. To create the  body press the [... create] ``a Residue Body'' button and the second residue body is created. The data window then appears as was seen in Fig. \ref{fig:resRBmain}, except a new control at the top of the window allows you to select between the two rigid bodies that have now been entered. The body will be initially named for the XYZ file, but rename this to ``half-bipy''.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.45\linewidth]{figures/bipy1pF.jpg}
+    \caption{The graphics window display after atom selection is complete in the process of defining a bipyridine rigid body.}
+    \label{fig:bipy1pF}
+\end{figure}
+
+\subsubsection{Half-molecule+1 Bipy}
+To illustrate how GSAS-II handles ``duplicate'' atoms, lets create a rigid body that has both C5 and C6, even though the two atoms will be related by symmetry once the body is inserted into the structure. For this follow the instructions from the previous Half-molecule Bipy section (\S\ref{Half-moleculeBipy}), except that in the final paragraph when we create the rigid body, we want to retain all atoms in the body, including C6) , so we will want to select all the atoms. Again press ``Set All.'' The graphics window will now be similar to Fig. \ref{fig:bipy1pF}, but all atoms will be selected. To create the  body press the [... create] ``a Residue Body'' button and the third residue body is created. Again the data window then appears as was seen in Fig. \ref{fig:resRBmain}, except a new control at the top of the window allows you to select between the three rigid bodies that have now been created. The body will be initially named for the XYZ file, but rename this to ``half-bipy+1''.
+
+\section{Rigid Bodies and Quaternions}\label{ref:RBquat}
+When a rigid body is placed into a crystal structure, one must define where in the structure the body will be placed and also how the Cartesian axes of the body will be defined relative to the crystal axes. The location is simple to understand. GSAS-II will accept a location for the rigid body as fractional coordinates and the origin of the Cartesian coordinates will be placed at that point. 
+
+There are two commonly used mathematical methods for orienting objects, Euler angles\index{Euler angles} and quaternions\index{quaternions}. Quaternions are newer, dating back only to the mid-1800's, in contrast to Euler's work in the mid-1700's. Quaternions are preferable for computational use, but this was not discovered until the past few decades. (GSAS used Euler angles for rigid bodies.) I have read somewhere that ``a quaternion is simply a scalar and a vector combined together into a complex number.'' I'd question the use of ``simply'' in that sentence, but the basic idea is that quaternions use four numbers $q_0$, $q_1$, $q_2$ and $q_3$ but these are normalized with $\sqrt{q_0^2 + q_1^2 + q_2^2 + q_3^2}$ so that in fact only three values are unique. 
+
+In many cases where GSAS-II uses quaternions, it instead displays the values converted to a related form, with a unit vector and an azimuthal rotation angle. The math for that is pretty simple, and can be seen in \texttt{GSASIImath.Q2AV()} with the angle in radians and \texttt{GSASIImath.Q2AVdeg()} in degrees. The inverse operations are \texttt{GSASIImath.AV2Q()} (radians) and \texttt{GSASIImath.AVdeg2Q()} (degrees). When GSAS-II refines quaternions, it does so with two refinement flags, one for the vector part of the quaternion and one for the azimuthal angle. There will be times when symmetry determines which of those two quantities can be varied, as will be discussed in the next section. 
+
+\section{Rigid Bodies and Crystallographic Symmetry}\label{ref:RBsym}
+It is fairly common that a rigid body will have internal symmetry, such as the 6/m symmetry of the C atoms in a phenyl group; it is somewhat less common for the crystal symmetry to enforce some or all of the symmetry of the rigid body. When this does occur, the rigid body must be placed at a special location (point, axis or plane) with that crystallographic symmetry. As will be discussed here, placement of the rigid body and its refinement will require special attention, but that will require that the rigid body coordinates be defined to be compatible with that symmetry.
+
+When a rigid body is placed on a crystallographic symmetry location, several changes may be needed:
+The rigid body must be defined to align the Cartesian axes/origin to the symmetry:
+The Cartesian rigid body symmetry axis must be defined along x, y or z (or x+y or x+y+z). The Cartesian origin must be defined to match symmetry points or planes in the body
+The body must be inserted into the structure to retain symmetry:
+The rigid body must be inserted into the crystal structure to place the quaternion rotation vector along the selected Cartesian axis. The origin will be a high-symmetry Wyckoff site
+Which rigid body parameters may be refined:
+It will not be possible to refine all six degrees of freedom; symmetry will determine what parameters can be refined. 
+The origin in crystal space must be constrained to stay on the axis or plane; if on a symmetry point, it cannot be refined.
+
+Setting constraints on the body position
+
+Usually the x,y \& z components for the rigid body positions are all refined, but symmetry may require a constraint such as x=0 or x=y, while for individual atoms, these constraints are created automatically, for rigid bodies constraints must be generated manually. 
+Do this by creating holds or equivalences on the appropriate parameters in the Constraints/Phase tree section
+Note naming of rigid body origin parameters:
+Residue bodies:
+RBRPx:n:m: for x (…Py for y, ...Pz for z), where n is the rigid body number and m is the insertion number. 
+
+Vector bodies: RBVPx:n:m etc.
+
+The variable name is shown for each body in the rigid body Models tab
+
+Here are the different cases for rigid body symmetry:
+Center of symmetry: The Cartesian origin will need to be the $\overline{1}$ position. This will always be either on an atom or at the midpoint between two (or, unlikely, more) atoms. Usually only one from each symmetry-related pair of atoms will be included in the body (or occupancies must be set to 0.5 due to atom duplication). There are no requirements on orientation of axes. 
+Crystal coordinates: The rigid body origin will be defined as the $\overline{1}$site and will not be refined. The body orientation can be refined in “AV” mode (no constraints).
+Occupancies: Consider if atoms are duplicated by the $\overline{1}$and if so lower frac relative to any atom at the origin
+Mirror plane: The rigid body must be defined so that the normal to the mirror plane must be along a fixed Cartesian axis* for the body and the Cartesian origin must be defined so that it lies in the mirror plane. (i.e., if z will be the normal direction then the plane must be at z=0).
+Crystal coordinates: One coordinate in the rigid body origin will need to be fixed on the mirror plane (typically place a hold on variable p::RBRP$\eta$:\#:\# $\eta$=x, y or z; diagonal mirror planes may require equivalences between x, y and/or z) so that the origin may be refined. The rigid body orientation vector will need to be fixed along the mirror plane normal. Only the rigid body azimuth angle can be refined (mode “A”). 
+Occupancies: Consider if atoms are duplicated, if so lower frac relative to atoms on the plane
+
+* Possible Cartesian axes that can be used for the symmetry direction are x, y, z, x+y or x+y+z
+
+Rotation axis: The Cartesian origin must be defined on the axis, which will be at a midpoint between a group of atoms or on an atom. Align the axis along a fixed Cartesian axis* . 
+Crystal coordinates: coordinates for the rigid body origin will need to be constrained to stay on the axis by placing holds and/or constraints on two origin parameters (p::RBRP$\eta$:\#:\# $\eta$=x, y or z) to leave one free parameter. The rigid body orientation vector will need to be fixed along the axis. For orientation only the rigid body azimuth angle can be refined (mode “A”).
+Occupancies: Consider if atoms are duplicated by the axis and if so lower frac relative to any atoms on the axis
+Improper rotation axes define both an axis and a perpendicular plane. The Cartesian origin must be fixed on the point where the axis meets the plane and the symmetry axis for the rigid body must be aligned with the quaternion axis. In crystal coordinates the origin is fixed and for orientation only the rigid body azimuth angle can be refined (mode “A”).
+Glide planes and screw axes could require constraints similar to the previous examples, but this would occur only in the unlikely event that a molecular fragment has such internal symmetry
+
+A Linear rigid body has two orientational degrees of freedom rather than three, since a rotation of the object along the linear axis leaves it unchanged. The rigid body should be defined so that the linear axis falls on one of the allowed Cartesian axes*. How it will be treated depends on the symmetry for the location where it will be placed. 
+General position: when a linear rigid body is placed in a location with no symmetry, there are no restrictions on the origin location or the orientation. The origin can be refined freely and the orientation can be refined in “V” mode (two degrees of freedom).
+Symmetry axis: when a linear body is placed on a symmetry axis, orientation must be engineered to lie on that axis. Such a body has only one degree of freedom, the position along that axis (use appropriate constraints on the origin). The orientation cannot be refined.
+
+Symmetry plane: the most common case is a linear rigid body lying in a mirror plane. When inserting, the rigid body symmetry axis must be defined along the normal to that plane. The origin for the rigid body will have two degrees of freedom (use appropriate constraints) and there will be one orientational degree of freedom, to rotate the body around the azimuthal angle (“A” mode). 
+
+\section{Example: Inserting rigid bodies}
+
+For this, we will approximately duplicate the structure model used in the MOF structure from Silvana Urcia-Romero et al. (2022), DOI:10.1021/acs.cgd.1c01460. The CIFs from this paper can be downloaded for free from https://www.ccdc.cam.ac.uk/structures/search?pid=ccdc:2125626\&issn=1528-7483\&id=doi:10.1021/acs.cgd.1c01460\&sid=ACS. Any of the CIFs from that paper will do. 
+
+
+\subsection{Inserting the pyrazinedicarboxylic acid ion rigid body}
+
+\subsection{Inserting the bipyridine molecule rigid body}
+
+\section{TLS Displacement Parameters for Rigid Bodies}\label{ref:RBTLS}
+
+
+(started! \ref{needs more work})
