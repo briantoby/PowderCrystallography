@@ -77,3 +77,22 @@ $$I\left(Q\right)=Nf^2\sum_{i}^{N}\sum_{j\neq i}^{N}\frac{\sin{Qr_{ij}}}{Qr_{ij}
  As we saw before, neutron or x-ray quanta can interact with the sample in several ways. Alternatively, they may also not be scattered at all and go straight through the sample unperturbed. When quanta are scattered incoherently or inelastically or are captured by the sample, they can no longer contribute to the diffraction signal. Diffraction intensities are computed ignoring this effect, but when samples have high probabilities for neutron or x-ray absorption or non-diffraction scattering, the fraction of lost quanta will depend on the scattering geometry, the wavelength and the diffraction angle. If a significant fraction of the quanta are absorbed or are otherwise scattered by non-diffraction events a correction factor may be needed to accurately match the idealized diffraction intensities to what is actually observed. This is known as an absorption correction, but it should be noted that non-diffraction scattering as well as actual absorption is accounted for in this factor. To evaluate the effects of absorption, GSAS-II includes a program (also in the Calculate menu) called Absorb\index{software!Absorb} where a chemical formula is supplied along with a sample size and density or packing fraction (since powder samples usually are not fully dense) and the value of mr is computed as function of wavelength.
 
  Another assumption that is made when computing diffraction intensities is that the probe quanta are only scattered once and only a small fraction are scattered. In an effect called multiple scattering, it is possible for a scattered quantum to be scattered again before it leaves the sample. This occurs most significantly for intense reflections in large single crystals and is an effect called primary extinction. This effect is greatest when crystals have very large domains without defects to disrupt ordering. To compute primary extinction quantitatively, one must use a higher level of scattering theory than will be discussed here, called dynamical diffraction. Another effect can occur, similar to absorption, where if significant fraction of the incident quanta are diffracted before much penetration into the sample occurs, fewer quanta are available to be scattered than will be expected. This is known as secondary extinction. Both primary and secondary extinction are most likely to be observed with large and highly perfect crystals. More commonly, so-called single crystals are actually constructed of relatively small domains due to defects and these domains have small misalignments with each other. Such a crystal is known as ideally mosaic. The small domain sizes disrupt the dynamical scattering needed to cause primary extinction and the small misalignments between domains prevent secondary extinction. Single-crystal experiments will sometimes require that a crystal be thermally shocked to induce mosaicity, but extinction is quite rare in powder diffraction because when crystallite sizes are larger than a few microns, sample grinding should be used. GSAS-II does provide correction terms for extinction that can be used for single-crystal and powder diffraction with x-rays and neutron. Note that primary extinction can be quite significant in electron diffraction because with the high electron energies used, only small domains within a sample are probed and are much more likely to have “perfect” ordering on these distance scales. 
+
+\section{For More Information}
+
+\begin{itemize}
+\item 
+\textit{Fundamentals of Crystallography.} Third Edition (2011). C. Giacovazzo, H. L. Monaco, G. Artioli, D. Viterbo, M. Milaneso, G. Ferraris, G. Gilli, P. Gilli, G. Zanotti and M. Catti. Edited by C. Giacovazzo. IUCr Texts on Crystallography No. 15, IUCr/Oxford University Press.
+\begin{quote}
+This is a weighty, comprehensive, and modern book on crystallography. If you are going to buy anything, this is what I would recommend. 
+\end{quote}
+
+
+\item 
+\textit{International Tables for Crystallography
+Volume C: Mathematical, Physical and Chemical Tables}, (2021) T. R. Welberry ed. 
+DOI: 10.1107/97809553602060000117
+\begin{quote}
+This is a comprehensive reference on diffraction, with tables and articles on practically everything, but probably much more than you want. Your library/institution may make this available on-line. 
+\end{quote}
+\end{itemize}

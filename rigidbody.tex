@@ -250,7 +250,7 @@ While you can create a rigid body from fractional coordinates found in a crystal
 
 It should be noted that the molecular modeling, as well as first-principles codes, will compute the ``in vacuum'' structures for the input atoms, corresponding to an isolated object. However, in a crystal structure, molecules and ions will often change configuration to minimize the energetics of packing interactions. In almost all cases, the changes to these moieties will be due to torsion angle changes. It is well worthwhile to review crystallographic results with the moiety to be used for a rigid body to ensure that the common structural configurations can be achieved once torsional modes are included. 
 
-\section{Examples: Defining Residue Rigid Bodies}
+\section{Defining Residue Rigid Body Examples}
 
 It may help to better understand the process of defining a rigid body by following an exercise, where I define two residue rigid bodies. Later in this chapter I will then place these rigid bodies into a metal-organic framework (MOF) material where the two rigid bodies each coordinate a transition-metal atom. The two moieties to be used here are a pyrazine-2,3-dicarboxylic acid ion and a 4,4'-bipyridine (bipy) molecule. 
 \begin{figure}
@@ -323,7 +323,7 @@ When the ``Edit Residue Body''/``Extract from file'' menu command is used, the f
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.75\linewidth]{figures/bipy0.jpg}
+    \includegraphics[width=0.65\linewidth]{figures/bipy0.jpg}
     \caption{The initial data window contents when importing the XYZ coordinates for the bipyridine molecule.}
     \label{fig:bipy0}
 \end{figure}
@@ -374,69 +374,271 @@ Finally, to create the rigid body, we want to remove the one duplicate atom (C6)
 \subsubsection{Half-molecule+1 Bipy}
 To illustrate how GSAS-II handles ``duplicate'' atoms, lets create a rigid body that has both C5 and C6, even though the two atoms will be related by symmetry once the body is inserted into the structure. For this follow the instructions from the previous Half-molecule Bipy section (\S\ref{Half-moleculeBipy}), except that in the final paragraph when we create the rigid body, we want to retain all atoms in the body, including C6) , so we will want to select all the atoms. Again press ``Set All.'' The graphics window will now be similar to Fig. \ref{fig:bipy1pF}, but all atoms will be selected. To create the  body press the [... create] ``a Residue Body'' button and the third residue body is created. Again the data window then appears as was seen in Fig. \ref{fig:resRBmain}, except a new control at the top of the window allows you to select between the three rigid bodies that have now been created. The body will be initially named for the XYZ file, but rename this to ``half-bipy+1''.
 
-\section{Rigid Bodies and Quaternions}\label{ref:RBquat}
-When a rigid body is placed into a crystal structure, one must define where in the structure the body will be placed and also how the Cartesian axes of the body will be defined relative to the crystal axes. The location is simple to understand. GSAS-II will accept a location for the rigid body as fractional coordinates and the origin of the Cartesian coordinates will be placed at that point. 
+\section{Inserting Rigid Bodies}\label{ref:RBinsert}
+The process for using rigid bodies in a refinement is a two-step process. First, the rigid body must be defined, as has already been discussed in this chapter. The definition process is independent of any specific crystallographic information on how the body is used and indeed saving the rigid body to a file will allow your hard work to be ``recycled'' in a future project. The second step, which we call inserting the body into a structure, is where the rigid body is integrated into a crystal structure model. (This is what is shown in table in the Atoms tab.) Rigid bodies are added and changed using the ``RB Models'' tab for the phase and are inserted using the ``Edit Body''/``Locate \& Insert Rigid Body'' menu command. Once a rigid body has been selected to insert into the structure, the data window shows information about the rigid body, as seen in Fig. \ref{fig:RBI0} and the insertion process is started. In the insertion process, one defines:
+\begin{itemize}
+    \item the location of the rigid body origin in fractional coordinates, 
+    \item the orientation of the rigid body (see \S\ref{ref:RBquat}),
+    \item how the rigid body atoms are mapped to atoms in the structure.
+\end{itemize}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{figures/RBI0.jpg}
+    \caption{The data window provided to insert a rigid body. This appears after a rigid body has been selected, but has not yet been inserted.}
+    \label{fig:RBI0}
+\end{figure}
 
-There are two commonly used mathematical methods for orienting objects, Euler angles\index{Euler angles} and quaternions\index{quaternions}. Quaternions are newer, dating back only to the mid-1800's, in contrast to Euler's work in the mid-1700's. Quaternions are preferable for computational use, but this was not discovered until the past few decades. (GSAS used Euler angles for rigid bodies.) I have read somewhere that ``a quaternion is simply a scalar and a vector combined together into a complex number.'' I'd question the use of ``simply'' in that sentence, but the basic idea is that quaternions use four numbers $q_0$, $q_1$, $q_2$ and $q_3$ but these are normalized with $\sqrt{q_0^2 + q_1^2 + q_2^2 + q_3^2}$ so that in fact only three values are unique. 
+This process for inserting a rigid body offers several mechanisms to change the position and orientation of the rigid body. One can type numbers into the GUI, or use the azimuth slider and see immediate changes in the graphics window. The mouse can also be used to change the position of the rigid body. Note that the following  mouse actions are defined for the visualization of the structure (discussed in Chapter  \ref{Chap:structureplotting}): 
+\begin{itemize}
+    \item \textbf{Horizontal Left mouse drag}: left-right mouse movement rotates the structure around the vertical screen axis (y). 
+    \item \textbf{Vertical Left mouse drag}: up-down mouse motion rotates the structure around the horizontal screen axis (x). 
+    \item \textbf{Right mouse drag}: moves the view point. Since the view point is always at the center of the window, this translates the structure.
+    \item     \textbf{Middle mouse drag}: rotates the structure around the screen axis perpendicular to the window (z)
+    \item \textbf{Mouse wheel rotation}: this changes the ``camera distance'' which has the effect of zooming the plot in and out.
+\end{itemize}
+When the Alt key (Option key for MacOS) is held down while using the mouse, the mouse actions reposition the rigid body rather than change the view of the structure:
+\begin{itemize}
+    \item \textbf{Alt+Left mouse drag}: left-right movement rotates the rigid body around the vertical screen axis (y); up-down motion rotates the rigid body round the horizontal axis (x). The rotation is around the rigid body origin.
+    \item \textbf{Alt+Right mouse drag}: Translates the rigid body origin. The motion is in the plane of the window. To move the rigid body in the third direction, rotate the view by $90^\circ$ (using a horizontal left-mouse drag) and then use Alt+right mouse drag. 
+    \item     \textbf{Alt+Middle mouse drag}: rotates the rigid body around the screen axis perpendicular to the window (z).
+\end{itemize}
+Note that with Mac and a single button mouse, it is possible to hold down control+option and use the mouse drag to simulate the right mouse button drag or use command+option to simulate the middle mouse button drag. I recommend getting a three-button mouse, instead. 
 
-In many cases where GSAS-II uses quaternions, it instead displays the values converted to a related form, with a unit vector and an azimuthal rotation angle. The math for that is pretty simple, and can be seen in \texttt{GSASIImath.Q2AV()} with the angle in radians and \texttt{GSASIImath.Q2AVdeg()} in degrees. The inverse operations are \texttt{GSASIImath.AV2Q()} (radians) and \texttt{GSASIImath.AVdeg2Q()} (degrees). When GSAS-II refines quaternions, it does so with two refinement flags, one for the vector part of the quaternion and one for the azimuthal angle. There will be times when symmetry determines which of those two quantities can be varied, as will be discussed in the next section. 
+The other mechanism for repositioning a rigid body involves specifying pairs of atoms between the rigid body and the structure. The rigid body can be translated and/or oriented so that the specific atoms are moved as close as is possible. This is done with the lower section of the data window, as seen in Fig. \ref{fig:RBI1}. This part of the window is also used to determine how atoms in the rigid body are mapped to atoms in the structure.  I will call the table of atoms shown here as the ``Assignments Table.'' Note that the first two columns of the table show the rigid body label and the atom type. The third, fourth and fifth columns show the atom in the structure that is paired to the rigid body atom, as an atom number, atom label and the distance between the paired atoms. By default, atoms are paired by shortest distances. Note that as the rigid body is moved, these distances are updated and pairing assignments are revised if the closest atoms change. The last column allows one to override this pairing by assigning a specific atom in the structure to be paired to the rigid body atom. 
+These assignments are also used for the ``Set Origin,'' ``Set Orientation,'' and ``Set both'' buttons, which will be explained in a subsequent paragraph. 
+Optionally, use the ``Update Assignments'' button to the right of the assignments table, after making an assignment to update the list of paired atoms and their distances. 
+
+When the rigid body import process is completed using the ``Add'' button (immediately above the table), the rigid body atom will be added to the phase with the position, orientation, and any torsion angle(s) that has been specified. Each atom in the rigid body will be linked to an atom in the structure where the coordinates, occupancy, and $\rm U_{iso}$ or $\rm U_{\it ij}$ values in the Atoms table will be updated to match what is generated from the rigid body. 
+Note that one option for the atom assignments is ``Create new,'' which is used to indicate that a new atom atom should be added to the structure to pair to the rigid body rather than use an atom that is already defined. 
+
+When atom pairs are assigned manually, the ``Set Origin,'' ``Set Orientation,'' and ``Set both'' buttons to the right of the table can be used to set the rigid body location and orientation. At least one atom must be selected for ``Set Origin'' to function. This will set the Origin fractional coordinates to minimize the distance(s) to the paired atom(s). 
+If two or more atom pairs are assigned manually, the ``Set Orientation'' button can be used. This sets the Orientation azimuth and Orientation vector values to minimize distances. With three or more atoms assigned, the ``Set both'' button will set the Orientation azimuth and vector as well as the origin coordinates. The use of these will be illustrated later (in \S\ref{ref:RBinsertExample}).
+
+One potentially tricky aspect of assigning atom pairs manually is determining which atoms should be paired. This can be aided by highlighting atoms in the graphics window. If you select a row in this lower section of the data window by clicking on the rigid body label, that atom in the rigid body is highlighted by changing its color to green. Likewise, the paired atom in the structure is also highlighted by changing that atom's color to green. Should you wish to find a different atom in the structure, the ``Crystal Highlight'' selection to the right of the assignments table can be used to select an atom to highlight. 
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{figures/RBI1.jpg}
+    \caption{Enter Caption}
+    \label{fig:RBI1}
+\end{figure}
+
+Once the body has been inserted, a window such as what is seen in Fig, \ref{fig:RBmodel1}. Note that this window shows the location of the rigid body origin in fractional coordinates, the azimuthal angle and a unit vector in fractional coordinates that position and orient the body. There are refinement flags for the origin and orientation. The refinement modes for orientation refinement (A, V, and AV, which are explained in the next section.) This window allows the overall fractional occupancy for the rigid body to be refined. As noted before, if the Alt key is held down (the Option key for MacOS), the rigid body is moved or rotated rather than changing the view of the entire model. 
+
+There are a number of ways that the ADPs for rigid bodies can be fit. The default is where all atoms are assigned the same $\rm U_{iso}$ value but Translation-Libration-Screw (TLS) group motion descriptions (see \S\ref{ref:RBTLS}) are also offered. 
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\linewidth]{figures/RBmodel1.jpg}
+    \caption{The data window after a rigid body has been inserted into a structure.}
+    \label{fig:RBmodel1}
+\end{figure}
+\section{Orienting Rigid Bodies: Quaternions}\label{ref:RBquat}
+When a rigid body is placed into a crystal structure, one must define where in the structure the body will be placed and also how the Cartesian axes of the body will be defined relative to the crystal axes. Understanding how to locate the rigid body is straightforward. That position (in fractional coordinates) is referred to as the rigid body origin, since this is the location of the rigid body's Cartesian coordinate system origin. The mechanism used to orient the rigid body Cartesian axes with the crystal axes is a bit more complex, as will be discussed next.
+
+There are two commonly used mathematical methods for orienting objects, Euler angles\index{Euler angles} and quaternions\index{quaternions}. Quaternions are newer, dating back only to the mid-1800's, in contrast to Euler's work in the mid-1700's. Quaternions are significantly preferable for computational use, but this was not discovered until the past few decades and probably due to needs for video game programming. (GSAS used Euler angles for rigid bodies.) I have read somewhere that ``a quaternion is simply a scalar and a vector combined together into a complex number.'' I'd question the use of ``simply'' in that sentence, but the basic idea is that quaternions use four numbers $q_0$, $q_1$, $q_2$ and $q_3$ but these are normalized so that  $\sqrt{q_0^2 + q_1^2 + q_2^2 + q_3^2} = 1$, so that in fact only three of the four values are unique. 
+
+As was seen in the previous section, instead of displaying the quaternion values, they are converted to a related form, with a unit vector and an azimuthal rotation angle. This unit vector is usually shown in fractional coordinates. This is done in most places where GSAS-II uses quaternions. The math for the conversion is pretty simple, and can be seen in routine \texttt{GSASIImath.Q2AV()}, with the angle in radians, and \texttt{GSASIImath.Q2AVdeg()}, in degrees. The inverse operations are in \texttt{GSASIImath.AV2Q()} (radians) and \texttt{GSASIImath.AVdeg2Q()} (degrees). When GSAS-II refines quaternions, it does so with two refinement flags, one for the vector part of the quaternion and one for the azimuthal angle. Thus, there are four modes for refinement of the orientation quaternion:
+\begin{enumerate}
+    \item \textbf{AV mode}: In this mode, all of the three degrees of freedom are refined. The name is chosen to indicate that both the azimuth and the vector are fit. 
+    \item \textbf{V mode}: In this mode, only two degrees of freedom are refined. The name is chosen to indicate that only the vector is fit. 
+    \item \textbf{A mode}: In this mode, only one degree of freedom, that of the azimuthal rotation,  is refined. The name is chosen to indicate that only the azimuth is fit. 
+    \item \textbf{None}: In this mode, there are no orientational degrees of freedom.
+\end{enumerate}
+Symmetry will determine which of these modes is allowed, as will be discussed in the next section. 
 
 \section{Rigid Bodies and Crystallographic Symmetry}\label{ref:RBsym}
-It is fairly common that a rigid body will have internal symmetry, such as the 6/m symmetry of the C atoms in a phenyl group; it is somewhat less common for the crystal symmetry to enforce some or all of the symmetry of the rigid body. When this does occur, the rigid body must be placed at a special location (point, axis or plane) with that crystallographic symmetry. As will be discussed here, placement of the rigid body and its refinement will require special attention, but that will require that the rigid body coordinates be defined to be compatible with that symmetry.
+It is fairly common that a rigid body will have internal symmetry, such as the 6/m symmetry of the C atoms in a phenyl group; it is somewhat less common for the crystal symmetry to enforce some or all of the symmetry of the rigid body. When this does occur, the rigid body must be placed at a special location (a point, axis or plane) where that crystallographic symmetry is present. As will be discussed here, placement of the rigid body and its refinement will require special attention, but that will require that the rigid body coordinates be defined to be compatible with that symmetry and that the rigid body then be incorporated into the unit cell axes in a manner that preserves the symmetry. The rigid body definition must align the Cartesian axes and/or origin to the internal symmetry in the body: 
+\begin{itemize}
+    \item If there is a rigid body symmetry axis, it must be defined in Cartesian space along x, y or z (or x+y or x+y+z). Use of x, y, or z is recommended as it is much simpler. 
+    \item The Cartesian origin must be defined to match symmetry points or planes in the body
+\end{itemize}
 
-When a rigid body is placed on a crystallographic symmetry location, several changes may be needed:
-The rigid body must be defined to align the Cartesian axes/origin to the symmetry:
-The Cartesian rigid body symmetry axis must be defined along x, y or z (or x+y or x+y+z). The Cartesian origin must be defined to match symmetry points or planes in the body
-The body must be inserted into the structure to retain symmetry:
-The rigid body must be inserted into the crystal structure to place the quaternion rotation vector along the selected Cartesian axis. The origin will be a high-symmetry Wyckoff site
-Which rigid body parameters may be refined:
-It will not be possible to refine all six degrees of freedom; symmetry will determine what parameters can be refined. 
-The origin in crystal space must be constrained to stay on the axis or plane; if on a symmetry point, it cannot be refined.
+The following sections of this chapter will discuss details for how the the rigid body is inserted into the unit cell. However, before we get to that, let's consider how symmetry affects this process. 
 
-Setting constraints on the body position
+\begin{itemize}
+    \item The rigid body must be inserted into the crystal structure to place the quaternion rotation vector along the selected Cartesian axis. This is computed for you by GSAS-II. 
+    \item The location for the rigid body (the origin), in fractional coordinates, will be a higher-symmetry Wyckoff site rather than a general position.
+    \item The rigid body in fractional coordinates origin in crystal space must be constrained to stay on the axis or plane or point of that Wyckoff site and it will not be possible to refine all six degrees of freedom for the rigid body. The site symmetry will determine what parameters can be refined, as will be considered for the different possible symmetry cases, below.
+\end{itemize}
 
-Usually the x,y \& z components for the rigid body positions are all refined, but symmetry may require a constraint such as x=0 or x=y, while for individual atoms, these constraints are created automatically, for rigid bodies constraints must be generated manually. 
-Do this by creating holds or equivalences on the appropriate parameters in the Constraints/Phase tree section
-Note naming of rigid body origin parameters:
-Residue bodies:
-RBRPx:n:m: for x (…Py for y, ...Pz for z), where n is the rigid body number and m is the insertion number. 
+When a rigid body is placed at a general position in fractional coordinates, the x,y \& z coordinates for the rigid body positions are all refined, but symmetry may require a constraint such as x=0 or x=y. Note that when individual atoms occur on a high-symmetry site, GSAS-II will generate the constraints that force the atom to remain on that symmetry location, but for rigid bodies, these constraints must be generated manually. These are created using the Constraints data tree entry where you can place a ``Hold'' (see \S\ref{ref:Hold}) on the parameters that should not change. This requires knowing the names for the rigid body location parameters, which are determined from two numbers that are assigned to each rigid body in a project and in a structure. Each rigid body that is created in a project is assigned a number. These numbers start at 0; the number is shown on the data window for vector and residue rigid body, as seen in the example in Fig. \ref{fig:pz3}. In addition, each rigid body can be used multiple times within a phase. These are also numbered and are known as the insertion number. 
+The parameter names for residue bodies locations are \texttt{RBRPx:}\textit{n}\texttt{:}\textit{m}, \texttt{RBRPy:}\textit{n}\texttt{:}\textit{m}, and \texttt{RBRPz:}\textit{n}\texttt{:}\textit{m} for the x, y \& z fractional coordinates of the rigid body origin, respectively, 
+where \textit{n} is the rigid body number and \textit{m} is the insertion number.
+For vector bodies parameter names are 
+\texttt{RBVPx:}\textit{n}\texttt{:}\textit{m}, \texttt{RBVPy:}\textit{n}\texttt{:}\textit{m}, and \texttt{RBVPz:}\textit{n}\texttt{:}\textit{m},
+for the x, y \& z fractional coordinates of the rigid body origin, respectively. 
 
-Vector bodies: RBVPx:n:m etc.
+\subsection{Symmetry Cases}
+The possible ways that symmetry can interact with rigid bodies follows:
 
-The variable name is shown for each body in the rigid body Models tab
+\subparagraph{Center of symmetry} The Cartesian origin will need to be the $\overline{1}$ position, so the rigid body origin will need to be placed at the site of symmetry for the rigid body. 
+This will always be either on an atom in the group or at the midpoint between two (or, occasionally more) atoms. 
+There is a choice here with respect to which atoms will be included. One can include only one from each symmetry-related pair of atoms in the body, or both. If symmetry-related atoms are included, GSAS-II will recognize them and will set the occupancy to zero for one atom of each pair of duplicates. Note that in this case ($\overline{1}$), there are no requirements for the orientation of axes.
 
-Here are the different cases for rigid body symmetry:
-Center of symmetry: The Cartesian origin will need to be the $\overline{1}$ position. This will always be either on an atom or at the midpoint between two (or, unlikely, more) atoms. Usually only one from each symmetry-related pair of atoms will be included in the body (or occupancies must be set to 0.5 due to atom duplication). There are no requirements on orientation of axes. 
-Crystal coordinates: The rigid body origin will be defined as the $\overline{1}$site and will not be refined. The body orientation can be refined in “AV” mode (no constraints).
-Occupancies: Consider if atoms are duplicated by the $\overline{1}$and if so lower frac relative to any atom at the origin
-Mirror plane: The rigid body must be defined so that the normal to the mirror plane must be along a fixed Cartesian axis* for the body and the Cartesian origin must be defined so that it lies in the mirror plane. (i.e., if z will be the normal direction then the plane must be at z=0).
-Crystal coordinates: One coordinate in the rigid body origin will need to be fixed on the mirror plane (typically place a hold on variable p::RBRP$\eta$:\#:\# $\eta$=x, y or z; diagonal mirror planes may require equivalences between x, y and/or z) so that the origin may be refined. The rigid body orientation vector will need to be fixed along the mirror plane normal. Only the rigid body azimuth angle can be refined (mode “A”). 
-Occupancies: Consider if atoms are duplicated, if so lower frac relative to atoms on the plane
+In crystal coordinates: when the rigid body is inserted into the structure, the origin location will need to selected as a $\overline{1}$ site in the structure. 
+Since that symmetry location is a fixed point in fractional coordinates, no coordinates can be refined. The body orientation can be refined in ``AV'' mode (no orientational constraints).
+%No special care for occupancies will be needed as GSAS-II should set these for you. 
 
-* Possible Cartesian axes that can be used for the symmetry direction are x, y, z, x+y or x+y+z
+\subparagraph{Mirror plane} The rigid body must be defined so that the normal to the mirror plane will be along a fixed Cartesian axis for the body; use of x, y, or z for that axis is recommended. 
+The Cartesian origin must be defined so that it lies in the mirror plane. \textit{I.e.}, if z will be the direction normal to the mirror plane, then the rigid body's internal mirror plane must be placed at z=0.
 
-Rotation axis: The Cartesian origin must be defined on the axis, which will be at a midpoint between a group of atoms or on an atom. Align the axis along a fixed Cartesian axis* . 
-Crystal coordinates: coordinates for the rigid body origin will need to be constrained to stay on the axis by placing holds and/or constraints on two origin parameters (p::RBRP$\eta$:\#:\# $\eta$=x, y or z) to leave one free parameter. The rigid body orientation vector will need to be fixed along the axis. For orientation only the rigid body azimuth angle can be refined (mode “A”).
-Occupancies: Consider if atoms are duplicated by the axis and if so lower frac relative to any atoms on the axis
-Improper rotation axes define both an axis and a perpendicular plane. The Cartesian origin must be fixed on the point where the axis meets the plane and the symmetry axis for the rigid body must be aligned with the quaternion axis. In crystal coordinates the origin is fixed and for orientation only the rigid body azimuth angle can be refined (mode “A”).
-Glide planes and screw axes could require constraints similar to the previous examples, but this would occur only in the unlikely event that a molecular fragment has such internal symmetry
+In crystal coordinates: One coordinate in the rigid body origin will need to be fixed on the mirror plane. So that the origin may be refined, you will need to place a constraint hold (see \S\ref{ref:Hold}) on parameter \texttt{RBRPx:}\textit{n}\texttt{:}\textit{m}, \texttt{RBRPy:}\textit{n}\texttt{:}\textit{m}, or \texttt{RBRPz:}\textit{n}\texttt{:}\textit{m}. If located on in a diagonal mirror planes, you will need to place an equivalence between x, y and/or z.   The rigid body orientation vector will need to be fixed along the mirror plane normal, so this can't be refined. Only the rigid body azimuth angle can be refined (mode ``A''). Thus there are three free parameters: two for position and one for orientation.  
+%Occupancies: Consider if atoms are duplicated, if so lower frac relative to atoms on the plane
 
-A Linear rigid body has two orientational degrees of freedom rather than three, since a rotation of the object along the linear axis leaves it unchanged. The rigid body should be defined so that the linear axis falls on one of the allowed Cartesian axes*. How it will be treated depends on the symmetry for the location where it will be placed. 
-General position: when a linear rigid body is placed in a location with no symmetry, there are no restrictions on the origin location or the orientation. The origin can be refined freely and the orientation can be refined in “V” mode (two degrees of freedom).
-Symmetry axis: when a linear body is placed on a symmetry axis, orientation must be engineered to lie on that axis. Such a body has only one degree of freedom, the position along that axis (use appropriate constraints on the origin). The orientation cannot be refined.
+\subparagraph{Rotation axis} The Cartesian origin must be defined on the rigid body's symmetry axis, which will be on an atom or at a midpoint between two or more atoms. Align the rigid body's symmetry axis along a fixed Cartesian axis;  use of x, y, or z for that axis is recommended. 
 
-Symmetry plane: the most common case is a linear rigid body lying in a mirror plane. When inserting, the rigid body symmetry axis must be defined along the normal to that plane. The origin for the rigid body will have two degrees of freedom (use appropriate constraints) and there will be one orientational degree of freedom, to rotate the body around the azimuthal angle (“A” mode). 
+In crystal coordinates: the coordinates for the rigid body origin will need to be constrained to stay on the axis by placing holds (see \S\ref{ref:Hold})  or constraints on two origin parameters (\texttt{RBRPx:}\textit{n}\texttt{:}\textit{m}, \texttt{RBRPy:}\textit{n}\texttt{:}\textit{m}, and/or \texttt{RBRPz:}\textit{n}\texttt{:}\textit{m}.) The rigid body orientation vector will need to be fixed along the axis in crystal coordinates. For orientation only the rigid body azimuth angle can be refined (mode ``A''). 
+Thus there are two free parameters for the body: one for position and one for orientation.  
 
-\section{Example: Inserting rigid bodies}
+\subparagraph{Improper rotation axes} define both an axis and a perpendicular plane. It will be uncommon to find a rigid body on an improper rotation axis, but if this occurs, the Cartesian origin must be fixed on the point where the axis meets the plane and a Cartesian axis must be chosen along the symmetry axis for the rigid body. 
 
-For this, we will approximately duplicate the structure model used in the MOF structure from Silvana Urcia-Romero et al. (2022), DOI:10.1021/acs.cgd.1c01460. The CIFs from this paper can be downloaded for free from https://www.ccdc.cam.ac.uk/structures/search?pid=ccdc:2125626\&issn=1528-7483\&id=doi:10.1021/acs.cgd.1c01460\&sid=ACS. Any of the CIFs from that paper will do. 
+In crystal coordinates,  the origin is fixed to be at the point where the axis and plane intersect in fractional coordinates. The rigid body Cartesian axis must be aligned with the crystallographic rotation axis.  The only degree of freedom for refinement will be the rigid body azimuth angle (mode ``A'').
 
+\subparagraph{Glide planes and screw axes} are unlikely to occur with rigid bodies, as the molecular fragment for the body would have to have internal symmetry that includes translational symmetry; the rigid body would need to be part of an infinite-length molecule. I would be very interested to see an example of this. 
 
-\subsection{Inserting the pyrazinedicarboxylic acid ion rigid body}
+\subsection{Linear Rigid Bodies}
 
-\subsection{Inserting the bipyridine molecule rigid body}
+A linear rigid body has two orientational degrees of freedom rather than three, since a rotation of the object along the linear axis leaves it unchanged. The linear rigid body will usually be defined so that the linear axis falls on one of the Cartesian axes. (Note exception below for a body in a symmetry plane). 
+The specific requirements depend on the symmetry for the location where the inear rigid body will be placed. 
 
+\subparagraph{General position}: when a linear rigid body is placed in a location with no symmetry, there are no restrictions on the origin location or the orientation. The origin can be refined freely and the orientation can be refined in ``V'' mode (with two degrees of freedom) for a total of five refinable parameters. 
+
+\subparagraph{Linear Rigid Body in a Symmetry Plane} 
+This provides a minor challenge, in that there can be only one orientational degree of freedom, since rotation along the rigid body linear axis leaves the body invariant and the body must remain in the plane. The solution to this is that the body orientation must be defined so that the azimuthal axis is normal to the plane so that if refined in ``A'' mode, the body rotates in the plane. The origin can be placed anywhere along the body, but is best in the middle. The origin for the rigid body will have two degrees of freedom (use appropriate constraints). 
+
+\subparagraph{Linear Rigid Body Perpendicular to a Symmetry Plane} 
+In this case, there are no orientational degrees of freedom. The origin must be placed in the middle of the body, and will have two degrees of freedom so that the body can move in the plane (use appropriate constraints). 
+
+\section{Example: Inserting rigid bodies}\label{ref:RBinsertExample}
+
+For this, we will approximately duplicate the structure model used in the MOF structure from Silvana Urcia-Romero \textit{et al.} (2022), DOI:10.1021/acs.cgd.1c01460. The CIFs from this paper can be downloaded for free from \url{https://www.ccdc.cam.ac.uk/structures/search?pid=ccdc:2125626\&issn=1528-7483\&id=doi:10.1021/acs.cgd.1c01460\&sid=ACS}. Any of the CIFs from that paper will do. After the coordinates are read, and the ``Draw Atoms'' or ``Draw Options'' phase tab is selected, the structure will appear as shown in \ref{fig:MOF0}.
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{figures/MOF0.jpg}
+    \caption{The asymmetric unit for the MOF structure being used to demonstrate use of rigid bodies. The pink atom is Co, which is bonded to a bipyridine (half shown), a pyrazinedicarboxylic acid unit and a water molecule. Also present is a $\rm CO_2$ molecule. Note that the view point has been shifted away from the center of the unit cell.}
+    \label{fig:MOF0}
+\end{figure}
+
+\subsection{Example 1: Inserting the pyrazinedicarboxylic acid ion rigid body}
+
+To insert the pyrazinedicarboxylic acid ion rigid body that was previously created, select the ``RB Models'' phase tab. 
+If for some reason the structure is not plotted, select the ``Draw Atoms'' or ``Draw Options'' phase tab and then return to the `RB Models'' tab. 
+The `RB Models'' tab posts the menu labeled ``Edit Body'' and from that menu select the ``Locate \& Insert Rigid Body'' menu command. This will open a window where one can select from the three rigid bodies that were previously defined. The body we want was called ``pzdc''; select this and press OK. The data window will appear, as seen in Fig. \ref{fig:RBI0} and the structure visualization will appear as shown in \ref{fig:MOF1}, where now the rigid body is also displayed. 
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{figures/MOF1.jpg}
+    \caption{The asymmetric unit for the MOF structure with the addition of the pyrazinedicarboxylic acid rigid body in the process of being inserted. The stick figure with green lines for bonds shows the rigid body location and orientation.}
+    \label{fig:MOF1}
+\end{figure}
+
+Our next task will be to orient the pyrazinedicarboxylic acid rigid body on the approximate positions of the atoms that are in that group. This will be very hard to see with these atoms shown as space-filling. Press the ``Ball \& Sticks'' or ``Sticks'' button to change the display according to your preference. As noted before (in \S\ref{ref:RBinsert}) we can identify atoms to be paired by highlighting them. The most easily identified atoms to me are the ring nitrogens and the carboxyilic carbons. In Table \ref{tab:pzatoms} I have provided a list of atoms to be paired. 
+\begin{table}
+    \centering
+    \begin{tabular}{cc}
+     rigid body    & structure \\
+         N2& N13\\
+         N11& N14\\
+         C4& C6\\
+         C8& C7\\
+    \end{tabular}
+    \caption{Easily identifiable paired atoms for the pyrazinedicarboxylic acid rigid body and corresponding atoms in the structure.}
+    \label{tab:pzatoms}
+\end{table}
+Assign these four atoms, as seen in Fig. \ref{fig:RBI2}. Then press the ``Set both'' button and note that the rigid body is now largely superimposed, as seen in Fig. \ref{fig:MOF2} and the assignments table (Fig. \ref{fig:RBI3}) now shows the C and N paired atoms are all within a few tenths of an Ångstrom. The O atoms can be brought into better agreement by adjusting the torsion angles with the sliders.  
+\begin{figure}
+    \centering
+    \includegraphics[width=0.35\linewidth]{figures/RBI2.jpg}
+    \caption{The assignments table for the pyrazinedicarboxylic acid rigid body, which shows how atoms are paired. This is after four atom assignments have been made, but before the rigid body position has been updated.}
+    \label{fig:RBI2}
+\end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{figures/MOF2.jpg}
+    \caption{The pyrazinedicarboxylic acid rigid body superimposed on the structure, in the process of being inserted.}
+    \label{fig:MOF2}
+\end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.35\linewidth]{figures/RBI3.jpg}
+    \caption{The assignments table for the pyrazinedicarboxylic acid rigid body after four atom assignments have been made and the ``Set both'' button has been used to superimpose the bodies. Note the close distances between the C and N atom pairs.}
+    \label{fig:RBI3}
+\end{figure}
+
+Finally, complete the rigid body insertion process by pressing the ``Add'' button. The two sets of superimposed atoms are replaced by a single set, where the bonds are now colored in orange, to indicate that this is a rigid body, as seen in \ref{fig:MOF3}. The positions of the rigid body atoms are updated in the Atoms tab and the coordinates and $\rm U_{iso}$ values are shaded to indicate that these values are generated from the rigid body, as seen in Fig. \ref{fig:RBI4}.
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{figures/MOF3.jpg}
+    \caption{The pyrazinedicarboxylic acid ion rigid body after insertion. The orange bonds indicate that this is a rigid body.}
+        \label{fig:MOF3}
+\end{figure}
+\begin{figure}
+        \centering
+        \includegraphics[width=0.5\linewidth]{figures/RBI4.jpg}
+            \caption{The contents of the Atoms tab after the pyrazinedicarboxylic acid ion rigid body has been inserted. Note the shading of the coordinates and $\rm U_{iso}$ values to indicate that these values are generated from the rigid body. }
+        \label{fig:RBI4}
+    \end{figure}
+    
+\subsection{Example 2A: Inserting the bipyridine molecule rigid body}
+Before beginning this example, you should save the GSAS-II project so that we can return to this point, where only the first rigid body has been inserted. 
+This rigid body is a bit different from the previous because it has internal symmetry. It is duplicated by a center of symmetry. This $\overline{1}$ located at (0,$\frac{1}{2}$,0), so this is where the origin of this rigid body needs to be placed. 
+% would be nice if this worked, but the RB Models tab overrides this:
+% The graphics will be a bit easier to use if the view point is placed at this location. Change the ``View Point'' setting on the Draw Options tab to \texttt{0 0.5 0} and so that you see the same plot as I will show, change the ``View Dir.'' setting to \texttt{0 0 1} so that the view is down \textit{c}.
+
+Again, select the ``RB Models'' phase tab, if needed. 
+To insert the bipyridine molecule rigid body from the ``half-bipy'' rigid body that was previously created; again use the ``Edit Body''/``Locate \& Insert Rigid Body'' menu command. This will open a window where one can select from the three rigid bodies that were previously defined. The body we want was called ``half-bipy''; select this and press OK. The data window will appear similar to what was seen before (Fig. \ref{fig:RBI0}) and the half-molecule bipyridine rigid body is also displayed. 
+
+ To set the origin location, change the ``Origin'' y value to 0.5 at the top of the data window and select the ``Lock'' selection so this does not get changed accidentally. At this point, given that the origin is fixed, it is not that hard to use the Alt+Left mouse and Alt+Middle mouse drag motions to align the rigid body to the atoms in the structure. This will not be easy to explain in writing how to do this, but let me try. Note that the following paragraph is optional as the following one duplicates the alignment process.
+
+The initial plot appears with the rigid body approximately opposite where we want it, as seen in Fig. \ref{fig:RBI5}. Holding the Alt key down, drag the middle mouse button (Alt+middle mouse) vertically until the two rings are approximately aligned, as seen in Fig. \ref{fig:RBI6}. While this looks to be fairly reasonable alignment, rotating the view by approximately $90^\circ$, by dragging with the left mouse button (no Alt key) produces a view that shows the rings are not in the same plane, as seen in Fig. \ref{fig:RBI7}. Rotation of the rigid body using Alt+left mouse, will bring the rings to be closely overlapped. 
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{figures/RBI5.jpg}
+    \caption{Initial location of the half-bipyridine molecule rigid body during the insertion process.}
+    \label{fig:RBI5}
+\end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.45\linewidth]{figures/RBI6.jpg}
+    \caption{Location of the half-bipyridine molecule rigid body during the insertion process after rotation using the Alt+middle mouse button.}
+    \label{fig:RBI6}
+\end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.4\linewidth]{figures/RBI7.jpg}
+    \caption{Location of the half-bipyridine molecule rigid body during the insertion process after rotation using the Alt+middle mouse button and rotation of the view.}
+    \label{fig:RBI7}
+\end{figure}
+
+The other way to align the rigid bodies is to assign atoms, as was done before.
+Note that the rigid body N1 atom must be paired to the N15 atom in the structure. The two rigid body atoms bonded to N1 are C2 and C3, which can be seen from the atom labels in the plot. In the structure, it can be determined that C8 and C12 are bonded to N15 using the ``Crystal Highlight'' option. As before, assign these atoms. Assign rigid body atoms C2, N1, and C3, respectively, to structure atoms C8, N15, and C12, respectively, and press the ``Set Orientation'' button. (Note that it does not matter if C8 is assigned to C2 or to C3, so the two C atoms assignments could be reversed.)
+
+Finally, press ``Add'' to complete the insertion of this rigid body. The half of the bipyridine molecule will now appear with orange bonds, as was seen before for the pyrazinedicarboxylic acid. 
+
+\subsection{Example 2B: Inserting the bipyridine molecule rigid body with a duplicate atom}
+The last example will be to repeat the previous rigid body insertion, but to use a version of the rigid body that includes atoms that are duplicated by symmetry. The rigid body insertion in previous step needs to be reversed before this step can be performed. Either reload the GSAS-II project (\texttt{.gpx}) file that was saved in the last step or delete the rigid body insertion by selecting the \texttt{half-bipy:0} body on the ``RB Models'' tab and then press the ``Delete'' button. 
+
+Follow approximately the same process as before to insert the bipyridine molecule rigid body. Again use the ``Edit Body''/``Locate \& Insert Rigid Body'' menu command, but this time use the ``half-bipy+1'' rigid body that was previously created, . This will open a window where one can select from the three rigid bodies that were previously defined. Again, set the origin location by changing the ``Origin'' y value to 0.5 at the top of the data window and select the ``Lock'' selection. Assign rigid body atoms C2, N1, and C3, respectively, to structure atoms C8, N15, and C12, respectively, and press the ``Set Orientation'' button. 
+
+One important extra step is needed relative to the previous example. While atoms C1-C5, N1, and H1-H4 match atoms in the structure, there is no matching atom for C6. The default action would be to pair this atom with one of the $\rm CO_2$ C atoms, but here we need is for GSAS-II to add this atom to the structure when the rigid body is inserted. From the pull-down menu in the ``Assign as atom'' for C6, select the ``Create new'' option. Then press the ``Update Assignments'' button and the assignments table should appear, as in seen in Fig. \ref{fig:RBI8}. 
+\begin{figure}
+    \centering
+    \includegraphics[width=0.35\linewidth]{figures/RBI8.jpg}
+    \caption{The assignments table for the bipyridine molecule+1 rigid body. Note that atom C6 has been designated as a new atom.}
+    \label{fig:RBI8}
+\end{figure}
+After the ``Add'' button has been pressed, the rigid body information is updated in the Atoms tab, which appears as in seen in Fig. \ref{fig:RBI9}. Note that the C6 atom in the rigid body has been added to the atoms list as atom \#29 (the second atom labeled as RbC29.) Note that since this atom is a symmetry duplicate, the occupancy has been set as zero during the insertion process. 
+\begin{figure}
+    \centering
+    \includegraphics[width=0.75\linewidth]{figures/RBI9.jpg}
+    \caption{The contents of the Atoms tab after the bipyridine molecule+1 rigid body has been inserted. The new atom from the rigid body has been inserted as the last atom.}
+    \label{fig:RBI9}
+\end{figure}
 \section{TLS Displacement Parameters for Rigid Bodies}\label{ref:RBTLS}
 
+Translation-Libration-Screw (TLS) representation was initially presented by Verner Schomaker\index{Schomaker, V.} and Ken Trueblood\index{Trueblood, K.} in a seminal 1968 \textit{Acta Cryst.} paper (DOI: 10.1107/S0567740868001718) as a mechanism for understanding the motion of rigid bodies from their ADPs. They expanded the representation developed by D. W. J. Cruickshank\index{Cruickshank, D.} who used two tensors to describe group motion, a six-term tensor for anisotropic translational motion, that is labeled ``T'' (for translations) and another a six-term tensor for anisotropic rotational  motion,  labeled  ``L'' for libration.  Schomaker and Trueblood added a third eight-term ``S'' tensor (named for screw motion, which combines translations and librations.) This is now known as the TLS model. Note that for a body that has an origin placed at the center of the rotary motion, the S terms are all zero, greatly simplfying the full TLS representation from 20 terms to 12. For an isolated body, the center of rotation will be the center of mass, but in a crystal, bonds and Van der Waals interactions make the center of rotation less clear. 
 
-(started! \ref{needs more work})
+Initially, crystallographers fit individual anisotropic ADP values for each atom in the group and then fit TLS terms to the ADP values to extract information about body's motions. Now when TLS fitting is used, the model is invoked directly and ADP values are generated from the T, L and S terms. 
+
+Note that the effect of the T matrix terms, if asymmetrical, will be to have different motion in different crystallographic directions, but motion of each atom due to the contribution of T will be the same. In contrast, the L matrix terms will have greater impact the farther an atom is from the origin of the body. S terms have both effects. In GSAS-II, when atoms in a rigid body are set as isotropic, the ADP will not show the anisotropy generated by the T, L and S terms, as the $\rm U_{iso}$ value will show an average for all directions, but if the rigid body atoms are set to be anisotropic, the anisotropy will be clear from the $\rm U_{\it ij}$ values. In powder diffraction, one seldom has sufficient data to refine as many as six anisotropic parameters for an atom. However, with rigid bodies, since these values are being generated from the TLS terms, there is no disadvantage to using anisotropic parameters for atoms in a rigid body. 
+
+\subparagraph{Fitting TLS terms.} With powder data, I never try to fit all 20 TLS terms. I will assume that my origin choice is close enough to the center of rotation to leave the S terms as all zero. Even the remaining 12 terms may be too many to refine reliably. I may refine only the diagonal T and L terms (for a total of 6 terms) and have been known to even constrain the diagonal terms to all be the same, so that I have only 2 terms to refine for the entire group, but that still allows me to have a feel if rotation or translation is the primary form of group motion. 

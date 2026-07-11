@@ -117,7 +117,7 @@ The process of creating a new variable in the GSAS-II GUI is largely the same as
 
 One major role for new variable constraints is to implement refinement of representational analysis distortion modes. This will be discussed in \S\ref{ref:RA}. These are typically created by reading in a CIF created on the ISODISTORT web site. 
 
-\subsection{Parameter holds:}
+\subsection{Parameter holds:}\label{ref:Hold}
 Parameter holds are used to prevent a parameter from being fit. These are typically used where a single refine flag will set several parameters to be refined, but one of those parameters should not be fit. These are not commonly needed. 
 
 An example where a parameter hold would be used would be with a structure in a polar space group. As was described in \S\ref{ref:polar}, one or more coordinates must be fixed. In the example used in \S\ref{ref:polar},  with space group $P 2_1$, the origin for the $b$ axis is undefined. One likely want to vary all the atom coordinates except one of the y values. Fixing a ``dAy'' parameter for one atom will prevent that one variable from being refined. 

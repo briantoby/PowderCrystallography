@@ -198,3 +198,27 @@ Marquardt damping was first developed by Kenneth Levenberg\index{Levenberg, K.} 
 \section{Model Failure}
 
 When the Marquardt damping factor is large enough that the off-diagonal terms in the Hessian are now negligible, then GSAS-II produces a warning message that there is extreme correlation to the point that the refinement is progressing poorly. Should Marquardt damping factor fail to prevent $\chi^2$ from increasing, GSAS-II will discontinue refinement with an ``ouch'' error message. Both of these are indications that the model must be rethought. This could be an indication that the model is missing symmetry: Should one try to refine a model with symmetry that lacks a mirror place that is indeed present, the atoms that are related by that mirror plane will be highly correlated. (They would be completely correlated if the data were noise- and systematic error free.) In other cases, you may be trying to fit too many parameters and you will need to consider use of restraints or, more likely, constraints to reduce the model complexity, as is introduced in Chapter \ref{Chap:simplify} and discussed in the following chapters. 
+
+\section{For More Information}
+
+\begin{itemize}
+\item 
+\textit{Mathematical Techniques in Crystallography and Materials Science}, 3rd Ed. (2004) E. Prince, Springer. DOI: 10.1007/978-3-642-18711-7
+\begin{quote}
+This is a short and very terse book. Not easy reading, but beloved by a generation of mathematical crystallographers. 
+\end{quote}
+
+\item\textit{International Tables for Crystallography
+Volume C: Mathematical, Physical and Chemical Tables}, (2021) T. R. Welberry ed. 
+DOI: 10.1107/97809553602060000117
+\begin{quote}
+This is a comprehensive reference on diffraction, but does have material on minimization.  Your library/institution may make this available on-line. 
+\end{quote}
+
+\item 
+\textit{Fundamentals of Crystallography.} Third Edition (2011). C. Giacovazzo, H. L. Monaco, G. Artioli, D. Viterbo, M. Milaneso, G. Ferraris, G. Gilli, P. Gilli, G. Zanotti and M. Catti. Edited by C. Giacovazzo. IUCr Texts on Crystallography No. 15, IUCr/Oxford University Press.
+\begin{quote}
+I have the 2nd edition, which has a nice chapter on crystallographic computing. 
+\end{quote}
+
+\end{itemize}

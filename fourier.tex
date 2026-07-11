@@ -104,7 +104,7 @@ voids in the structure. If a phase is selected and then the ``Draw Atoms`` tab i
 sweeps through the unit cell with the specified grid spacing and locates points where there are no atoms (as determined by their space-filling radius) within a specified distance. Dots are then placed at those locations where there are no atoms.\index{void map}
     
 \section{Pawley Fitting}\label{ref:Pawley}\index{Pawley fitting|textbf}
-There are effectively two approaches to fitting x-ray diffraction patterns. In Rietveld fitting, peak positions are determined from a phase's lattice parameters and intensities are determined from the crystallographic structure. In the second approach, individual peak fitting, which is also called sometimes called pattern deconvolution, both the peak positions and the peak intensity are treated as independent varied parameters. Peak profiles may or may not be treated as individual variables. GSAS-II implements both methods, where peak fitting is discussed in Chapter \ref{Chap:peakfitting}. In the late 1970's Stuart Pawley\index{Pawley, S.} developed a program he called ALLHKL\index{software!ALLHKL} that blended the two approaches. Peak positions were determined from lattice parameters, but peak intensities were fit directly as least-squares variable parameters. A bit of finesse was needed to decide when two reflections were too closely overlapped to deal with as individual reflections, but use of lattice parameters to determine peak positions is greatly advantageous when one has two closely-spaced peaks. Without that constraint, the peak tends to be fit as a single peak somewhere between the two actual positions. Note that in a Pawley fit, all of the usual parameters that determine background, peak positions and peak shapes can be refined in conjunction with the parameters, but care should be taken to only refine those terms after fairly good fits are obtained for reflection intensities. Parameters that determine peak intensities, such as atomic positions, texture or scale factors cannot be refined in a Pawley fit, of course.
+There are effectively two approaches to fitting x-ray diffraction patterns. In Rietveld fitting, peak positions are determined from a phase's lattice parameters and intensities are determined from the crystallographic structure. In the second approach, individual peak fitting, which is also called sometimes called pattern deconvolution, both the peak positions and the peak intensity are treated as independent varied parameters. Peak profiles may or may not be treated as individual variables. GSAS-II implements both methods, where peak fitting is discussed in Chapter \ref{Chap:peakfitting}. In the late 1970's Stuart Pawley\index{Pawley, G.} developed a program he called ALLHKL\index{software!ALLHKL} that blended the two approaches. Peak positions were determined from lattice parameters, but peak intensities were fit directly as least-squares variable parameters. A bit of finesse was needed to decide when two reflections were too closely overlapped to deal with as individual reflections, but use of lattice parameters to determine peak positions is greatly advantageous when one has two closely-spaced peaks. Without that constraint, the peak tends to be fit as a single peak somewhere between the two actual positions. Note that in a Pawley fit, all of the usual parameters that determine background, peak positions and peak shapes can be refined in conjunction with the parameters, but care should be taken to only refine those terms after fairly good fits are obtained for reflection intensities. Parameters that determine peak intensities, such as atomic positions, texture or scale factors cannot be refined in a Pawley fit, of course.
 
 The result of a Pawley fit provides an ideal fit to the crystallographic fit to a powder diffraction pattern, in that all reflection intensities are optimized to provide the best fit possible, which would match that of an ideal crystallographic model. The use of a Pawley fit provides a good starting point for fitting the non-crystallographic parameters, as has been discussed in Chapter \ref{Chap:profile}. Likewise, as has been discussed in \S\ref{ref:beststruturefit}, at the final stages of a refinement project, a Pawley fit provides a measure for what R-factor or reduced $\chi^2$ value would be obtained in an ideal crystallographic fit, taking into imperfections in peak shapes, background fitting, etc. A Pawley fit can also be used to subtract out peaks from an impurity phase that has a known unit cell, but not a known structure, or for a phase that will not be fit well due to texture. Aluminum sample cans in neutron diffraction are an example of the latter case. 
 
@@ -153,3 +153,30 @@ To perform a Le Bail fit, go to the Phase’s Data tab (or in “SeparateHistPha
     \caption{Window to select a choice for initializing the $F_{calc, hkl}$ values for a Le Bail fit.  ``Yes'' selects the original Le Bail method where all values are set to 1 and ``No'' uses the Von Dreele approach, where the structure input is used.}
     \label{fig:LeBail1}
 \end{figure}
+
+\section{For More Information}
+
+\begin{itemize}
+\item\textit{Fundamentals of Powder Diffraction and Structural Characterization of Materials} (2025), P. Y. Zavalij and V. K. Pecharsky, Pecharsky \& Zavalij). Springer, DOI: 10.1007/978-3-031-91504-8
+\begin{quote}
+There is a short chapter on Fourier techniques and some discussion of Pawley and Le Bail extraction here.
+\end{quote}
+
+\item\textit{Fundamentals of Crystallography.} Third Edition (2011). C. Giacovazzo, H. L. Monaco, G. Artioli, D. Viterbo, M. Milaneso, G. Ferraris, G. Gilli, P. Gilli, G. Zanotti and M. Catti. Edited by C. Giacovazzo. IUCr Texts on Crystallography No. 15, IUCr/Oxford University Press.
+\begin{quote}
+There is some discussion of Fourier techniques here.
+\end{quote}
+
+\item 
+\textit{The Fast Fourier Transform} (1974), E. O. Brigham, Prentice-Hall. 
+\begin{quote}
+As a graduate student, I found this book very helpful for understanding Fourier transforms. The next two URLs may be even more valuable.
+\end{quote}
+
+\item
+The Crystallographic Resources at Otterbein University website provides an online Fourier transform computation that I think is quite educational, 
+\url{https://djohnston66.gitlab.io/fft/}
+
+\item
+Kathryn Cowtan\index{Cowtan, K.} has a ``Picture Book of Fourier Transforms'' website that has some very educational illustrations, \url{http://www.ysbl.york.ac.uk/~cowtan/fourier/fourier.html}
+\end{itemize}

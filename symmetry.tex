@@ -362,7 +362,7 @@ Groups are built from operators, which for our purposes we will consider as givi
 
  If we consider the mirror plane operator we saw before, x,y,-z, and combine that with x,y,z, we create a second group with just two elements, since x,y,-z operated on itself gives x,y,z and x,y,-z operated on x,y,z gives back x,y,-z. Combined with a lattice, these two operators will generate a space group \textit{P m} using short-form Hermann-Mauguin notation (or \textit{P }1 1 \textit{m} in long-form Hermann-Mauguin notation, where the 1 indicates there is no symmetry along the \textit{a}or \textit{b} axes.) Some head-scratching about mirror planes will show that a lattice must have an axis that is at right angle to the mirror plane (if not lattice points will not be reproduced at the correct positions), so \textit{P m} is only consistent with a monoclinic unit cell. When I say only consistent with monoclinic, this does not preclude a unit cell that appears to be of higher symmetry, for example it could have all three cell axes appear as 90° within arbitrarily small experimental errors, but only one of these angles is constrained by symmetry to be 90° and thus the cell would not be considered to be orthorhombic unless additional symmetry is present that requires all angles to be 90°.
 
- We can also take the \textit{P m} space group and add an additional centering operation to create a new space group. Let’s add a B-center which means operator ½+x,y,½+z. When this is operated on x,y,-z we create fourth additional operator, ½+x,y,½-z. Using these four operators on each other, we generate no others. Thus, the space group \textit{B }1 1 \textit{m} has four operators: x,y,z; x,y,-z; ½+x,y,½+z; and ½+x,y,½-z. Note that we used only two symmetry operations (the mirror plane and centering) to generate these four operators. We call those two operators the \textbf{generators}\index{generator|textbf} because those two operators can be used generate the entire group and those generators are thus included in the Hermann-Mauguin name. It is also worth noting that Volume A of the \textit{International Tables for Crystallography} does not include \textit{B} 1 1 \textit{m} as one of the 230 space groups, but a closer look at the volume one can find \textit{B }1 1 \textit{m} as one of the non-standard settings for space group \textit{A }1 \textit{m }1. 
+ We can also take the \textit{P m} space group and add an additional centering operation to create a new space group. Let’s add a B-center which means operator ½+x,y,½+z. When this is operated on x,y,-z we create fourth additional operator, ½+x,y,½-z. Using these four operators on each other, we generate no others. Thus, the space group \textit{B }1 1 \textit{m} has four operators: x,y,z; x,y,-z; ½+x,y,½+z; and ½+x,y,½-z. Note that we used only two symmetry operations (the mirror plane and centering) to generate these four operators. We call those two operators the \textbf{generators}\index{crystallographic generator|textbf} because those two operators can be used generate the entire group and those generators are thus included in the Hermann-Mauguin name. It is also worth noting that Volume A of the \textit{International Tables for Crystallography} does not include \textit{B} 1 1 \textit{m} as one of the 230 space groups, but a closer look at the volume one can find \textit{B }1 1 \textit{m} as one of the non-standard settings for space group \textit{A }1 \textit{m }1. 
  The 230 three dimensional unique space groups tabulated in the \textit{International Tables for Crystallography, Volume A} only reflects only the standard settings for space groups. 
  Just as the \textit{International Tables }lists \textit{B}\ 1\ 1\ \textit{m} as one of the non-standard settings for space group \textit{A}\ 1 \textit{m}\ 1, one could also consider F centering or I centering with a mirror plane and generate other versions of space groups. 
  There are a large number of non-standard space groups. 
@@ -467,3 +467,50 @@ It should be noted that some symmetry operations are purely translational while 
     \caption{Information displayed by GSAS-II for the polar space group $P 2_1$}
     \label{fig:P21}
 \end{figure}
+
+\section{For More Information}
+
+\begin{itemize}
+\item 
+\textit{International Tables for Crystallography, Volume A: Space-group symmetry.} M. I. Aroyo, ed. (2016). 6th ed. Chichester: Wiley, for the International Union of Crystallography. DOI:  10.1107/97809553602060000114. 
+\begin{quote}
+This is the canonical reference for space groups. The pre-1980s Volume 1 is actually closer to what GSAS-II uses. If your library does not have a physical copy of Volume A, they may offer on-line access.
+\end{quote}
+
+\item \textit{Space Groups for Solid State Scientists}, 3rd Edition (2013), G. Burns and A.M. Glazer, Academic Press, DOI: 10.1016/C2011-0-05712-5. 
+\item
+\textit{Symmetry in Crystallography, Understanding the International Tables}, (2012) P. G. Radaelli, Oxford Publ. for the International Union of Crystallography. DOI: 10.1002/crat.201200325.
+\begin{quote}
+The above two books explain how to read the \textit{International Tables, Volume A}.
+\end{quote}
+
+\item 
+\textit{Fundamentals of Crystallography.} Third Edition (2011). C. Giacovazzo, H. L. Monaco, G. Artioli, D. Viterbo, M. Milaneso, G. Ferraris, G. Gilli, P. Gilli, G. Zanotti and M. Catti. Edited by C. Giacovazzo. IUCr Texts on Crystallography No. 15, IUCr/Oxford University Press.
+\begin{quote}
+This is a weighty, comprehensive, and modern book on crystallography. If you are going to buy anything, this is what I would recommend. 
+\end{quote}
+
+\item
+\textit{X-Ray Structure Determination: A Practical Guide.} 2nd ed., (1989). Stout, George H., and Lyle H. Jensen. John Wiley \& Sons.
+\begin{quote}
+I find this book easy to read, perhaps because I bought it for a course as an undergrad and have gone through it so many times. 
+Anything in this book on experimental practice is  decades out of date.
+\end{quote}
+\item
+Note that there are dozens, perhaps hundreds, of books that cover crystallographic symmetry. If you have a favorite, use it. 
+\item 
+There is quite a wealth of symmetry information on various web sites. 
+\begin{itemize}
+\item
+The Bilbao Crystallographic Server, \url{https://cryst.ehu.es/cryst/} offers both elementary and very advanced tables and computational tools. 
+\item
+The Cambridge Crystallographic Data Center provides ``CSD Symmetry'' as a downloadable database, \url{https://www.ccdc.cam.ac.uk/solutions/software/csdsymmetry/}. I have not used this, but the CCDC does lots of good things. 
+\item 
+Jeremy Cockcroft\index{Cockcroft, J.} has extensive information on symmetry on the web,
+\url{http://img.chem.ucl.ac.uk/sgp/mainmenu.htm}
+\item 
+The 
+Crystallographic Resources at Otterbein University
+website, \url{https://spacegroups.symotter.org/} is an excellent companion to the \textit{International Tables, Volume A}. The 3-D representations here are much easier to understand than the 2-D figures in the book. 
+\end{itemize}
+\end{itemize}
