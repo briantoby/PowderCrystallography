@@ -1,15 +1,28 @@
+\newif\ifKindle
+% \Kindletrue  % Uncomment this line to compile the PDF version for Kindle direct publishing
+\Kindlefalse   % Uncomment this line to compile the distribution PDF version
+
 % options for URLS
 \usepackage{xurl}
 \usepackage{hyperref}
-\hypersetup{
-    colorlinks=true,
-    linkcolor=blue,
-    filecolor=magenta,      
-    urlcolor=cyan,
-    pdftitle={Powder Crystallography with GSAS-II},
-    pdfpagemode=FullScreen,
+\ifKindle
+    \hypersetup{draft=true}
+\else
+    \hypersetup{
+        colorlinks=true,
+        linkcolor=blue,
+        filecolor=magenta,      
+        urlcolor=cyan,
+        pdftitle={Powder Crystallography with GSAS-II},
+        pdfpagemode=FullScreen,
     }
-\urlstyle{sf}
+    \urlstyle{sf}
+\fi
+\ifKindle
+    \usepackage{wrapfig}
+%\else
+%    Use this text for electronic PDF
+\fi
 
 % Book title/title page customization
 \newcommand{\bookname}{Crystallographic Powder Diffraction Analysis with GSAS-II}
@@ -21,3 +34,4 @@
 \newcommand{\authorsubtitle}{Naperville IL, USA}
 % Author subtitle could be a university or a geographical location
 \newcommand{\bookedition}{Edition 0.9.0 -- Preview version}
+

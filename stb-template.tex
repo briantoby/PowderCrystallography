@@ -29,7 +29,7 @@
 \usepackage{subcaption}
 \usepackage{placeins}
 
-% supposedly this puts boxes around figures. 1st try did not work
+% this puts boxes around figures
 \usepackage{float}
 \floatstyle{boxed}  % place figures in boxes
 \restylefloat*{figure} % * for caption inside
@@ -67,7 +67,7 @@
 
 % ---- Half Title Page ----
 % current geometry will be restored after title page
-\newgeometry{top=1.75in,bottom=.5in}
+\newgeometry{top=1.75in,bottom=.5in,left=1in}
 \begin{titlepage}
 \begin{flushleft}
 
@@ -106,7 +106,7 @@
 
 % ---- Title Page ----
 % current geometry will be restored after title page
-\newgeometry{top=1.75in,bottom=.5in}
+\newgeometry{top=1.75in,bottom=.5in,left=1in}
 \begin{titlepage}
 \begin{flushleft}
 
@@ -184,4 +184,9 @@ license.\end{flushleft}
 \backmatter
 \addcontentsline{toc}{chapter}{Index}
 \printindex
+\ifKindle
+    \input{AboutTheCover} % add this only for the print copy
+%\else
+%    Use this text for electronic PDF
+\fi
 \end{document}
