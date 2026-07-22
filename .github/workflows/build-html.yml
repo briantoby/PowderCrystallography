@@ -25,7 +25,8 @@ jobs:
         run: |
           mkdir -p _html
           #make4ht -u -f html5 -d _html stb-template.tex "mathjax,fn-in"
-          make4ht -u -f html5 -d _html stb-template.tex "mathjax,fn-in" "-cunihtf -utf8"
+          make4ht -u -f html5 -d _html -e stb-template.mk4 stb-template.tex "mathjax,fn-in"
+          #make4ht -u -f html5 -d _html stb-template.tex "mathjax,fn-in" "-cunihtf -utf8"
 
       - name: Upload HTML artifact
         uses: actions/upload-artifact@v4
