@@ -1,11 +1,15 @@
 \newif\ifKindle
 % \Kindletrue  % Uncomment this line to compile the PDF version for Kindle direct publishing
 \Kindlefalse   % Uncomment this line to compile the distribution PDF version
+\newif\ifCover
+%\Covertrue  % Uncomment this line to include the cover into the PDF version
+\Coverfalse   % Uncomment this line to compile the distribution PDF version
 
 % options for URLS
 \usepackage{xurl}
 \usepackage{hyperref}
 \ifKindle
+    \usepackage{wrapfig}
     \hypersetup{draft=true}
 \else
     \hypersetup{
@@ -18,10 +22,10 @@
     }
     \urlstyle{sf}
 \fi
-\ifKindle
+
+\ifCover
+    \usepackage{pdfpages} % Required to include external PDFs
     \usepackage{wrapfig}
-%\else
-%    Use this text for electronic PDF
 \fi
 
 % Book title/title page customization
@@ -31,7 +35,8 @@
 
 \newcommand{\booklicense}{Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0, \url{https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en})}
 \author{Brian H. Toby}
-\newcommand{\authorsubtitle}{Naperville IL, USA}
+\newcommand{\authorsubtitle}{Advanced Photon Source\\
+Argonne National Laboratory}
 % Author subtitle could be a university or a geographical location
 \newcommand{\bookedition}{Edition 0.9.0 -- Preview version}
 

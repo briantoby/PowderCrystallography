@@ -63,6 +63,12 @@
 
 % Content Starts Here
 \begin{document}
+\ifCover
+    % 1. Insert Front Cover
+    % pagecommand={} ensures standard header/footers are suppressed on the cover
+    \includepdf[pages=1]{figures/FrontCoverPreview.pdf} 
+\else
+
 \frontmatter
 
 % ---- Half Title Page ----
@@ -96,6 +102,9 @@
 
 \end{flushleft}
 \end{titlepage}
+
+\fi
+
 \restoregeometry
 % ---- End of Half Title Page ----
 
@@ -156,6 +165,7 @@
 \thispagestyle{empty}
 
 \begin{flushleft}
+Use of the Advanced Photon Source, an Office of Science User Facility operated for the U.S. Department of Energy (DOE) Office of Science by Argonne National Laboratory, was supported by the U.S. DOE under Contract No. DE-AC02-06CH11357. \\
 \vspace*{\fill}
 This book was typeset using \LaTeX{} software on the overleaf.com website using the Science Textbook format from Richard R. Masters (\url{https://github.com/ironmeld/science-textbook-template}).\\
 \vspace{\fill}
@@ -189,4 +199,11 @@ license.\end{flushleft}
 %\else
 %    Use this text for electronic PDF
 \fi
+
+\ifCover
+    % Insert About Cover & rear cover
+    \input{AboutTheCover} % add this only for the print copy
+    \includepdf[pages=1]{figures/RearCoverPreview.pdf} 
+\fi
+
 \end{document}
