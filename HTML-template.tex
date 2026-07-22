@@ -1,0 +1,188 @@
+% this is a slightly customized version of the Science Textbook template from Richard R. Masters
+% (https://github.com/ironmeld/science-textbook-template).
+\documentclass{book}
+\input{settings}  % get settings from an external file
+
+% add defs for some commonly used Greek letters
+\DeclareUnicodeCharacter{03B8}{\ensuremath{\theta}}
+\DeclareUnicodeCharacter{03BB}{\ensuremath{\lambda}}
+\DeclareUnicodeCharacter{03C0}{\ensuremath{\pi}}
+\DeclareUnicodeCharacter{03C3}{\ensuremath{\sigma}}
+\DeclareUnicodeCharacter{03B1}{\ensuremath{\alpha}}
+\DeclareUnicodeCharacter{03B2}{\ensuremath{\beta}}
+\DeclareUnicodeCharacter{03B3}{\ensuremath{\gamma}}
+\DeclareUnicodeCharacter{2061}{ }
+
+% Create convenient commands \booktitle and \bookauthor
+\makeatletter
+\newcommand{\booktitle}{\@title}
+\newcommand{\bookauthor}{\@author}
+\makeatother
+
+% This utf8 declaration is not needed for versions of latex > 2018 but may
+% be helpful for older software. Eventually it may not be worth keeping.
+\usepackage[utf8]{inputenc}  
+\usepackage{fix-cm}  % this package allows large \fontsize
+\usepackage{tikz}    % this is for graphics. e.g. rectangle on title page
+\usepackage{amsmath} % Used by equations
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{placeins}
+
+% this puts boxes around figures
+\usepackage{float}
+\floatstyle{boxed}  % place figures in boxes
+\restylefloat*{figure} % * for caption inside
+
+% The following dimensions specify 4.75" X 7.5" content on 6 3/8" by 9 1/4"
+% paper. The paper width and height can be tweaked as required and the content
+% should size to fit within the margins accordingly.
+%
+% The (inside) bindingoffset should be larger for books with more pages. Some
+% standard recommended sizes are .375in minimum up to 1in for 600+ page books.
+% Sizes .75in and .875in are also recommended roughly at 150 and 400 pages.
+\usepackage[bindingoffset=0.625in,
+            left=.5in, right=.5in,
+            top=.8125in, bottom=.9375in,
+            paperwidth=6.375in, paperheight=9.25in]{geometry}
+% Here is an alternative geometry for reading on letter size paper:
+% \usepackage[margin=.75in, paperwidth=8.5in, paperheight=11in]{geometry}
+
+\renewcommand{\contentsname}{Table of Contents} % default is {Contents}
+\usepackage{makeidx}
+%\makeindex % Initialize an index so we can add entries with \index
+
+% ---- TOC: reserve more width for section numbers (e.g., 12.10) ----
+\makeatletter
+\renewcommand*\l@section{\@dottedtocline{1}{1.5em}{3.2em}}
+\makeatother
+\makeatletter
+\renewcommand*\l@subsection{\@dottedtocline{2}{3.8em}{4.0em}}
+\makeatother
+% -------------------------------------------------------------------
+
+% Content Starts Here
+\begin{document}
+%\ifCover
+%    % 1. Insert Front Cover
+%    % pagecommand={} ensures standard header/footers are suppressed on the cover
+%    \includepdf[pages=1]{figures/FrontCoverPreview.pdf} 
+%\else
+%
+%\frontmatter
+%
+% ---- Half Title Page ----
+% current geometry will be restored after title page
+%\newgeometry{top=1.75in,bottom=.5in,left=1in}
+%\begin{titlepage}
+%\begin{flushleft}
+%
+% Title
+%
+%\textbf{\fontfamily{qcs}\fontsize{30}{54}\selectfont \bookname \\}
+%
+% Draw a line 4pt high
+%\par\noindent\rule{\textwidth}{4pt}\\
+%
+% Subtitle
+% Shaded box from left to right. Text node is midway (centered).
+%\begin{tikzpicture}
+%\shade[bottom color=lightgray,top color=white]
+%    (0,0) rectangle (\textwidth, 1.5)
+%    node[midway] {\textbf{\large \textit{\booksubtitle}}};
+%\end{tikzpicture}
+
+% Edition Number
+%\begin{flushright}
+%\Large \bookedition
+%\end{flushright}
+%
+% \vspace{\fill}
+%\vspace{\fill}
+%
+%\end{flushleft}
+%\end{titlepage}
+%
+%\fi
+
+\restoregeometry
+% ---- End of Half Title Page ----
+
+
+% No page numbers on the Frontispiece page
+\thispagestyle{empty}
+
+
+% ---- Title Page ----
+% current geometry will be restored after title page
+\newgeometry{top=1.75in,bottom=.5in,left=1in}
+\begin{titlepage}
+\begin{flushleft}
+
+% Title
+\textbf{\fontfamily{qcs}\fontsize{30}{54}\selectfont \bookname\\}
+
+% Draw a line 4pt high
+\par\noindent\rule{\textwidth}{4pt}\\
+
+% Shaded box from left to right with Subtitle
+% The text node is midway (centered).
+\begin{tikzpicture}
+\shade[bottom color=lightgray,top color=white]
+    (0,0) rectangle (\textwidth, 1.5)
+    node[midway] {\textbf{\large \textit{\booksubtitle}}};
+\end{tikzpicture}
+
+% Edition Number
+\begin{flushright}
+\Large \bookedition
+\end{flushright}
+
+\vspace{\fill}
+
+% Author and Location
+\textbf{\large \bookauthor}\\[3.5pt]
+\textbf{\large \textit{\authorsubtitle}}
+
+\vspace{\fill}
+
+\end{flushleft}
+\end{titlepage}
+\restoregeometry
+% ---- End of Title Page ----
+
+% Do not show page numbers on colophon page
+\thispagestyle{empty}
+
+\begin{flushleft}
+Use of the Advanced Photon Source, an Office of Science User Facility operated for the U.S. Department of Energy (DOE) Office of Science by Argonne National Laboratory, was supported by the U.S. DOE under Contract No. DE-AC02-06CH11357. \\
+\vspace*{\fill}
+This book was typeset using \LaTeX{} software on the overleaf.com website using the Science Textbook format from Richard R. Masters (\url{https://github.com/ironmeld/science-textbook-template}).\\
+\vspace{\fill}
+This work is copyright \textcopyright{} \the\year{} \bookauthor\ and is made available under the \booklicense\ 
+license.\end{flushleft}
+
+% A title page resets the page # to 1, but the second title page
+% was actually page 3. So add two to page counter.
+\addtocounter{page}{2}
+
+% The asterisk excludes chapter from the table of contents.
+%\chapter*{Preface to Crystallographic Powder Diffraction Analysis with GSAS-II}
+
+\input{dedication}
+
+\include{preface}
+
+% Three-level Table of Contents
+\setcounter{tocdepth}{3}
+\tableofcontents
+
+\mainmatter
+
+\input{contents}
+
+\backmatter
+\addcontentsline{toc}{chapter}{Index}
+%\printindex
+
+\end{document}
