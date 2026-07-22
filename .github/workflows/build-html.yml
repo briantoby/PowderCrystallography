@@ -2,29 +2,37 @@ name: Build HTML from LaTeX (with make4ht)
 
 on:
   workflow_dispatch:
-#  push:
-#    tags:
-#      - "v*"
-#      - "release-*"
 
 permissions:
   contents: read
 
 jobs:
   build-html:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install TeX Live + make4ht deps
+      - name: Setup TeX Live
+        uses: teatimeguest/setup-texlive-action@v3
+        with:
+          packages: >
+            scheme-small
+            collection-latexrecommended
+            collection-latexextra
+            collection-fontsrecommended
+            collection-plaingeneric
+            collection-pictures
+            make4ht
+            tex4ht
+            dvisvgm
+            lmodern
+
+      - name: Verify toolchain
         run: |
-          sudo apt-get update
-          sudo apt-get install -y texlive-full texlive-latex-extra texlive-htmlxml
-#          sudo apt-get install -y \
-#            texlive-full \
-#            make4ht
+          which make4ht
+          make4ht --version
 
       - name: Build HTML with make4ht
         run: |
