@@ -1,0 +1,38 @@
+name: Build HTML from LaTeX (with make4ht)
+
+on:
+  workflow_dispatch:
+#  push:
+#    tags:
+#      - "v*"
+#      - "release-*"
+
+permissions:
+  contents: read
+
+jobs:
+  build-html:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install TeX Live + make4ht deps
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            texlive-full \
+            make4ht
+
+      - name: Build HTML with make4ht
+        run: |
+          mkdir -p _html
+          make4ht -u -f html5 -d _html stb-template.tex "mathjax,fn-in"
+
+      - name: Upload HTML artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: powdercrystallography-html
+          path: _html
+          if-no-files-found: error
