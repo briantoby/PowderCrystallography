@@ -21,9 +21,10 @@ jobs:
       - name: Install TeX Live + make4ht deps
         run: |
           sudo apt-get update
-          sudo apt-get install -y \
-            texlive-full \
-            make4ht
+          sudo apt-get install -y texlive-full texlive-latex-extra texlive-htmlxml
+#          sudo apt-get install -y \
+#            texlive-full \
+#            make4ht
 
       - name: Build HTML with make4ht
         run: |
