@@ -14,20 +14,34 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup TeX Live
-        uses: teatimeguest/setup-texlive-action@v3
-        with:
-          packages: >
-            scheme-small
-            collection-latexrecommended
-            collection-latexextra
-            collection-fontsrecommended
-            collection-plaingeneric
-            collection-pictures
-            make4ht
-            tex4ht
-            dvisvgm
-            lmodern
+      - name: Install TeX Live base
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            texlive \
+            texlive-latex-base \
+            texlive-latex-recommended \
+            texlive-latex-extra \
+            texlive-fonts-recommended \
+            texlive-plain-generic \
+            texlive-pictures \
+            texlive-xetex \
+            texlive-luatex \
+            lmodern \
+            dvisvgm \
+            perl \
+            wget \
+            xz-utils
+
+      - name: Install make4ht via tlmgr (user mode)
+        run: |
+          tlmgr init-usertree
+          tlmgr option repository https://mirror.ctan.org/systems/texlive/tlnet
+          tlmgr --usermode install make4ht tex4ht
+
+      - name: Put tlmgr user bin on PATH
+        run: |
+          echo "$HOME/texmf/bin/x86_64-linux" >> "$GITHUB_PATH"
 
       - name: Verify toolchain
         run: |
