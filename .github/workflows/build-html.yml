@@ -24,7 +24,7 @@ jobs:
       - name: Build HTML with make4ht
         run: |
           mkdir -p _html
-          make4ht -u -f html5 -d _html HTML-template.tex "mathjax,fn-in" "3"
+          make4ht -u -f html5 -d _html HTML-template.tex "mathjax,fn-in,xhtml,3"
 
       - name: Upload HTML artifact
         uses: actions/upload-artifact@v4
