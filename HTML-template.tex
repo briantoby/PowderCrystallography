@@ -52,21 +52,19 @@
 \usepackage{makeidx}
 
 % command to force a new HTML page (used for contents page)
-\newcommand{\HardHtmlSplit}{%
-  \ifvmode\else\par\fi
-  \HCode{</div>}%
-  \TgLikeSectionCut
-  \HCode{<div class="content">}%
-}
+%\newcommand{\HardHtmlSplit}{%
+%  \ifvmode\else\par\fi
+%  \HCode{</div>}%
+%  \TgLikeSectionCut
+%  \HCode{<div class="content">}%
+%}
 % HTML-only vertical spacer (works in TeX4ht)
-\newcommand{\HTMLvspace}[1]{%
-  \ifvmode\IgnorePar\fi
-  \HCode{<div style="height:#1;"></div>}%
-}
-
+%\newcommand{\HTMLvspace}[1]{%
+%  \ifvmode\IgnorePar\fi
+%  \HCode{<div style="height:#1;"></div>}%
+%}
 % convenient blank-line helper
-\newcommand{\HTMLblankline}{\HTMLvspace{1em}}
-%\makeindex % Initialize an index so we can add entries with \index
+%\newcommand{\HTMLblankline}{\HTMLvspace{1em}}
 
 % ---- TOC: reserve more width for section numbers (e.g., 12.10) ----
 \makeatletter
@@ -111,14 +109,14 @@
 \end{flushright}
 
 %\vspace{\fill}
-\HTMLblankline
+%\HTMLblankline
 
 % Author and Location
 \textbf{\large \bookauthor}\\[3.5pt]
 \textbf{\large \textit{\authorsubtitle}}
 
 %\vspace{\fill}
-\HTMLblankline
+%\HTMLblankline
 
 \end{flushleft}
 \end{titlepage}
@@ -131,10 +129,10 @@
 \begin{flushleft}
 Use of the Advanced Photon Source, an Office of Science User Facility operated for the U.S. Department of Energy (DOE) Office of Science by Argonne National Laboratory, was supported by the U.S. DOE under Contract No. DE-AC02-06CH11357. \\
 %\vspace*{\fill}
-\HTMLblankline
+%\HTMLblankline
 This book was typeset using \LaTeX{} software on the overleaf.com website using the Science Textbook format from Richard R. Masters (\url{https://github.com/ironmeld/science-textbook-template}).\\
 %\vspace{\fill}
-\HTMLblankline
+%\HTMLblankline
 This work is copyright \textcopyright{} \the\year{} \bookauthor\ and is made available under the \booklicense\ 
 license.\end{flushleft}
 
@@ -144,7 +142,7 @@ license.\end{flushleft}
 
 \input{dedication}
 
-\HardHtmlSplit
+%\HardHtmlSplit
 %\HCode{<a id="Contents"></a>}
 %\include{preface}
 
