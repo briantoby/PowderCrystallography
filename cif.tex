@@ -34,7 +34,7 @@ A table of values for several data names can also be created using the \texttt{l
 keyword:
 
 \begin{quote}
-\texttt{
+\texttt{\\
 loop\_\\
    \_atom\_site\_type\_symbol\\
    \_atom\_site\_fract\_x\\
@@ -45,16 +45,23 @@ loop\_\\
 }
 \end{quote}
 
-There are two special placeholder values used in CIF. A value of ``?'' (a question mark, which may be used without quotes) indicates that a value is unknown or is unspecified. 
-A value of ``.'' (a period, which may also be used without quotes) indicates that the data name
-does not have an appropriate in the specified context. 
+There are two special placeholder values used in CIF. A value of ``?'' (a question mark, which must be used without quotes) indicates that a value is unknown or is unspecified. 
+A value of ``.'' (a period, which must also be used without quotes) indicates that the data name
+does not have an appropriate meaning in the specified context:
+
+\begin{quote}
+\texttt{\\
+\_diffrn\_ambient\_temperature     ?  \# not measured\\
+\_chemical\_melting\_point            .  \# decomposes on heating\\
+}
+\end{quote}
 
 CIFs are organized in blocks, where each block is an independent collection of data items and their values. 
 Note that the beginning of a block is indicated by an name that begins with the string \texttt{data\_}, but the name that follows the underscore is considered arbitrary and may be changed when the CIF is archived. This is not a complete guide to the syntax of CIF, but this should provide a good overview as to what is required. 
 
 CIF was unusual when created, if not unique, in that every CIF data name was given a formal and permanent definition in a set of documents called the CIF data dictionaries. Should a definition need to be changed, a new CIF data name is coined. 
 
-By the mid-1990's, the utility of CIF had been demonstrated and work was began to develop CIF data dictionaries for applications beyond small-molecule crystallography. As this was done, CIF was renamed as the Crystallographic Information Framework\index{Crystallographic Information File|textbf}, as CIF was taking on the role of becoming a formal language for communication of crystallography, not just a file format. This also has the benefit that the term ``CIF file'' was no longer a redundancy. 
+By the mid-1990's, the utility of CIF had been demonstrated and work was began to develop CIF data dictionaries for applications beyond small-molecule crystallography. As this was done, CIF was renamed as the Crystallographic Information Framework\index{Crystallographic Information File|textbf}, because CIF was taking on the role of becoming a formal language for communication of crystallography, not just a file format. This also has the benefit that the term ``CIF file'' was no longer a redundancy. 
 
 The pdCIF dictionary, with definitions for many items needed for powder diffraction, was one of the first to be started and took me the better part of a decade. One of the major problems was that a data name can only be associated with a single value or a single series of values within a CIF block. 
 That rule means that, for example, lattice parameters can only be defined once in a block. 
