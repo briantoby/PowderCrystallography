@@ -63,51 +63,7 @@
 
 % Content Starts Here
 \begin{document}
-%\ifCover
-%    % 1. Insert Front Cover
-%    % pagecommand={} ensures standard header/footers are suppressed on the cover
-%    \includepdf[pages=1]{figures/FrontCoverPreview.pdf} 
-%\else
-%
-%\frontmatter
-%
-% ---- Half Title Page ----
-% current geometry will be restored after title page
-%\newgeometry{top=1.75in,bottom=.5in,left=1in}
-%\begin{titlepage}
-%\begin{flushleft}
-%
-% Title
-%
-%\textbf{\fontfamily{qcs}\fontsize{30}{54}\selectfont \bookname \\}
-%
-% Draw a line 4pt high
-%\par\noindent\rule{\textwidth}{4pt}\\
-%
-% Subtitle
-% Shaded box from left to right. Text node is midway (centered).
-%\begin{tikzpicture}
-%\shade[bottom color=lightgray,top color=white]
-%    (0,0) rectangle (\textwidth, 1.5)
-%    node[midway] {\textbf{\large \textit{\booksubtitle}}};
-%\end{tikzpicture}
-
-% Edition Number
-%\begin{flushright}
-%\Large \bookedition
-%\end{flushright}
-%
-% \vspace{\fill}
-%\vspace{\fill}
-%
-%\end{flushleft}
-%\end{titlepage}
-%
-%\fi
-
 \restoregeometry
-% ---- End of Half Title Page ----
-
 
 % No page numbers on the Frontispiece page
 \thispagestyle{empty}
@@ -166,23 +122,19 @@ license.\end{flushleft}
 % was actually page 3. So add two to page counter.
 \addtocounter{page}{2}
 
-% The asterisk excludes chapter from the table of contents.
-%\chapter*{Preface to Crystallographic Powder Diffraction Analysis with GSAS-II}
-
 \input{dedication}
 
-\include{preface}
+%\include{preface}
 
 % Three-level Table of Contents
-\setcounter{tocdepth}{3}
-\tableofcontents
+%\setcounter{tocdepth}{3}
+%\tableofcontents
 
 \mainmatter
 
 \input{contents}
 
-\backmatter
-\addcontentsline{toc}{chapter}{Index}
-%\printindex
+%\backmatter
+%\addcontentsline{toc}{chapter}{Index}
 
 \end{document}
