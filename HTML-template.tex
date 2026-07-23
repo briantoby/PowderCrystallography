@@ -3,15 +3,7 @@
 \documentclass{book}
 \input{settings}  % get settings from an external file
 
-% add defs for some commonly used Greek letters
-%\DeclareUnicodeCharacter{03B8}{\ensuremath{\theta}}
-%\DeclareUnicodeCharacter{03BB}{\ensuremath{\lambda}}
-%\DeclareUnicodeCharacter{03C0}{\ensuremath{\pi}}
-%\DeclareUnicodeCharacter{03C3}{\ensuremath{\sigma}}
-%\DeclareUnicodeCharacter{03B1}{\ensuremath{\alpha}}
-%\DeclareUnicodeCharacter{03B2}{\ensuremath{\beta}}
-%\DeclareUnicodeCharacter{03B3}{\ensuremath{\gamma}}
-\DeclareUnicodeCharacter{2061}{ }
+\DeclareUnicodeCharacter{2061}{ }  % removes an extraneous (normally invisible) Unicode character
 
 % Create convenient commands \booktitle and \bookauthor
 \makeatletter
@@ -51,13 +43,6 @@
 \renewcommand{\contentsname}{Table of Contents} % default is {Contents}
 \usepackage{makeidx}
 
-% command to force a new HTML page (used for contents page)
-%\newcommand{\HardHtmlSplit}{%
-%  \ifvmode\else\par\fi
-%  \HCode{</div>}%
-%  \TgLikeSectionCut
-%  \HCode{<div class="content">}%
-%}
 % HTML-only vertical spacer (works in TeX4ht)
 \newcommand{\HTMLvspace}[1]{%
   \ifvmode\IgnorePar\fi
@@ -85,7 +70,7 @@
 
 % ---- Title Page ----
 % current geometry will be restored after title page
-\newgeometry{top=1.75in,bottom=.5in,left=1in}
+%\newgeometry{top=1.75in,bottom=.5in,left=1in}
 \begin{titlepage}
 \begin{flushleft}
 
@@ -108,19 +93,17 @@
 \Large \bookedition
 \end{flushright}
 
-%\vspace{\fill}
 \HTMLblankline
 
 % Author and Location
 \textbf{\large \bookauthor}\\[3.5pt]
 \textbf{\large \textit{\authorsubtitle}}
 
-%\vspace{\fill}
 \HTMLblankline
 
 \end{flushleft}
 \end{titlepage}
-\restoregeometry
+%\restoregeometry
 % ---- End of Title Page ----
 
 % Do not show page numbers on colophon page
@@ -128,10 +111,8 @@
 
 \begin{flushleft}
 Use of the Advanced Photon Source, an Office of Science User Facility operated for the U.S. Department of Energy (DOE) Office of Science by Argonne National Laboratory, was supported by the U.S. DOE under Contract No. DE-AC02-06CH11357. \\
-%\vspace*{\fill}
 \HTMLblankline
 This book was typeset using \LaTeX{} software on the overleaf.com website using the Science Textbook format from Richard R. Masters (\url{https://github.com/ironmeld/science-textbook-template}).\\
-%\vspace{\fill}
 \HTMLblankline
 This work is copyright \textcopyright{} \the\year{} \bookauthor\ and is made available under the \booklicense\ 
 license.\end{flushleft}
@@ -142,7 +123,6 @@ license.\end{flushleft}
 
 \input{dedication}
 
-%\HardHtmlSplit
 \HCode{<a id="Contents"></a>}
 %\include{preface}
 
