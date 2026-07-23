@@ -5,6 +5,12 @@ on:
 
 permissions:
   contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
 
 jobs:
   build-html:
@@ -32,3 +38,24 @@ jobs:
           name: powdercrystallography-html
           path: _html
           if-no-files-found: error
+
+      # Optional safety: remove root index.html if make4ht creates one
+      - name: Remove root index.html (if present)
+        run: |
+          rm -f _html/index.html
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _html
+
+  deploy-pages:
+    needs: build-html
+    runs-on: ubuntu-24.04
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
