@@ -65,11 +65,11 @@ If we then imagine selecting that same point in every box, we construct an infin
 
  For the box we used to construct our ideal crystal, we give the name the \textbf{unit cell.}\index{unit cell|textbf}
  We still need not consider exactly how the atoms are arranged within that box, but since every box (or equivalently unit cell) is identical, once we have described the contents of the unit cell, we can construct an exact description of the entire crystal. 
- This leads to a very convenient mechanism for describing the coordinates of atoms within the unit cell using \textbf{crystallographic axes}, which are also sometimes called the \textbf{crystal axes}. We label the three sides of the unit cell as \textbf{\textit{a}, \textit{b} \& \textit{c}}\index{\textit{a}|textbf}\index{\textit{b}|textbf}\index{\textit{c}|textbf}, and define the angles between the sides as \textbf{α}, \textbf{β}, \& \textbf{γ}\index{$\alpha$|textbf}\index{$\beta$|textbf}\index{$\gamma$|textbf}, where we define as γ the angle between the \textit{a} \& \textit{b} sides, β between \textit{a }\& \textit{c}, and α between \textit{b} \& \textit{c}. We then define \textbf{axes}, \textbf{x, y \& z} along \textit{a}, \textit{b} \& \textit{c} directions, respectively. Note that the angles between these axes are dictated by α, β \& γ, so for systems other than cubic, tetragonal and orthorhombic, angles between axes may not be 90 degrees. Such axes systems are \textit{non-orthogonal} (also called oblique) which makes performing three-dimensional algebra more difficult, but will so greatly simplify our descriptions of the crystal that this mechanism is much preferred over orthogonal coordinate systems. Table \ref{tab:conventions} outlines the common conventions used for assigning axes for the seven crystal systems.
+ This leads to a very convenient mechanism for describing the coordinates of atoms within the unit cell using \textbf{crystallographic axes}, which are also sometimes called the \textbf{crystal axes}. We label the three sides of the unit cell as \textbf{\textit{a}, \textit{b} \& \textit{c}}\index{\textit{a}|textbf}\index{\textit{b}|textbf}\index{\textit{c}|textbf}, and define the angles between the sides as $\alpha$, $\beta$, \& $\gamma$\index{$\alpha$|textbf}\index{$\beta$|textbf}\index{$\gamma$|textbf}, where we define as $\gamma$ the angle between the \textit{a} \& \textit{b} sides, $\beta$ between \textit{a }\& \textit{c}, and $\alpha$ between \textit{b} \& \textit{c}. We then define \textbf{axes}, \textbf{x, y \& z} along \textit{a}, \textit{b} \& \textit{c} directions, respectively. Note that the angles between these axes are dictated by $\alpha$, $\beta$ \& $\gamma$, so for systems other than cubic, tetragonal and orthorhombic, angles between axes may not be 90 degrees. Such axes systems are \textit{non-orthogonal} (also called oblique) which makes performing three-dimensional algebra more difficult, but will so greatly simplify our descriptions of the crystal that this mechanism is much preferred over orthogonal coordinate systems. Table \ref{tab:conventions} outlines the common conventions used for assigning axes for the seven crystal systems.
  
 \begin{table}
 \centering
-\caption{Conventions for labeling of axes for the seven crystal systems.\index{crystal systems} Note that for monoclinic systems, the convention below is the current conventional preference, but \textit{c} unique (where α = β = 90°) was more commonly used historically. Use of \textit{a} unique (β = γ = 90°) is seen in the literature only rarely.}
+\caption{Conventions for labeling of axes for the seven crystal systems.\index{crystal systems} Note that for monoclinic systems, the convention below is the current conventional preference, but \textit{c} unique (where $\alpha$ = $\beta$ = 90°) was more commonly used historically. Use of \textit{a} unique ($\beta$ = $\gamma$ = 90°) is seen in the literature only rarely.}
 \label{tab:conventions}
 
 \begin{tabular}{| l | p{0.2\textwidth} | p{0.3\textwidth} |}
@@ -77,17 +77,17 @@ If we then imagine selecting that same point in every box, we construct an infin
 \hline
 Crystal system name & Constraints on lengths of sides & Constraints on angles between sides \\
 \hline
-Cubic & \textit{a}=\textit{b}=\textit{c} & α = β = γ = 90° \\
+Cubic & \textit{a}=\textit{b}=\textit{c} & $\alpha$ = $\beta$ = $\gamma$ = 90° \\
 \hline
-Tetragonal & \textit{a}=\textit{b} & α = β = γ = 90° \\
+Tetragonal & \textit{a}=\textit{b} & $\alpha$ = $\beta$ = $\gamma$ = 90° \\
 \hline
-Orthorhombic & none & α = β = γ = 90° \\
+Orthorhombic & none & $\alpha$ = $\beta$ = $\gamma$ = 90° \\
 \hline
-Hexagonal & \textit{a}=\textit{b} & γ = 120°; α = β = 90° \\
+Hexagonal & \textit{a}=\textit{b} & $\gamma$ = 120°; $\alpha$ = $\beta$ = 90° \\
 \hline
-Rhombohedric & \textit{a}=\textit{b}=\textit{c} & α = β = γ \\
+Rhombohedric & \textit{a}=\textit{b}=\textit{c} & $\alpha$ = $\beta$ = $\gamma$ \\
 \hline
-Monoclinic & none & b unique: α = γ = 90° \\
+Monoclinic & none & b unique: $\alpha$ = $\gamma$ = 90° \\
 \hline
 Triclinic & none & none \\
 \hline
@@ -115,7 +115,7 @@ The Fourier transform takes a signal in units of time, and expresses it as a fun
 \section{The reciprocal lattice}
 
 Since crystallographic axes may be non-orthogonal, we can make some calculation processes much simpler by describing a new set of axes relative to the previously defined crystal axes, which we call the \textbf{reciprocal lattice}\index{reciprocal lattice|textbf}. 
-To define the reciprocal lattice, we create three new axes, which we label as \textbf{\textit{a*}, \textit{b*} }\&\textbf{ \textit{c*,}}\index{\textit{a*}|textbf}\index{\textit{b*}|textbf}\index{\textit{c*}|textbf} where the asterisk (*) indicates these are reciprocal lattice axes. We make these axes perpendicular to the plane containing each pair of the crystal system axes (\textit{a}, \textit{b} \& \textit{c}), meaning that \textbf{\textit{a*}} is perpendicular to \textit{b} \& \textit{c}, and likewise for \textit{\textbf{b*}} to \textit{a} \& \textit{c} and \textbf{\textit{c*}} to \textit{a} \& \textit{b,} or equivalently using dot products to designate perpendicular axes, $a^*\cdot b =  a^* \cdot c = b^* \cdot a =  b^* \cdot c =  c^* \cdot b =  c^* \cdot a = 0$. We also scale the length of the reciprocal axes so that $a^*\cdot a = 1$, $b^*\cdot b = 1$ and $c^*\cdot c = 1$. Note that since we conventionally use units of Ångstroms (Å) for \textit{a}, \textit{b} \& \textit{c}c, then the units of \textit{a*}, \textit{b*} \& \textit{c*} are Å\textsuperscript{-1}. The angles between the reciprocal aces, \textbf{α*}, \textbf{β*} \& \textbf{γ*}\index{$\alpha^\ast$|textbf}\index{$\beta^\ast$|textbf}\index{$\gamma^\ast$|textbf} are defined analogously to the angles for the crystal axes so that \textbf{α*} is the angle between \textit{b} and \textit{c}, etc. 
+To define the reciprocal lattice, we create three new axes, which we label as \textbf{\textit{a*}, \textit{b*} }\&\textbf{ \textit{c*,}}\index{\textit{a*}|textbf}\index{\textit{b*}|textbf}\index{\textit{c*}|textbf} where the asterisk (*) indicates these are reciprocal lattice axes. We make these axes perpendicular to the plane containing each pair of the crystal system axes (\textit{a}, \textit{b} \& \textit{c}), meaning that \textbf{\textit{a*}} is perpendicular to \textit{b} \& \textit{c}, and likewise for \textit{\textbf{b*}} to \textit{a} \& \textit{c} and \textbf{\textit{c*}} to \textit{a} \& \textit{b,} or equivalently using dot products to designate perpendicular axes, $a^*\cdot b =  a^* \cdot c = b^* \cdot a =  b^* \cdot c =  c^* \cdot b =  c^* \cdot a = 0$. We also scale the length of the reciprocal axes so that $a^*\cdot a = 1$, $b^*\cdot b = 1$ and $c^*\cdot c = 1$. Note that since we conventionally use units of Ångstroms (Å) for \textit{a}, \textit{b} \& \textit{c}c, then the units of \textit{a*}, \textit{b*} \& \textit{c*} are Å\textsuperscript{-1}. The angles between the reciprocal aces, $\alpha$*, $\beta$* \& $\gamma$*\index{$\alpha^\ast$|textbf}\index{$\beta^\ast$|textbf}\index{$\gamma^\ast$|textbf} are defined analogously to the angles for the crystal axes so that $\alpha$* is the angle between \textit{b} and \textit{c}, etc. 
 
  The properties of this new reciprocal axis coordinate system were first discovered by J. Willard Gibbs\index{Gibbs, J. W.}, well in advance of modern crystallographic practice. This coordinate system turns out to be the ideal mechanism to describe the three-dimensional conjugate space needed for Fourier analysis of the periodic density of scatterers in the unit cell. The reciprocal axes are also used to formalize a concept called the Ewald sphere, which is used to understand the orientation needed to bring a single crystal into a diffracting position, as well as which diffraction maxima can be observed with a given wavelength particle. While elegant, the Ewald sphere is not really needed for powder diffraction. For our purposes, we will only consider that diffraction occurs in only with reciprocal lattice with $\vec{d_{hkl}^\ast}=\ ha^\ast+\ kb^\ast+lc^\ast$, where \textit{h, k}, and \textit{l} are all integers. 
 
@@ -124,8 +124,8 @@ To define the reciprocal lattice, we create three new axes, which we label as \t
  Just as we measure bond distances between atoms in real space, there are some commonly referenced quantities in reciprocal space. 
  As noted before, if we define a reflection direction as vector $\vec{d_{hkl}^\ast}=\ ha^\ast+\ kb^\ast+lc^\ast$, we can also consider the magnitude of that vector, $d_{hkl}^\ast=\left|\vec{d_{hkl}^\ast}\right|$, which will have units of inverse length (typically Å\textsuperscript{-1}). 
  This is often written without the subscripts as \textit{d*}.\index{\textit{d*}|textbf} 
- As will be seen, this quantity is used in Fourier transform relationships where a factor of 2π is commonly required. 
- Physicists typically prefer the quantity $\rm Q$\index{$\rm Q$|textbf}, where Q = 2π d*. In addition to Q and d*, there is one more widely-used quantity that I personally would prefer to see disappear from usage. This is the quantity \textbf{d} and is often called a \textbf{d-space}\index{d-space}, where d = 1/d* = 2π/Q. The units of d thus are length, but note that d is actually measuring a quantity that is only meaningful in reciprocal space. I do not like use of d (d-space values) because it tempts one to use that real space length to relate some aspect of the atomic structure to the scattering at a location in reciprocal space, but this ignores that scattering intensities and the atomic structure are in a Fourier relationship, where every aspect of the structure affects the scattering to some extent. The wide use of d is somewhat historical, since it is part of \textbf{Bragg’s law}, ($n\lambda=2d\sin{\theta}$)\index{Bragg's law}. This equation had already been used to describe the properties of waves. In this equation λ is the wavelength for the scattered particle, $\theta$ is one-half the angle between the incident direction of the particle and its scattered direction. The factor \textit{n} here is due to the idea the diffraction occurs at orders with integer multiples, but since we build that into the \textit{hkl}values, we can treat \textit{n} as unity and remove it. As much as I respect the amazing sagacity of William Laurence Bragg\index{Bragg, W. L.}, I would prefer that this formulation of Bragg’s law be replaced with $\lambda={2\sin\theta}/{d^\ast}$ or $\lambda ={2\pi\sin\theta}/Q$. To understand why Bragg’s law was such an important advance, it should be understood that this wave equation went against the thinking of many established scientists, including his father William Henry Bragg, who did not believe that x-rays had wave character. Laurie Bragg\index{Bragg, W. H.} deployed that wave equation at age 22 and won a well-deserved Nobel prize at a ripe old age of 25. Bragg’s law was intended to relate scattering of x-rays to distances between planes of atoms, which we now can see is a poor idea as it confuses direct and reciprocal space phenomena. 
+ As will be seen, this quantity is used in Fourier transform relationships where a factor of $2\pi$ is commonly required. 
+ Physicists typically prefer the quantity $\rm Q$\index{$\rm Q$|textbf}, where Q = $2\pi $ d*. In addition to Q and d*, there is one more widely-used quantity that I personally would prefer to see disappear from usage. This is the quantity \textbf{d} and is often called a \textbf{d-space}\index{d-space}, where d = 1/d* = $2\pi$/Q. The units of d thus are length, but note that d is actually measuring a quantity that is only meaningful in reciprocal space. I do not like use of d (d-space values) because it tempts one to use that real space length to relate some aspect of the atomic structure to the scattering at a location in reciprocal space, but this ignores that scattering intensities and the atomic structure are in a Fourier relationship, where every aspect of the structure affects the scattering to some extent. The wide use of d is somewhat historical, since it is part of \textbf{Bragg’s law}, ($n\lambda=2d\sin{\theta}$)\index{Bragg's law}. This equation had already been used to describe the properties of waves. In this equation $\lambda$ is the wavelength for the scattered particle, $\theta$ is one-half the angle between the incident direction of the particle and its scattered direction. The factor \textit{n} here is due to the idea the diffraction occurs at orders with integer multiples, but since we build that into the \textit{hkl}values, we can treat \textit{n} as unity and remove it. As much as I respect the amazing sagacity of William Laurence Bragg\index{Bragg, W. L.}, I would prefer that this formulation of Bragg’s law be replaced with $\lambda={2\sin\theta}/{d^\ast}$ or $\lambda ={2\pi\sin\theta}/Q$. To understand why Bragg’s law was such an important advance, it should be understood that this wave equation went against the thinking of many established scientists, including his father William Henry Bragg, who did not believe that x-rays had wave character. Laurie Bragg\index{Bragg, W. H.} deployed that wave equation at age 22 and won a well-deserved Nobel prize at a ripe old age of 25. Bragg’s law was intended to relate scattering of x-rays to distances between planes of atoms, which we now can see is a poor idea as it confuses direct and reciprocal space phenomena. 
 
  As has been mentioned, while diffraction patterns are commonly measured in units of $2\theta$, this means that the measurement results change depending on the wavelength of the source. 
  As noted, in energy-dispersive detection measurements are made at constant $2\theta$ with measurement of $\lambda$. So that diffraction data may be compared with different data collection types and different wavelengths, display of patterns in units of Q rather than $2\theta$ is a wise choice. Q also has the advantage that it roughly scales with $2\theta$, so that if one refers to low Q, that can be readily interpreted as low angle scattering, while high Q will refer to high angle scattering (or perhaps unobservable, except with shorter wavelengths.)
@@ -173,7 +173,7 @@ $$F_{hkl}=\ \sum_{ij}^{N}{f_i\exp(-2\pi i\vec{d_{hkl}^\ast} \cdot  \vec{x_{j}})}
 
 where $\vec{d^*_{hkl}}$ is the vector in \textit{reciprocal space} for reflection (\textit{h, k, l}) and $\vec{x_j}$ is the vector from origin to the atom location \textit{in real space}. Now we can see the value of the reciprocal space construct from how it simplifies the dot product. The quantity $\vec{d_{hkl}^\ast}\cdot\vec{x_j} = hx_j+\ ky_j+lz_j$, even for a triclinic system because between the reciprocal lattice was defined so that \textit{a*}\textit{·b} = \textit{a*}\textit{·c} = … = 0 and \textit{a*·a}= … = 1. Note that $F_{hkl}$ values will be complex numbers where the relative values of the real and imaginary components and their signs indicate a phase. The magnitude of the structure factor, $|F_{hkl}|$, describes the strength of this particular diffraction peak. Conversion of $|F_{hkl}|$ to the actual intensity observed for the Since \textit{hkl} indicates a direction in reciprocal space, we can think of $F_{hkl}$ as describing both the strength and phase for scattering in the \textit{hkl} direction. Note that our previous definitions for reciprocal space require \textit{a*·b} = \textit{a*·c} = 0 and \textit{a*·a} = 1 (and likewise permuted with \textit{b}* and \textit{c}*) and this means that ($\vec{q_{hkl}}\cdot\vec{x_i}$)  can be simplified to (\textit{h}x\textsubscript{i} + \textit{k}y\textsubscript{i} + \textit{l}z\textsubscript{i}). Thus, the structure factor can be rewritten as 
 
-$$F_{hkl}=\sum_j^N f_j \exp⁡[-2πi(hx_j + ky_j + lz_j)]$$
+$$F_{hkl}=\sum_j^N f_j \exp⁡[-2\pi i(hx_j + ky_j + lz_j)]$$
 
 Note that while the Debye equation\index{Debye equation} is a double sum over \textit{all atoms in the material}, this equation is a single summation over only the atoms \textit{in the unit cell}.
 In very approximate terms, this has reduced the complexity of the computation by a factor of 10\textsuperscript{40} for the dimensions of a real sample. 
@@ -182,7 +182,7 @@ The structure factor in general is a complex value, where the complex part and t
 \section{The electron density equation}\label{ref:rho}
 The Fourier transform of the structure factors gives us an expression for scattering density, which will be in the form of electrons for x-ray scattering, but will be in the form of nuclear scattering power with neutron structure factors. 
 
-$$\rho(x,y,z) = \frac{1}{V} \sum_{hkl}  F_{hkl} \exp⁡[-2πi(hx + ky + lz)] $$
+$$\rho(x,y,z) = \frac{1}{V} \sum_{hkl}  F_{hkl} \exp⁡[-2\pi i(hx + ky + lz)] $$
 This equation might imply that once we have measured the structure factors, we can apply this equation to find where atoms are located. However, we can measure only $|F_{hkl}|$, without phase information, this equation cannot be applied directly without knowing the phases. Nevertheless, it is quite useful as will be discussed much later when Fourier maps are considered in \S\ref{ref:Fourier}. It should be understood that for x-ray scattering $\rho(x,y,z)$ has units of electrons/$\mathring{\text{A}}^3$ and must be either zero or positive. Since some isotopes have negative scattering lengths for neutrons, $\rho(x,y,z)$, can be positive or negative when any of those types of atoms are present when neutron scattering factors are used. This equation is only exact when an infinite number of terms is used, but in practice the summation is terminated, which produces ``ripples'' on the intensities known as truncation errors. 
 
 \section{Site Occupancies}\label{ref:occupancies}
@@ -193,9 +193,9 @@ Of course, our imaginary ideal crystal differs from real-world crystals in many 
 
 The intensities of reflections are lowered because this thermal motion and static displacements spreads out the siting of the nucleus or electrons over some region and this lowers the intensities of the higher Q reflections for the same reason as why \textit{f}(Q) decreases with angle in x-rays. This was noted and explained very early in the history of crystallography with what is known as the \textbf{Debye-Waller} factor\index{Debye-Waller factor|textbf}\label{Debye-Waller factor}, which relates this lowering of intensities to the mean atomic displacements averaged over all atoms, but a better formulation, since atoms can have very different amounts of motion depending on their mass and bonding environment, is to formulate the structure factor equation with a term for each atom in this fashion:
 
-$$F_{hkl}=\sum_j^N f_j \exp⁡[-2πi(hx_j + ky_j + lz_j)] \exp⁡[-2πi(\vec{Q}\cdot\vec{U_j})]$$
+$$F_{hkl}=\sum_j^N f_j \exp⁡[-2\pi i(hx_j + ky_j + lz_j)] \exp⁡[-2\pi i(\vec{Q}\cdot\vec{U_j})]$$
 
-The term that has been added, $\exp⁡[-2πi(\vec{Q}\cdot\vec{U_j})]$, defines an \textbf{atomic displacement parameter} for atom \textit{j}, as a tensor $\vec{U_j}$, noting that the subscript \textit{j} allows different values or even levels of expansion for each atom.
+The term that has been added, $\exp⁡[-2\pi i(\vec{Q}\cdot\vec{U_j})]$, defines an \textbf{atomic displacement parameter} for atom \textit{j}, as a tensor $\vec{U_j}$, noting that the subscript \textit{j} allows different values or even levels of expansion for each atom.
 The term atomic displacement parameter\index{atomic displacement parameter}\index{ADP|textbf}, models how the atom is distributed away from its average position, due to both static and dynamic disorder. This an important concept in crystallography and is commonly abbreviated as ADP, particularly in the single-crystal structure field. The term thermal parameter used to be used for what we now call atomic displacement parameter, but since ADPs incorporate both static and dynamic disorder and not all dynamic disorder is thermal, APD is a much better term than thermal parameter.    
 
 
@@ -239,7 +239,7 @@ As seen in Fig. \ref{fig:latt1}, as a guide for a potential lattice, I have plac
 
  There are two types of centers needed to construct the possible symmetry types for all three-dimensional lattices, known as the Bravais lattices\index{Bravais lattice}. One center type is placed in the side of a unit cell and called a face center. A face center with coordinates (½, ½, 0) is in the face perpendicular to \textit{c} and is called a C-center. Likewise, centers at (½, 0, ½) and (0, ½, ½) are called B-center and A-centers, respectively. As we saw before, a center at the middle of the unit cell is called a body center or is abbreviated as an I-center (short for the German word \textit{Innenzentriert}.). Combinations of centers are possible, but the only combination that cannot be simplified without loss of the underlying symmetry is when A-, B- and C-centers are \textit{all} combined. This combination is referred to as face centering or an F-center. Note that a A-, B-, C- or I-center will double the number of symmetry operations while face centering leads to four symmetry operations x,y,z; ½+x,½+y,z; ½+x,y,½+z; and x,½+y,½+z. Sometimes the expanded volume of a centered lattice is referenced by comparison to the low-symmetry primitive unit cell. Thus, a A-, B-, C- and I-centered lattice is doubly-primitive, meaning the centered cell has double the volume of the primitive cell. An F-centered lattice is quadruply-primitive. It is also possible to consider a lattice center on an edge of a unit cell, such as (½,0,0). Edge centers are used for description of unit cells for magnetic scattering but are not needed for the 14 Bravais lattices. 
 
- There is one special case of centering specific to related to rhombohedric unit cells. It is possible to transform any lattice constructed from rhombohedric unit cells (a=b=c, α=β=γ) into one that has a=b, γ=120° and α=β=90° unit cells,e.g. the same cell as a hexagonal lattice but this cell has three times the volume of the primitive rhombohedric unit cell and with lattice centers at (2⁄3, 1⁄3, 1⁄3) and (1⁄3, 2⁄3, 2⁄3). We use the symbol R is used for this type of centering. While both types of unit cells are used for this system because the same lattice can be generated either from a primitive rhombohedron or a triply-primitive centered cell in a hexagonal lattice, the hexagonal description tends to be used more commonly because it is usually somewhat more computationally simple.
+ There is one special case of centering specific to related to rhombohedric unit cells. It is possible to transform any lattice constructed from rhombohedric unit cells (a=b=c, $\alpha$=$\beta$=$\gamma$) into one that has a=b, $\gamma$=120° and $\alpha$=$\beta$=90° unit cells,e.g. the same cell as a hexagonal lattice but this cell has three times the volume of the primitive rhombohedric unit cell and with lattice centers at (2⁄3, 1⁄3, 1⁄3) and (1⁄3, 2⁄3, 2⁄3). We use the symbol R is used for this type of centering. While both types of unit cells are used for this system because the same lattice can be generated either from a primitive rhombohedron or a triply-primitive centered cell in a hexagonal lattice, the hexagonal description tends to be used more commonly because it is usually somewhat more computationally simple.
 
 \begin{table}
 \centering
@@ -248,17 +248,17 @@ As seen in Fig. \ref{fig:latt1}, as a guide for a potential lattice, I have plac
 \hline
 Name & Constraints on lengths & Constraints on angles & Bravais lattice centering options \\
 \hline
-Cubic & \textit{a}=\textit{b}=\textit{c} & α = β = γ = 90° & P, F, I \\
+Cubic & \textit{a}=\textit{b}=\textit{c} & $\alpha$ = $\beta$ = $\gamma$ = 90° & P, F, I \\
 \hline
-Tetragonal & \textit{a}=\textit{b} & α = β = γ = 90° & P, I \\
+Tetragonal & \textit{a}=\textit{b} & $\alpha$ = $\beta$ = $\gamma$ = 90° & P, I \\
 \hline
-Orthorhombic & none & α = β = γ = 90° & P, C, F, I \\
+Orthorhombic & none & $\alpha$ = $\beta$ = $\gamma$ = 90° & P, C, F, I \\
 \hline
-Hexagonal & \textit{a}=\textit{b} & γ = 120°; α = β = 90° & P \\
+Hexagonal & \textit{a}=\textit{b} & $\gamma$ = 120°; $\alpha$ = $\beta$ = 90° & P \\
 \hline
-Rhombohedral & \textit{a}=\textit{b}=\textit{c} & α = β = γ & R \\
+Rhombohedral & \textit{a}=\textit{b}=\textit{c} & $\alpha$ = $\beta$ = $\gamma$ & R \\
 \hline
-Monoclinic & none & b unique: α = γ = 90° & P, C \\
+Monoclinic & none & b unique: $\alpha$ = $\gamma$ = 90° & P, C \\
 \hline
 Triclinic & none & none & P \\
 \hline
@@ -380,17 +380,17 @@ An important consideration of symmetry is that translational symmetry, where ato
 
 To understand how systematic extinctions arise, let us consider a unit cell with a C-center. To simplify we will assume that the unit cell has only two atoms, if the first is at x,y,z then the second will be at x+1/2, y+1/2, z. If take the structure factor equation, 
 
-$$F_{hkl}=\sum_j^N f_j \exp⁡[-2πi(hx_j + ky_j + lz_j)]$$
+$$F_{hkl}=\sum_j^N f_j \exp⁡[-2\pi i(hx_j + ky_j + lz_j)]$$
 
 and expand this over our two atoms, we get 
 
-$$F_{hkl} = f_j \exp⁡[-2πi(hx_j + ky_j + lz_j)] f_j + \exp⁡[-2πi(hx_j + ky_j + lz_j) + \frac{h+k}{2}] $$
+$$F_{hkl} = f_j \exp⁡[-2\pi i(hx_j + ky_j + lz_j)] f_j + \exp⁡[-2\pi i(hx_j + ky_j + lz_j) + \frac{h+k}{2}] $$
 
 which can be rewritten as 
 
-$$ F_{hkl} = f_j \exp⁡[-2πi(hx_j + ky_j + lz_j)] f_j + \exp⁡[-πi(h + k)] \exp⁡[-2πi(hx_j + ky_j + lz_j) ] $$
+$$ F_{hkl} = f_j \exp⁡[-2\pi i(hx_j + ky_j + lz_j)] f_j + \exp⁡[-\pi i(h + k)] \exp⁡[-2\pi i(hx_j + ky_j + lz_j) ] $$
 
-Note that when h + k is even, then $\exp⁡[-πi(h + k)] = 1$ but when h + k is odd then $\exp⁡[-πi(h + k)] = -1$ so the sum of the two exponentials is zero. Thus, for C-centering with any number of atoms in the unit cell,  $F_{hkl}=2\sum_j^{N/2} f_j \exp⁡[-2πi(hx_j + ky_j + lz_j)]$ for h+k even, and $F_{hkl}=0$ for h + k odd. 
+Note that when h + k is even, then $\exp⁡[-\pi i(h + k)] = 1$ but when h + k is odd then $\exp⁡[-\pi i(h + k)] = -1$ so the sum of the two exponentials is zero. Thus, for C-centering with any number of atoms in the unit cell,  $F_{hkl}=2\sum_j^{N/2} f_j \exp⁡[-2\pi i(hx_j + ky_j + lz_j)]$ for h+k even, and $F_{hkl}=0$ for h + k odd. 
 
 We can also rationalize this by thinking that if viewed along a reciprocal space direction, symmetry causes the unit cell repeat distance to decrease by a half, then half of the reflections in that projection must disappear. For a 2\textsubscript{1} screw axis along \textit{a}, the viewed along the \textit{a*}-axis, the cell will appear to be half the original size. Thus, \textit{h}00 reflections will be absent when \textit{h} is odd. This only occurs in projection along \textit{a*}. From any other direction this superposition is broken. Likewise, for a \textit{c}-glide plane perpendicular to the \textit{b}-axis, this appears to halve the c-axis length except when not perpendicular to \textit{b}*, so \textit{h}0\textit{l} reflections must have zero intensity when \textit{l} is odd.
 
@@ -409,7 +409,7 @@ The 4e Wyckoff site is the general position and the other four Wyckoff sites are
 
 Related to site multiplicities is the concept of the asymmetric unit\index{asymmetric unit|textbf}. This can be expressed in two different ways. The \textit{International Tables} lists an asymmetric unit for each space group as a unique volume within the unit cell and if that unique volume is duplicated using the symmetry operators, the entire contents of the unit cell can be constructed. The other way that the asymmetric unit is described is in terms of the unique atoms that can be used to build up the unit cell contents. Note that each atom in the asymmetric unit will then have a multiplicity. The previous expression for the structure factor can then have the number of terms reduced
 
-$$F_{hkl}=\sum_j^{N^\prime} f_j m_j\exp⁡[-2πi(hx_j + ky_j + lz_j)] \exp⁡[-2πi(\vec{Q}\cdot\vec{U_j})]$$
+$$F_{hkl}=\sum_j^{N^\prime} f_j m_j\exp⁡[-2\pi i(hx_j + ky_j + lz_j)] \exp⁡[-2\pi i(\vec{Q}\cdot\vec{U_j})]$$
 
 where the summation over $N^\prime$ reduced to a summation over the number of atoms in the asymmetric unit rather than the entire unit cell contents and an extra term, $m_j$, is included for the multiplicity of each atom site. 
 

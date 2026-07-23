@@ -21,7 +21,7 @@ This may not do a perfect job with two overlapping peaks, where $|F_{obs, hkl}|$
 \section{Fourier Maps}\label{ref:Fourier}
 
 As was explored in \S\ref{ref:rho}, if we know the structure factors, including their phases, we can use the Fourier inversion of the structure factor equation,
-$$\rho(x,y,z) = \frac{1}{V} \sum_{hkl}  F_{hkl} \exp⁡[-2πi(hx + ky + lz)] $$
+$$\rho(x,y,z) = \frac{1}{V} \sum_{hkl}  F_{hkl} \exp⁡[-2\pi i(hx + ky + lz)] $$
 and obtain the scattering strength at any site in the unit cell. When this is computed for a three-dimensional grid of points across the unit cell (or better, just the unique portion of the unit cell) we get what is known as a Fourier map. The locations that have the most density are where there must be scattering matter (electrons or nuclei) in the crystal. If we use the $F_{calc, hkl}$ values in this equation, we get back a rather uninteresting result -- a map that shows the positions of the atoms that were used to compute the $F_{calc, hkl}$ values. This is known as a Fcalc map.
 
 Note that the above sum needs to be to infinity to obtain precise values of $\rho$, but, of course, in practice we can only measure to $180^\circ$ degrees, and rarely will we even get close to that. The lack of the unmeasured very high Q data will produce ``ripples'' in the $\rho(x,y,z)$ values and this is known as truncation error. 
