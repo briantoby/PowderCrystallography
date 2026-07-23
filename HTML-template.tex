@@ -41,15 +41,31 @@
 % The (inside) bindingoffset should be larger for books with more pages. Some
 % standard recommended sizes are .375in minimum up to 1in for 600+ page books.
 % Sizes .75in and .875in are also recommended roughly at 150 and 400 pages.
-\usepackage[bindingoffset=0.625in,
-            left=.5in, right=.5in,
-            top=.8125in, bottom=.9375in,
-            paperwidth=6.375in, paperheight=9.25in]{geometry}
+%\usepackage[bindingoffset=0.625in,
+%            left=.5in, right=.5in,
+%            top=.8125in, bottom=.9375in,
+%            paperwidth=6.375in, paperheight=9.25in]{geometry}
 % Here is an alternative geometry for reading on letter size paper:
 % \usepackage[margin=.75in, paperwidth=8.5in, paperheight=11in]{geometry}
 
 \renewcommand{\contentsname}{Table of Contents} % default is {Contents}
 \usepackage{makeidx}
+
+% command to force a new HTML page (used for contents page)
+\newcommand{\HardHtmlSplit}{%
+  \ifvmode\else\par\fi
+  \HCode{</div>}%
+  \TgLikeSectionCut
+  \HCode{<div class="content">}%
+}
+% HTML-only vertical spacer (works in TeX4ht)
+\newcommand{\HTMLvspace}[1]{%
+  \ifvmode\IgnorePar\fi
+  \HCode{<div style="height:#1;"></div>}%
+}
+
+% convenient blank-line helper
+\newcommand{\HTMLblankline}{\HTMLvspace{1em}}
 %\makeindex % Initialize an index so we can add entries with \index
 
 % ---- TOC: reserve more width for section numbers (e.g., 12.10) ----
@@ -63,7 +79,7 @@
 
 % Content Starts Here
 \begin{document}
-\restoregeometry
+%\restoregeometry
 
 % No page numbers on the Frontispiece page
 \thispagestyle{empty}
@@ -94,13 +110,15 @@
 \Large \bookedition
 \end{flushright}
 
-\vspace{\fill}
+%\vspace{\fill}
+\HTMLblankline
 
 % Author and Location
 \textbf{\large \bookauthor}\\[3.5pt]
 \textbf{\large \textit{\authorsubtitle}}
 
-\vspace{\fill}
+%\vspace{\fill}
+\HTMLblankline
 
 \end{flushleft}
 \end{titlepage}
@@ -112,9 +130,11 @@
 
 \begin{flushleft}
 Use of the Advanced Photon Source, an Office of Science User Facility operated for the U.S. Department of Energy (DOE) Office of Science by Argonne National Laboratory, was supported by the U.S. DOE under Contract No. DE-AC02-06CH11357. \\
-\vspace*{\fill}
+%\vspace*{\fill}
+\HTMLblankline
 This book was typeset using \LaTeX{} software on the overleaf.com website using the Science Textbook format from Richard R. Masters (\url{https://github.com/ironmeld/science-textbook-template}).\\
-\vspace{\fill}
+%\vspace{\fill}
+\HTMLblankline
 This work is copyright \textcopyright{} \the\year{} \bookauthor\ and is made available under the \booklicense\ 
 license.\end{flushleft}
 
@@ -124,6 +144,8 @@ license.\end{flushleft}
 
 \input{dedication}
 
+\HardHtmlSplit
+\HCode{<a id="Contents"></a>}
 %\include{preface}
 
 % Three-level Table of Contents
