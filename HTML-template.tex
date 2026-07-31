@@ -20,6 +20,14 @@
 \usepackage{graphicx}
 \usepackage{subcaption}
 \usepackage{placeins}
+\usepackage{microtype}
+
+% TeX4ht: suppress ligatures globally in HTML output so sequences like "ff"
+% are emitted reliably in headings and body text.
+\AtBeginDocument{%
+  \DisableLigatures{encoding = *, family = *}%
+  \Css{body, h1, h2, h3, h4, h5, h6, p, li, td, th, figcaption {font-variant-ligatures:none; font-feature-settings:"liga" 0, "clig" 0;}}%
+}
 
 % this puts boxes around figures
 \usepackage{float}
@@ -75,7 +83,7 @@
 \begin{flushleft}
 
 % Title
-\textbf{\fontfamily{qcs}\fontsize{30}{54}\selectfont \bookname\\}
+\textbf{\fontsize{30}{54}\selectfont \bookname\\}
 
 % Draw a line 4pt high
 \par\noindent\rule{\textwidth}{4pt}\\
