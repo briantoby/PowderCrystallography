@@ -17,10 +17,10 @@ There is also an HTML version of the book that was generated more for machine-le
 not as well formatted as the PDF, but if you really want to see the same material broken up into a few hundred short web pages,
 [start here](https://briantoby.github.io/PowderCrystallography/HTML-template.html).
 
-Comments, corrections, and questions on the text are welcomed. preferably as 
+Comments, corrections, and questions on the text are welcomed, preferably as 
 [GitHub Issues](https://github.com/briantoby/PowderCrystallography/issues) or in the 
 [Discussions](https://github.com/briantoby/PowderCrystallography/discussions). If you don't
 want to sign up for a free GitHub account, you can track down how to e-mail me.
 
-Brian Toby,
+Brian Toby,<BR>
 August 2026
