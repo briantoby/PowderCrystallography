@@ -83,10 +83,31 @@
       border-radius: 12px;
       padding: 1rem 1rem 1.1rem;
       margin: 1rem 0 1.4rem;
+
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 1rem;
+      align-items: center;
     }
-    .hero p {
-      margin: 0.35rem 0 0.8rem;
+
+    .hero-copy p {
+      margin: 0.35rem 0 0;
       color: var(--muted);
+    }
+
+    .hero .btn {
+      white-space: nowrap;
+    }
+
+    @media (max-width: 700px) {
+      .hero {
+        grid-template-columns: 1fr;
+        align-items: start;
+      }
+      .hero .btn {
+        justify-self: start;
+        margin-top: 0.25rem;
+      }
     }
 
     .btn {
@@ -135,8 +156,10 @@
 
   <div class="wrap">
     <section class="hero" aria-label="Quick access">
-      <strong>Download the book</strong>
-      <p>Get the newest PDF from the latest GitHub release.</p>
+      <div class="hero-copy">
+        <strong>Download the book</strong>
+        <p>Get the newest PDF from the latest GitHub release.</p>
+      </div>
       <a class="btn" href="https://github.com/briantoby/PowderCrystallography/releases/latest">
         Latest PDF Release
       </a>
