@@ -42,7 +42,14 @@ jobs:
 
       - name: Create root index.html from web/index.md
         run: |
-          pandoc web/index.md -f gfm -t html5 -s -o _html/index.html
+          pandoc web/index.md \
+            -f gfm \
+            -t html5 \
+            --standalone \
+            --template=web/index-template.html \
+            --metadata title="Powder Crystallography with GSAS-II" \
+            --metadata title-prefix="Crystallographic Powder Diffraction Analysis" \
+            -o _html/index.html
 
       - name: Upload HTML artifact
         uses: actions/upload-artifact@v4
