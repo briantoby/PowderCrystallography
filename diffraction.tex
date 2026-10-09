@@ -95,6 +95,10 @@ Another effect can occur, similar to absorption, if significant fraction of the 
 
 Both primary and secondary extinction are most likely to be observed with large and highly perfect crystals. More commonly, so-called single crystals are actually constructed of relatively small domains due to defects and these domains have small misalignments with each other. Such a crystal is known as ideally mosaic. The small domain sizes disrupt the dynamical scattering needed to cause primary extinction and the small misalignments between domains prevent secondary extinction. Single-crystal experiments will sometimes benefit if a crystal is thermally shocked to induce mosaicity. However, extinction is quite rare in powder diffraction because when crystallite sizes are larger than a few microns, sample grinding should be used. GSAS-II does provide correction terms for extinction that can be used for both single-crystal and powder diffraction and with both x-rays and neutron. While rarely needed, these do work well for materials with very large crystallite sizes. Note that laboratory powder diffraction experiments with such large-grain materials are likely to be inaccurate, due to poor particle counting statistics, but this is less likely to be a problem with high-energy x-rays and neutrons.  
 
+\section{Diffraction measurement corrections}
+The geometry for the measurement and the polarization of the radiation source dictates a pair of corrections, usually combined, and known as such as the Lorentz-Polarization correction/index{Lorentz-Polarization correction|textbf}. This is applied automatically by GSAS-II, where the only adjustable term that is used is one for the instrument polarization. 
+% should expand this more
+
 \section{For More Information}
 
 \begin{itemize}
@@ -114,4 +118,12 @@ DOI: 10.1107/97809553602060000117
 \begin{quote}
 This is a comprehensive and pricey reference on all types of diffraction, with tables and articles on practically everything, but is probably much more than you want. Your library/institution may have arranged on-line access, even if they don't have a print copy. 
 \end{quote}
+
+\item
+Origin and application of the Lorentz factor in X-ray diffraction (2026), Gasser, F., Simbrunner, J., Freychet, G., Demitri, N., Holy, V., and Resel, R. \textit{Acta Crystallographica Section A}, \textbf{82}(5), 350-360. 
+\url{https://doi.org/doi:10.1107/S2053273326005917} 
+\begin{quote}
+The Lorentz correction is discussed at depth and re-derived in this recent open access \textit{Acta Cryst. A} article.
+\end{quote}
+
 \end{itemize}
