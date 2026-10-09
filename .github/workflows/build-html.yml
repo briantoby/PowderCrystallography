@@ -51,18 +51,19 @@ jobs:
             --metadata title-prefix="Crystallographic Powder Diffraction Analysis" \
             -o _html/index.html
 
-      - name: Inspect HTML output
-        run: |
-          pwd
-          ls -la
-          echo
-          ls -la _html
-          echo
-          find _html -maxdepth 2 -type f | sort
-
-      - name: Fail if index.html is missing
-        run: |
-          test -f _html/index.html
+      # Debug steps: uncomment these if the Pages deploy fails again.
+      # - name: Inspect HTML output
+      #   run: |
+      #     pwd
+      #     ls -la
+      #     echo
+      #     ls -la _html
+      #     echo
+      #     find _html -maxdepth 2 -type f | sort
+      #
+      # - name: Fail if index.html is missing
+      #   run: |
+      #     test -f _html/index.html
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
