@@ -15,11 +15,12 @@ In GSAS-II there are two scaling parameters for every histogram,
     \item a phase fraction parameter for every phase in the histogram (these are ``HAP parameters,'' which will be discussed further in \S\ref{ref:HAP}). The phase fraction can be on an arbitrary scale. Note that the key value from the phase fraction is the ratio between different phase fractions for different phases in the same histogram.
 \end{itemize}
 
+\label{ref:scalingfactors1}
 In the case of a single-phase fit, either of the two can be fit, \textit{but not both}. 
 In the case of a multiphase fit, there are three choices: 
 
 \begin{enumerate}
-    \item the scale factor can be left at any fixed non-zero value (most commonly 1.0) and all phase fractions can be refined, or 
+    \item the scale factor can be left at any fixed positive value (most commonly 1.0) and all phase fractions can be refined, or 
     \item one phase fraction is fixed at a non-zero value (most commonly 1.0) and all other phase fractions are refined, along with the histogram scale factor, or 
     \item the sum of the phase fractions is fixed to be a positive constant, and then all phase fractions and the scale factor is fit.
 \end{enumerate}

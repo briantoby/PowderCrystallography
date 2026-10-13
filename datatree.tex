@@ -1,0 +1,368 @@
+\chapter{Details of the GSAS-II Data Tree}
+\label{Chap:GSASIIdatatree}
+
+The section on the left side of the main GSAS-II has what is called the GSAS-II data tree, which shows a hierarchical view of information stored 
+inside a GSAS-II project, largely mirroring the way that information is stored inside a GSAS-II project file. Since there is considerable flexibility with regard to what information may be stored 
+inside a project, there can also be considerable variability as to the types of entries that will be seen in the data tree. GSAS-II is operated by selecting different data tree items and changing the information associated with them. This chapter outlines the entries that can be found in the data tree and what sort of information is stored in each. 
+
+\section{The GSAS-II Data Tree Contents}
+\label{sec:DataTree}
+While there are some entries that are found in every GSAS-II project, the contents of the GSAS-II data tree will vary with what is being done with GSAS-II. 
+For example, if the program is being used to process a series of diffraction images, the data tree will contain only entries for images and the histogram(s) generated from those images. On the other hand, 
+a Rietveld fit will contain entries for at least one histogram and at least one phase. 
+In this section, I will describe the contents of the data tree in some detail. 
+This information is provided here as reference material for later chapters of the book. If you are 
+reading the book from the beginning, you are recommended to skim over this information and return later as you need to know more information relevant to work you are doing. Note that the data tree is called that because it is a hierarchical structure, where each entry is related to each other as branches in a tree come from the main tree trunk and the there are smaller branches that are attached to the main branches. In GSAS-II there are only three levels allowed. There is a top-level entry, which will usually have several child branches. I will refer to these as the main tree items. Some of those main tree items will have their own child branch, which I will call child tree items. To keep the structure of the program straightforward, he child tree items are not allowed to have their own children. 
+
+\subsection{In every GSAS-II project}
+When a GSAS-II project is initially created, there will only be the initial top-level entry in the data tree, which will be labeled ``Loaded Data:''. This will be changed to ``Project:...'' with the name of the \texttt{.gpx} file that contains the project when the project is saved. Clicking on this entry does not perform any action and the data window will be left blank. Clicking on any main data tree entry or child entry will cause information to be displayed relevant to that selection in the data window and most data tree items (main or child) will present controls where the contents can be changed. Many, but not all data tree items will also cause visualization information to be displayed in the GSAS-II graphics window. 
+
+\subsection{Optional data tree entries}
+As soon as any information is placed in the project (\texttt{.gpx}) file or the file is saved, a series of main tree items is placed into the project, as presented in Table \ref{tab:UniversalTreeItems}. 
+When any form of data is placed in a GSAS-II project, a histogram entry is created, where the prefix on the name assigned for the histogram entry is dictated by the type of data that are included. The prefixes used are presented in Table \ref{tab:HistItems}. Most histogram main entries will also have child entries, some of which are discussed in later sections of this chapter.
+Finally, there are a few other types of data tree main items that are listed in Table \ref{tab:OtherTreeItems}
+
+\begin{table}
+\centering
+\caption{Entries in every GSAS-II data tree.}
+\label{tab:UniversalTreeItems}
+\begin{tabular}{| l | p{0.65\textwidth} |}
+\hline
+\textit{Tree item name} & \textit{Description and discussion} \\
+\hline
+Notebook & Information tracking the work done in a project chronologically is placed here as well as any note you may choose to include.\\
+\hline
+Controls & Entries that control how refinements are performed are accessed here.\\
+\hline
+Covariance & After a refinement has been performed, this causes plot of the covariance between parameters to be shown as well as a summary of refinement statistics.\\
+\hline
+Constraints & Any constraints on how refinement parameters are limited or linked are placed here. These are discussed in Chapter \ref{Chap:constraints}.\\
+\hline
+Restraints & Any restraints that penalize the fit based on values for refinement parameters are found here. These are discussed in Chapter \ref{Chap:restraints}.\\
+\hline
+Rigid bodies & Rigid bodies are defined to control the geometry of atoms in a structure model, as discussed in Chapter \ref{Chap:rigidbody}.\\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}
+\centering
+\caption{GSAS-II histogram entries. The prefix is determined by the type of data in the histogram.}
+\label{tab:HistItems}
+\begin{tabular}{| l | p{0.65\textwidth} |}
+\hline
+\textit{Tree item prefix} & \textit{Description and discussion} \\
+\hline
+IMG & 2D diffraction images.\\
+\hline
+PWDR & Powder diffraction datasets. See \S\ref{ref:PWDRchild} for the child entries in a PWDR histogram.\\
+\hline
+HKLF & Single crystal diffraction datasets.\\
+\hline
+PDF & Pair Distribution Function histograms computed from powder diffraction data.\\
+\hline
+SASD & Small Angle diffraction datasets.\\
+\hline
+REFD & Reflectometry datasets.\\
+\hline
+PKS & Powder diffraction peak lists. This is not commonly used. More common is a peak list
+associated with a PWDR histogram.\\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}
+\centering
+\caption{Some of the other entries that may appear in the GSAS-II data tree.}
+\label{tab:OtherTreeItems}
+\begin{tabular}{| l | p{0.65\textwidth} |}
+\hline
+\textit{Tree item name} & \textit{Description and discussion} \\
+\hline
+Phases & When any phases are included in a project, this entry is created. Each 
+phase that is imported or created will be a separate child entry under the Phases main entry.\\
+\hline
+Hist/Phase & This tree item is present when the option to placing the parameters belonging to 
+both phases and histograms (HAP parameters) are placed directly into the data tree, see \S\ref{ref:separatehistogram}.\\
+\hline
+Sequential Results & GSAS-II can perform a number of different fits on series of datasets, 
+for example, calibrations and refinements. Results from these are placed in sequential results
+data tree entries, which will have data tables associated with them.\\
+\hline
+\end{tabular}
+\end{table}
+
+\clearpage
+\section{Powder diffraction 2D image (IMG) child entries}
+\label{ref:IMGchild}
+GSAS-II is widely used for data reduction for area detector data and can perform some types of data fitting directly to these images. There are a few parameters that are shown in the main data tree entry
+for the image, such as the pixel size. These should rarely be changed (preferably never). If this information is not correct, the image cannot be used. The child entries for an IMG entry are shown in Table \ref{tab:IMGchild}.
+
+\begin{table}
+\centering
+\caption{Child entries for an IMG (2D image) histogram data tree entry.}
+\label{tab:IMGchild}
+\begin{tabular}{| l | p{0.65\textwidth} |}
+\hline
+\textit{Child item name} & \textit{Description and discussion} \\
+\hline
+Comments & Metadata and annotations read from the image are placed here. Nothing here can be edited.\\
+\hline
+Image Controls & Used for calibration and integration of images, with extensive controls.\\
+\hline
+Masks & Used to designate parts of an image that should be ignored (masked away). There are many different types of masks that can be created to deal with different types of artifacts. There is also a mechanism for removing areas of the image that are not radially symmetric, such as single-crystal peaks from a diamond anvil cell.\\
+\hline
+Stress/Strain & This is used to analyze applied stress that will cause Bragg rings to be elongated.\\
+\hline
+\end{tabular}
+\end{table}
+
+\clearpage
+\section{Powder diffraction (PWDR) child entries}
+\label{ref:PWDRchild}
+The most commonly used type of histogram for GSAS-II is the powder diffraction (PWDR) entry. 
+These entries have a fairly large number of 
+child entries, as shown in Table \ref{tab:PWDRchild}. The contents for some of these entries are 
+described further below. 
+
+\begin{table}
+\centering
+\caption{Child entries for a PWDR (powder diffraction) histogram data tree entry.}
+\label{tab:PWDRchild}
+\begin{tabular}{| l | p{0.65\textwidth} |}
+\hline
+\textit{Child item name} & \textit{Description and discussion} \\
+\hline
+Comments & Metadata and annotations read from the data file are placed here. Nothing here can be edited.\\
+\hline
+Limits & Shows the range of the data and allows for the portion of data to be restricted. Regions of the pattern that should be ignored (excluded regions) can also be designated. It is also possible to designate regions of the histogram that should be plotted with a different intensity scale (magnification regions) here.\\
+\hline
+Background & Provides controls and results for fitting background for individual peak fits (see Chapter 
+\ref{Chap:peakfitting}) or Rietveld fits (see Chapter 
+\ref{Chap:background}). \\
+\hline
+Instrument Parameters & The parameters here will depend on the data type and affect the peak shape, peak positions and the peak intensities. See below and Tables \ref{tab:CWprofile1}, \ref{tab:CWprofile2}, and Table \ref{tab:TOFprofile}.\\
+\hline
+Sample Parameters & The sample parameters include a histogram scale factor and intensity/peak-position correction factors. There are also terms that describe the diffraction geometry and sample orientation as well as document any other measurement conditions. See \S\ref{ref:SampleParms} for more details. \\
+\hline
+Peak List & This contains a list of diffraction peaks when individual peak fitting is used.\\
+\hline
+Index Peak List & This contains a copied list of diffraction peaks from the Peak List that is used for assigning a unit cell to a pattern (autoindexing). The reflection indices (\textit{hkl} values) generated from the cell are shown here.\\
+\hline
+Unit Cells List & This serves three purposes: the controls for autoindexing are found here; there are controls that allow the reflection positions from a specified unit cell to be visualized by superimposing them on the histogram; there are several types of cell searches that can be performed and the results are displayed here.\\
+\hline
+Reflection Lists & When a Rietveld refinement is performed, lists of reflections are generated for each phase included in the current histogram. The reflection lists are shown here, with a notebook tab used to select the phase.\\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{The Instrument Parameters child entry of PWDR histograms}
+The instrumental parameters for a PWDR entry will be different depending on the type of included data. 
+The data type is determined by a code assigned to the data that indicates the radiation source. 
+Further monochromatic and dual-radiation (lab source, typically CuK$\alpha_1$-CuK$\alpha_2$) instruments also will have different parameters. 
+For monochromatic instruments the parameters  shown in Table \ref{tab:CWprofile1} are used, but for dual wavelength instruments the parameters shown in Table \ref{tab:CWprofile2} are appropriate. 
+For time of flight (TOF) diffraction there is yet another table, Table \ref{tab:TOFprofile}.
+Note that most of the values in the Instrument Parameters child data tree item determine the instrumental contribution to the peak profile while other parameters determine peak positions. The polarization term affects peak intensities.
+
+\begin{table}
+\centering
+\caption{The constant wavelength histogram parameters used in GSAS-II for single-wavelength instruments, x-ray or neutron.}
+\label{tab:CWprofile1}
+\begin{tabular}{| l | p{0.7\textwidth} |}
+\hline
+\textit{Parameter Name} & \textit{Description and discussion} \\
+\hline
+Azimuth & The location of the detector or the central angle from integration of an area detector wedge (caking)\\
+\hline
+Lam & The wavelength for the radiation. This can be refined, but this is quite unusual. This can be done only if a set of lattice parameters is fixed or there is a simultaneous fit where another histogram has a fixed wavelength. \\
+\hline
+Zero & An offset added to all $2\theta$ values. The value has units of degrees x 100. 
+Originally in Rietveld work this term was refined to account for sample displacement, but now there are much better correction terms available in the Sample Parameters data tree item. 
+You are strongly encouraged to leave this value as 0.0, unless you have determined this directly. Refining it is strongly discouraged.\\
+\hline
+Polariz. & The polarization of the beam in the diffraction plane vs. the perpendicular plane. This will be 0.5 for neutrons; something on the order of 0.95 for a synchrotron bending magnet source and on the order of 0.99 for a synchrotron insertion device source. This can only be refined in the unusual circumstance when the $\rm U_{iso}$ or $\rm U_{ij}$ terms in the structure are known and are fixed. \\
+\hline
+U, V \& W & The Gaussian width parameters, as described in \S\ref{sec:sigma2}, where $\sigma^2\ =\ U\ \tan^2{\theta}\ +V\ \tan{\theta}+W$ and $\sigma=FWHM\ /\ \sqrt{8\ln{2}}$. The preferred way that GSAS-II is used will have these terms be fit to a standard and are not be refined for samples.\\
+\hline
+X, Y \& Z & The Lorentzian width terms, where $FWHM = \Gamma = X / \cos\theta + Y \tan\theta + Z$. Note that CW instruments usually do not have any significant instrumental Lorentzian broadening, so these values are often all 0. 
+If values have been determined from a standard, use them, but Z is still expected to be 0. If they are not known, set them to 0 and refine sample broadening terms (see \S\ref{ref:HAP}.)
+\\
+\hline
+SH/L & The Finger-Cox-Jephcoat axial divergence correction, as discussed in \ref{sec:FCJ}, expressed as $(S+H)/L$. While the S and H terms are typically difficult to refine, this term tends to refine with good stability, but ideally the value is determined when the instrument \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}
+\centering
+\caption{The constant wavelength histogram parameters used in GSAS-II for dual-wavelength x-ray instruments (laboratory only).}
+\label{tab:CWprofile2}
+\begin{tabular}{| l | p{0.7\textwidth} |}
+\hline
+\textit{Parameter Name} & \textit{Description and discussion} \\
+\hline
+Azimuth & The location of the detector or the central angle from integration of an area detector wedge (caking)\\
+\hline
+Ka1 \& Ka2 & The wavelengths for the radiation. These can be set to known values using the "Source type" pull-down menu. \\
+\hline
+I(L2)/I(L1) & The relative intensity ratio for the two wavelengths, expressed as the intensity of the second, longer and weaker Ka2 wavelength relative to the primary Ka1 wavelength. \\
+\hline
+Zero & An offset added to all $2\theta$ values. The value has units of degrees x 100. 
+Originally in Rietveld work this term was refined to account for sample displacement, but now there are much better correction terms available in the Sample Parameters data tree item. 
+The alignment process for lab instruments ensures that this offset should be negligible. You are strongly encouraged to leave this value as 0. Refining it is strongly discouraged.\\
+\hline
+Polariz. & The polarization of the beam in the diffraction plane vs. the perpendicular plane. This will be 0.5 for instruments without a monochromator and will be $1 / [1 + \cos^2(2\theta_m)]$ where $2\theta_m$ is the Bragg angle for the monochromator. This can only be refined in the unusual circumstance when the $\rm U_{iso}$ or $\rm U_{ij}$ terms in the structure are known and are fixed. \\
+\hline
+U, V \& W & Gaussian width parameters, as described in \S\ref{sec:sigma2}, where $\sigma^2\ =\ U\ \tan^2{\theta}\ +V\ \tan{\theta}+W$ and $\sigma=FWHM\ /\ \sqrt{8\ln{2}}$. The preferred way that GSAS-II is used will have these terms be fit to a standard and are not be refined for samples.\\
+\hline
+X, Y \& Z & Lorentzian width terms where $FWHM = \Gamma = X / \cos\theta + Y \tan\theta + Z$. Note that CW instruments usually do not have any significant instrumental Lorentzian broadening, so these values are often all 0.
+If values have been determined from a standard, use them, but Z is still expected to be 0. If they are not known, set them to 0 and refine sample broadening terms (see \S\ref{ref:HAP}.)
+\\
+\hline
+SH/L & The Finger-Cox-Jephcoat axial divergence correction, as discussed in \ref{sec:FCJ}, expressed as $(S+H)/L$. While the S and H terms are typically difficult to refine, this term tends to refine with good stability, but ideally the value is determined when the instrument \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}
+\centering
+\caption{The TOF histogram parameters used in GSAS-II.}
+\label{tab:TOFprofile}
+\begin{tabular}{| l | p{0.6\textwidth} |}
+\hline
+\textit{Parameter Name} & \textit{Description and discussion} \\
+\hline
+Flight path & The distance between the neutron moderator and the detector in m. 
+It is best when this is the same for any detectors that are summed.\\
+\hline
+2-theta & The average $2\theta$ angle for the summed detectors. 
+It is best when this is the same for any detectors that are summed.\\
+\hline
+difA, difB \& difC & Conversion equation between TOF in microsec and d-space/Q, 
+$t = {\rm Zero} + {\rm difC}\ d + {\rm difA}\ d^2 + {\rm difB}/d$.
+The difB term is usually 0. difC is occasionally refined to account for sample 
+displacement.\\
+\hline
+alpha & The rise-side double exponential peak shape parameter. 
+Determined from instrument calibration. \\
+\hline
+beta0, beta1 \& betaQ & The fall-side double exponential peak shape parameters, 
+$\beta = \beta_0 + \beta_1 d^{4} + \beta_q d^{2}$. 
+Determined from instrument calibration. \\
+\hline
+sig-0, sig-1, sig-2 \& sig-q & Gaussian width parameters, $\sigma=FWHM / \sqrt{8\ln{2}}$ and 
+$\sigma = \sigma_0 + {\sigma_1}{d^{2}} + {\sigma_2}{d^{4}} + {\sigma_q}{d}$.
+Determined from instrument calibration. \\
+\hline
+X, Y \& Z & Lorentzian width terms,
+$\Gamma = FWHM ={X}{d}+{Y}{d^{2}}+Z$. TOF instruments may have some inherent 
+Lorentzian broadening, with X \& Y non-zero, but Z is not needed. 
+Determined from instrument calibration. \\
+\hline
+\end{tabular}
+\end{table}
+
+\clearpage
+\subsection{The Sample Parameters child entry of PWDR histograms}
+\label{ref:SampleParms}
+The Sample Parameters data tree item contains a number of parameters related to the sample and experimental conditions, a few of which can be refined. These are tabulated in Tables \ref{tab:CommonSample}, \ref{tab:SpecialSample1}, \ref{tab:SpecialSample2} and \ref{tab:SpecialSample3}.
+Most significant is the histogram scale factor. This is used to scale the computed diffraction data to match the intensity scale for the observed pattern, since the magnitude of the observed intensities will depend on experimental settings such as the sample size, instrumental configuration and data collection time. 
+While it is possible to perform diffraction measurements on an absolute scale, so that this scale factor value is known, this is not easy and is rarely done. For almost all work, the scale factor is fitted before fitting of any other diffraction parameters is attempted, other than perhaps background. The scale factor can be thought of as an arbitrary positive value that will almost always need to be fitted. Note, however, that the phase fraction parameters can be used to replace the histogram scale factor. This is discussed further in \S\ref{ref:scalingfactors} and \S\ref{ref:scalingfactors1}. 
+
+There are different terms here that correct for deviations in peak positions or changes to the diffraction intensities. The terms that will be available depend on the type of diffraction measurement, see Tables \ref{tab:SpecialSample1}, \ref{tab:SpecialSample2} and \ref{tab:SpecialSample3}.
+
+The sample parameters also include several goniometer or detector setting angles. These normally will not be needed, but become vital for characterization of texture when several measurements must be combined from different settings. The GSAS-II goniometer angles are defined with a coordinate system where the origin is located at the diffractometer center. This should also be the sample position. The 
+Y-axis points from the sample towards the radiation source (the opposite direction of the x-ray/neutron beam). The X-axis is perpendicular to the incident beam and in the diffraction plane towards $2\theta =0$. The Z-axis is perpendicular to X and Y and is chosen in the direction to complete the right-handed coordinate system. This will be upwards and vertical when the X-axis is to the right. The goniometer angles are defined with $\omega$ as the rotation of the sample stage relative to the incident beam.
+$\chi$ as the tilt angle of the goniometer head, $\phi$ as the azimuthal rotation of the sample spindle and the azimuth angle as the orientation angle of the detector bank section of a 2D image where $0^\circ$ is in the diffraction plane. 
+
+Finally, there are six constants that can be specified to document experimental conditions. The first three of these (time, temperature and pressure) have fixed labels, but the other three labels can be changed for a project. When changed for one histogram, the same labels are used for all histograms in the project. Note that the values provided for the measurement conditions do not change the results from any GSAS-II computations, but will be noted in tabulations when sequential fits are performed. 
+
+\begin{table}
+\centering
+\caption{The Sample Parameters entries for all types of PWDR histograms.}
+\label{tab:CommonSample}
+\begin{tabular}{| p{0.4\textwidth} | p{0.6\textwidth} |}
+\hline
+\textit{Parameter Name} & \textit{Description and discussion} \\
+\hline
+Instrument Name & This name is used in the generation of CIF exports that place the 
+diffraction data into a pdCIF file.\\
+\hline
+Diffractometer type & This can be either Bragg-Brentano or Debye-Scherrer. For neutrons use Debye-Scherrer.\\
+\hline
+Histogram scale factor& As described in the text, this is an arbitrary term that scales the computed powder diffraction pattern to match the experimental histogram.\\
+\hline
+Goniometer omega, chi, phi and azimuth& These angles describe how the sample is oriented. Typically only needed for texture characterization where multiple sample or detector settings are used. \\
+\hline
+Clock time& An optional value that ideally will be imported with the measurement. It specifies a time stamp in seconds for when each measurement is made in a multi-histogram dataset.\\
+\hline
+Sample temperature& This value ideally will be imported with the measurement. It specifies the sample temperature (in K). It will be provided in a project-based CIF export of the results, so it is best if this number is correct when not set from the input file.\\
+\hline
+Sample pressure& An optional value that ideally will be imported with the measurement. It specifies the
+applied hydrostatic pressure (in MPa).\\
+\hline
+Sample humidity, Sample voltage \& Applied load & Optional experimental setting values. As noted in \S\ref{ref:SampleParms}, these fields can be relabeled for any parametric setting that is changed in a multibank fit. \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}
+\centering
+\caption{Sample Parameters entries used only with Debye-Scherrer (x-ray or CW neutron) PWDR histograms.}
+\label{tab:SpecialSample1}
+\begin{tabular}{| l | p{0.55\textwidth} |}
+\hline
+\textit{Parameter Name} & \textit{Description and discussion} \\
+\hline
+Goniometer radius& This is the distance from the sample to the detector in mm.\\
+\hline
+Sample X displ. perp to beam & This measures the deviation of the sample position from the center of the diffraction circle towards the beam source. The value is in $\mu m$ if the Goniometer radius is correct. This is typically refined in most Rietveld fits, but only in the late refinement stages.  \\
+\hline
+Sample Y displ. $||$ to beam & This measures the deviation of the sample position from the center of the diffraction circle perpendicular to the beam. The value is in $\mu m$ if the Goniometer radius is correct. The effect of this offset is only discernible with very high angle ($\gg 90^\circ$). This should be fixed at 0. except when diffraction data are collected to $>140^\circ\ 2\theta$ (typically with neutrons) and even then refined with care and only in the late refinement stages. \\
+\hline
+Sample absorption ($\mu R$)& This specifies the loss of x-rays/neutrons due to absorption and other types of scattering. It should be adjusted for the sample packing density. It can be varied, but this usually requires that the $\rm U_{iso}$ values be fixed. \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}
+\centering
+\caption{Sample Parameters entries used only with Bragg-Brentano (lab x-ray) PWDR histograms.}
+\label{tab:SpecialSample2}
+\begin{tabular}{| l | p{0.6\textwidth} |}
+\hline
+\textit{Parameter Name} & \textit{Description and discussion} \\
+\hline
+Goniometer radius& This is the distance from the sample to the detector in mm.\\
+\hline
+Sample displacement& This corrects for the sample not being placed exactly at the center of the diffraction circle. This term will almost always need to be refined in a Bragg-Brentano fit. The units are $\mu m$, if the Goniometer radius is correct.\\
+\hline
+Sample transparency& This corrects for the change in depth that the x-ray beam penetrates as a function of the angle of incidence. It only makes sense for samples with absorption (low density). It can usually be refined.\\
+\hline
+Sample roughness A \& B& When an absorbing x-ray sample has a rough surface, the intensities of very low angle peaks can be diminished. These terms can be refined to account for that. This is usually not needed. Refine only with care. \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}
+\centering
+\caption{The Sample Parameters entry used only with TOF PWDR histograms.}
+\label{tab:SpecialSample3}
+\begin{tabular}{| l | p{0.55\textwidth} |}
+\hline
+\textit{Parameter Name} & \textit{Description and discussion} \\
+\hline
+Sample absorption ($\mu R/ \lambda$) & This specifies the loss of neutrons due to absorption and incoherent scattering. It should be adjusted for the sample packing density. This is a wavelength-dependent quantity, so provide this evaluated at 1 \AA, or divide by the wavelength where this is computed. It can be varied, but will usually interact highly with $\rm U_{iso}$ values. \\
+\hline
+\end{tabular}
+\end{table}
+
+
+
+\clearpage
+\section{For More Information}
+
+\begin{itemize}
+\item The help pages for GSAS-II, which are installed with the program and can be accessed from the help menu, are also found online at \url{https://advancedphotonsource.github.io/GSAS-II-tutorials/help/} or all pages can be downloaded as a single PDF file from \url{https://advancedphotonsource.github.io/GSAS-II-tutorials/docs/GSASII-help.pdf}. The help information also documents the contents of the GSAS-II data tree and discusses the menu commands available with most entries. 
+
+\end{itemize}
